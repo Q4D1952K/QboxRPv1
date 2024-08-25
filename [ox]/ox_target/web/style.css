@@ -1,17 +1,39 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap");
+@font-face {
+  font-family: "Circular";
+  src: url("fonts/Circular-Bold.woff2") format("woff2"),
+    url("fonts/Circular-Bold.woff") format("woff"),
+    url("fonts/Circular-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
 
-:root {
-  --color-default: #cfd2da;
-  --color-hover: white;
+@font-face {
+  font-family: "Circular";
+  src: url("fonts/Circular-Book.woff2") format("woff2"),
+    url("fonts/Circular-Book.woff") format("woff"),
+    url("fonts/Circular-Book.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
+  font-family: "Circular", sans-serif;
+  font-weight: normal;
   visibility: hidden;
   user-select: none;
   white-space: nowrap;
   margin: 0;
   user-select: none;
   overflow: hidden;
+}
+
+* {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 p {
@@ -23,69 +45,138 @@ p {
 }
 
 #eye {
+  text-align: center;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #ffffff;
+  border-radius: 100%;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 22pt;
-  fill: black;
+  top: calc(50% - 4px);
+  left: calc(50% - 4px);
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  z-index: 200;
 }
 
-.eye-hover {
-  fill: var(--color-default);
+#eye.active {
+  text-align: center;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #2575ff;
+  border-radius: 100%;
+  background-color: #2575ff;
+  position: absolute;
+  top: calc(50% - 4px);
+  left: calc(50% - 4px);
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  z-index: 200;
+}
+
+#eye i {
+  visibility: hidden;
 }
 
 #options-wrapper {
-  position: absolute;
-  top: calc(48.4%);
-  left: calc(50% + 18pt);
-}
-
-.option-container {
-  color: var(--color-default);
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
-  font-family: "Nunito";
-  background: linear-gradient(
-    90deg,
-    rgba(20, 20, 20, 0.7) 0%,
-    rgba(20, 20, 20, 0.6) 66%,
-    rgba(47, 48, 53, 0) 100%
-  );
-  font-size: 11pt;
-  line-height: 22pt;
-  vertical-align: middle;
-  margin: 2pt;
-  transition: 300ms;
-  transform-origin: left top;
-  scale: 1;
-  height: 22pt;
-  width: 150pt;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  position: absolute;
   top: 0;
+  z-index: 0;
 }
 
-.option-container:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(30, 30, 30, 0.7) 0%,
-    rgba(30, 30, 30, 0.6) 66%,
-    rgba(57, 58, 63, 0) 100%
-  );
-  transform-origin: left top;
-  color: var(--color-hover);
-  margin-left: 4pt;
+#options-wrapper li {
+  list-style: none;
+  width: 50%;
+  line-height: 20px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.option-icon {
-  font-size: 12pt;
-  line-height: 22pt;
-  width: 14pt;
-  margin: 5pt;
-  color: var(--color-default);
-}
-
-.option-label {
+#options-wrapper li a {
+  font-size: 20px;
+  display: inline-block;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px 10px 18px;
+  margin: 10px 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  text-shadow: 0px 0px 20px #000000;
   font-weight: 500;
+}
+
+#options-wrapper li a:hover, #options-wrapper li a:hover .option-icon{
+  color: #2575ff !important;
+	text-shadow: 0px 0px 20px #2575ffaa !important;
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+#options-wrapper li a .option-icon {
+  font-size: 22px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#options-wrapper li:only-child {
+  text-align: right;
+  left:-60px !important;
+  -webkit-transform-origin: right center !important;
+  -ms-transform-origin: right center !important;
+  transform-origin: right center !important;
+}
+
+#options-wrapper li:nth-last-child(n+2):nth-last-child(-n+2):first-child,
+#options-wrapper li:nth-last-child(n+2):nth-last-child(-n+2):first-child~li:not(:last-child) {
+  left:-60px !important;
+}
+
+#options-wrapper li:nth-last-child(n+2):nth-last-child(-n+2):first-child~li:not(:first-child) {
+  left:60px !important;
+}
+
+#options-wrapper li:nth-last-child(n+3):nth-last-child(-n+3):first-child~li:last-child {
+  left:-20px;
+}
+
+#options-wrapper li:nth-child(odd) {
+  text-align: right;
+  right: 60px;
+  -webkit-transform-origin: right center;
+  -ms-transform-origin: right center;
+  transform-origin: right center;
+}
+
+#options-wrapper li:nth-child(even) {
+  left: 60px;
+  -webkit-transform-origin: left center;
+  -ms-transform-origin: left center;
+  transform-origin: left center;
+}
+
+#options-wrapper li:nth-child(1),
+#options-wrapper li:nth-last-child(2) {
+  right: 20px;
+}
+
+#options-wrapper li:nth-child(2),
+#options-wrapper li:nth-last-child(1) {
+  left: 20px;
 }

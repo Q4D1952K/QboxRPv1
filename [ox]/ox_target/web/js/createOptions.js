@@ -14,13 +14,10 @@ function onClick() {
 export function createOptions(type, data, id, zoneId) {
   if (data.hide) return;
 
-  const option = document.createElement("div");
-  const iconElement = `<i class="fa-fw ${data.icon} option-icon" ${
-    data.iconColor ? `style = color:${data.iconColor} !important` : null
-  }"></i>`;
+  const option = document.createElement('li');
 
-  option.innerHTML = `${iconElement}<p class="option-label">${data.label}</p>`;
-  option.className = "option-container";
+  option.innerHTML = `<a><i class="fa-fw ${data.icon} option-icon" style="color:${data.iconColor || '#white'}"></i>${data.label}</a>`;
+  // option.className = "option-container";
   option.targetType = type;
   option.targetId = id;
   option.zoneId = zoneId;

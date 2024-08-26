@@ -711,7 +711,6 @@ function CreatePlayer(playerData, Offline)
         end
         local oxmoneytype = moneytype == 'cash' and 'money' or moneytype
         if accountsAsItems[oxmoneytype] then
-            print('set Money')
             exports.ox_inventory:SetItem(self.PlayerData.source, moneytype, self.PlayerData.money[moneytype])
         end
     end

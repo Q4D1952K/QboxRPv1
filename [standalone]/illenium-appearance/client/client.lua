@@ -122,6 +122,7 @@ function InitializeCharacter(gender, onSubmit, onCancel)
         end
         Framework.CachePed()
         TriggerServerEvent("illenium-appearance:server:ResetRoutingBucket")
+        TriggerEvent('rep-multichar:client:startmovie')
     end, config)
 end
 

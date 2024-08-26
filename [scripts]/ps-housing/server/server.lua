@@ -1,4 +1,3 @@
-QBCore = exports['qb-core']:GetCoreObject()
 -- PSCore = exports['ps-core']:GetCoreObject()
 
 local dbloaded = false
@@ -76,7 +75,7 @@ AddEventHandler("ps-housing:server:registerProperty", function (propertyData, pr
     TriggerClientEvent("ps-housing:client:addProperty", -1, propertyData)
 
     if propertyData.apartment and not preventEnter then
-        local player = QBCore.Functions.GetPlayerByCitizenId(propertyData.owner)
+        local player = exports.qbx_core:GetPlayerByCitizenId(propertyData.owne)
         local src = player.PlayerData.source
 
         -- local property = Property.Get(id)
@@ -112,7 +111,7 @@ lib.callback.register("ps-housing:cb:GetOwnedApartment", function(source, cid)
         return nil
     else
         local src = source
-        local Player = QBCore.Functions.GetPlayer(src)
+        local Player = exports.qbx_core:GetPlayer(src)
         local result = MySQL.query.await('SELECT * FROM properties WHERE owner_citizenid = ? AND apartment IS NOT NULL AND apartment <> ""', { Player.PlayerData.citizenid })
         if result[1] ~= nil then
             return result[1]
@@ -152,6 +151,7 @@ RegisterNetEvent("ps-housing:server:createNewApartment", function(aptLabel)
         for_sale = 0,
         shell = apartment.shell,
         apartment = apartment.label,
+        door_data = vector4(apartment.door.x, apartment.door.y, apartment.door.z,apartment.door.h)
     }
 
     Debug("Creating new apartment for " .. GetPlayerName(src) .. " in " .. apartment.label)
@@ -233,13 +233,14 @@ AddEventHandler("ps-housing:server:addTenantToApartment", function (data)
         if not newApartment then return end
 
         local citizenid = GetCitizenid(targetSrc, realtorSrc)
-        local targetToAdd = QBCore.Functions.GetPlayerByCitizenId(citizenid).PlayerData
+        local targetToAdd = exports.qbx_core:GetPlayerByCitizenId(citizenid).PlayerData
         local propertyData = {
             owner = targetCitizenid,
             description = string.format("This is %s's apartment in %s", targetToAdd.charinfo.firstname .. " " .. targetToAdd.charinfo.lastname, apartment.label),
             for_sale = 0,
             shell = newApartment.shell,
             apartment = newApartment.label,
+            door_data = vector4(newApartment.door.x, newApartment.door.y, newApartment.door.z,newApartment.door.h)
         }
 
         Debug("Creating new apartment for " .. GetPlayerName(targetSrc) .. " in " .. newApartment.label)
@@ -260,7 +261,7 @@ AddEventHandler("ps-housing:server:addTenantToApartment", function (data)
     property:UpdateApartment(data)
 
     local citizenid = GetCitizenid(targetSrc, realtorSrc)
-    local targetToAdd = QBCore.Functions.GetPlayerByCitizenId(citizenid)
+    local targetToAdd = exports.qbx_core:GetPlayerByCitizenId(citizenid)
     local targetPlayer = targetToAdd.PlayerData
 
     Framework[Config.Notify].Notify(targetSrc, "Your apartment is now at "..apartment, "success")
@@ -276,34 +277,34 @@ exports('IsOwner', function(src, property_id)
 end)
 
 function GetCitizenid(targetSrc, callerSrc)
-    local Player = QBCore.Functions.GetPlayer(tonumber(targetSrc))
-    if not Player then
+    local player = exports.qbx_core:GetPlayer(tonumber(targetSrc))
+    if not player then
         Framework[Config.Notify].Notify(callerSrc, "Player not found.", "error")
         return
     end
-    local PlayerData = Player.PlayerData
+    local PlayerData = player.PlayerData
     local citizenid = PlayerData.citizenid
     return citizenid
 end
 
 function GetCharName(src)
-    local Player = QBCore.Functions.GetPlayer(tonumber(src))
-    if not Player then return end
-    local PlayerData = Player.PlayerData
+    local player = exports.qbx_core:GetPlayer(tonumber(src))
+    if not player then return end
+    local PlayerData = player.PlayerData
     return PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname
 end
 
 function GetPlayerData(src)
-    local Player = QBCore.Functions.GetPlayer(tonumber(src))
-    if not Player then return end
-    local PlayerData = Player.PlayerData
+    local player = exports.qbx_core:GetPlayer(tonumber(src))
+    if not player then return end
+    local PlayerData = player.PlayerData
     return PlayerData
 end
 
 function GetPlayer(src)
-    local Player = QBCore.Functions.GetPlayer(tonumber(src))
-    if not Player then return end
-    return Player
+    local player = exports.qbx_core:GetPlayer(tonumber(src))
+    if not player then return end
+    return player
 end
 
 -- if PSCore then

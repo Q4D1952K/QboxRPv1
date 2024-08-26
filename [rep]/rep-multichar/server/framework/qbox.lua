@@ -1,4 +1,5 @@
-if not Framework.QBox() then print('miss') return end
+if not Framework.QBox() then return end
+local logger = require '@qbx_core.modules.logger'
 local startWithApartments = true
 local  starterItems = {
     { name = 'phone', amount = 1 },
@@ -23,10 +24,8 @@ local function GiveStarterItems(src)
     for i = 1, #starterItems do
         local item = starterItems[i]
         if item.metadata and type(item.metadata) == 'function' then
-            print(item.name)
             exports.ox_inventory:AddItem(src, item.name, item.amount, item.metadata(src))
         else
-            print(item.name)
             exports.ox_inventory:AddItem(src, item.name, item.amount, item.metadata)
         end
     end

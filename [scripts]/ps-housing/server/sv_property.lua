@@ -3,7 +3,6 @@ Property = {
     propertyData = nil,
     playersInside = nil,   -- src
     playersDoorbell = nil, -- src
-
     raiding = false,
 }
 Property.__index = Property
@@ -42,11 +41,12 @@ function Property:PlayerEnter(src)
     local citizenid = GetCitizenid(src)
 
     if self:CheckForAccess(citizenid) then
-        local Player = QBCore.Functions.GetPlayer(src)
-        local insideMeta = Player.PlayerData.metadata["inside"]
+        local Player = exports.qbx_core:GetPlayer(src)
+        -- local insideMeta = Player.PlayerData.metadata["inside"]
 
-        insideMeta.property_id = self.property_id
-        Player.Functions.SetMetaData("inside", insideMeta)
+        -- insideMeta.property_id = self.property_id
+        -- Player.Functions.SetMetaData("inside", insideMeta)
+        Player.Functions.SetMetaData('currentPropertyId', self.property_id)
     end
 
     local bucket = tonumber(self.property_id) -- because the property_id is a string
@@ -63,11 +63,12 @@ function Property:PlayerLeave(src)
     local citizenid = GetCitizenid(src)
 
     if self:CheckForAccess(citizenid) then
-        local Player = QBCore.Functions.GetPlayer(src)
-        local insideMeta = Player.PlayerData.metadata["inside"]
+        local Player = exports.qbx_core:GetPlayer(src)
+        -- local insideMeta = Player.PlayerData.metadata["inside"]
 
-        insideMeta.property_id = nil
-        Player.Functions.SetMetaData("inside", insideMeta)
+        -- insideMeta.property_id = nil
+        -- Player.Functions.SetMetaData("inside", insideMeta)
+        Player.Functions.SetMetaData('currentPropertyId', nil)
     end
 
     SetPlayerRoutingBucket(src, 0)
@@ -253,7 +254,7 @@ function Property:UpdateOwner(data)
 
     local previousOwner = self.propertyData.owner
 
-    local targetPlayer  = QBCore.Functions.GetPlayer(tonumber(targetSrc))
+    local targetPlayer  = exports.qbx_core:GetPlayer(tonumber(targetSrc))
 
     local PlayerData = targetPlayer.PlayerData
     local bank = PlayerData.money.bank
@@ -282,8 +283,8 @@ function Property:UpdateOwner(data)
 
     targetPlayer.Functions.RemoveMoney('bank', self.propertyData.price, "Bought Property: " .. self.propertyData.street .. " " .. self.property_id)
 
-    local prevPlayer = QBCore.Functions.GetPlayerByCitizenId(previousOwner)
-    local realtor = QBCore.Functions.GetPlayer(tonumber(realtorSrc))
+    local prevPlayer = exports.qbx_core:GetPlayerByCitizenId(previousOwner)
+    local realtor = exports.qbx_core:GetPlayer(tonumber(realtorSrc))
     local realtorGradeLevel = realtor.PlayerData.job.grade.level
 
     local commission = math.floor(self.propertyData.price * Config.Commissions[realtorGradeLevel])
@@ -542,7 +543,7 @@ RegisterNetEvent('ps-housing:server:raidProperty', function(property_id)
         return 
     end
 
-    local Player = QBCore.Functions.GetPlayer(src)
+    local Player = exports.qbx_core:GetPlayer(src)
     if not Player then return end
     local PlayerData = Player.PlayerData
     local job = PlayerData.job
@@ -791,7 +792,7 @@ RegisterNetEvent("ps-housing:server:removeAccess", function(property_id, citizen
 
         property:UpdateHas_access(has_access)
 
-        local playerToAdd = QBCore.Functions.GetPlayerByCitizenId(citizenidToRemove) or QBCore.Functions.GetOfflinePlayerByCitizenId(citizenidToRemove)
+        local playerToAdd = exports.qbx_core:GetPlayerByCitizenId(citizenidToRemove) or exports.qbx_core:GetOfflinePlayer(citizenidToRemove)
         local removePlayerData = playerToAdd.PlayerData
         local srcToRemove = removePlayerData.source
 
@@ -818,7 +819,7 @@ lib.callback.register("ps-housing:cb:getPlayersWithAccess", function (source, pr
 
     for i = 1, #has_access do
         local citizenid = has_access[i]
-        local Player = QBCore.Functions.GetPlayerByCitizenId(citizenid) or QBCore.Functions.GetOfflinePlayerByCitizenId(citizenid)
+        local Player = exports.qbx_core:GetPlayerByCitizenId(citizenid) or exports.qbx_core:GetOfflinePlayer(citizenid)
         if Player then
             withAccess[#withAccess + 1] = {
                 citizenid = citizenid,
@@ -850,7 +851,7 @@ lib.callback.register('ps-housing:cb:getPropertyInfo', function (source, propert
 
     local ownerCid = property.propertyData.owner
     if ownerCid then
-        ownerPlayer = QBCore.Functions.GetPlayerByCitizenId(ownerCid) or QBCore.Functions.GetOfflinePlayerByCitizenId(ownerCid)
+        ownerPlayer = exports.qbx_core:GetPlayerByCitizenId(ownerCid) or exports.qbx_core:GetOfflinePlayer(ownerCid)
         ownerName = ownerPlayer.PlayerData.charinfo.firstname .. " " .. ownerPlayer.PlayerData.charinfo.lastname
     else
         ownerName = "No Owner"
@@ -870,7 +871,7 @@ end)
 
 RegisterNetEvent('ps-housing:server:resetMetaData', function()
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
+    local Player = exports.qbx_core:GetPlayer(src)
     local insideMeta = Player.PlayerData.metadata["inside"]
 
     insideMeta.property_id = nil

@@ -1,14 +1,11 @@
-local QBCore = exports['qb-core']:GetCoreObject()
-
 RegisterNetEvent('QBCore:Server:UpdateObject', function()
 	if source ~= '' then return false end
-	QBCore = exports['qb-core']:GetCoreObject() 
 end)
 
 RegisterNetEvent("bl-realtor:server:updateProperty", function(type, property_id, data)
     -- Job check
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
+    local Player = exports.qbx_core:GetPlayer(src)
     local PlayerData = Player.PlayerData
     if not RealtorJobs[PlayerData.job.name] then return false end
 
@@ -20,7 +17,7 @@ end)
 RegisterNetEvent("bl-realtor:server:registerProperty", function(data)
     -- Job check
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
+    local Player = exports.qbx_core:GetPlayer(src)
     local PlayerData = Player.PlayerData
     if not RealtorJobs[PlayerData.job.name] then return false end
 
@@ -32,7 +29,7 @@ end)
 RegisterNetEvent("bl-realtor:server:addTenantToApartment", function(data)
     -- Job check
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
+    local Player = exports.qbx_core:GetPlayer(src)
     local PlayerData = Player.PlayerData
     if not RealtorJobs[PlayerData.job.name] then return false end
 
@@ -43,13 +40,13 @@ end)
 
 lib.callback.register("bl-realtor:server:getNames", function (source, data)
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
+    local Player = exports.qbx_core:GetPlayer(src)
     local PlayerData = Player.PlayerData
     if not RealtorJobs[PlayerData.job.name] then return false end
     
     local names = {}
     for i = 1, #data do
-        local target = QBCore.Functions.GetPlayerByCitizenId(data[i]) or QBCore.Functions.GetOfflinePlayerByCitizenId(data[i])
+        local target = exports.qbx_core:GetPlayerByCitizenId(data[i]) or exports.qbx_core:GetOfflinePlayer(data[i])
         if target then
             names[#names+1] = target.PlayerData.charinfo.firstname .. " " .. target.PlayerData.charinfo.lastname
         else
@@ -63,7 +60,7 @@ end)
 if Config.UseItem then
     QBCore.Functions.CreateUseableItem(Config.ItemName, function(source, item)
         local src = source
-        local Player = QBCore.Functions.GetPlayer(src)
+        local Player = exports.qbx_core:GetPlayer(src)
         if Player.Functions.GetItemByName(item.name) ~= nil then
             TriggerClientEvent("bl-realtor:client:toggleUI", src)
         end

@@ -36,6 +36,7 @@ end
 local function createSpawnArea()
     for i = 1, #spawns, 1 do
         local spawn = spawns[i]
+        print(json.encode(spawn))
         BeginScaleformMovieMethod(scaleform, 'ADD_AREA')
         ScaleformMovieMethodAddParamInt(i)
         ScaleformMovieMethodAddParamFloat(spawn.coords.x)
@@ -236,7 +237,7 @@ local function inputHandler()
     stopCamera()
 end
 
-AddEventHandler('qb-spawn:client:setupSpawns', function(cData, new, apps)
+RegisterNetEvent('qb-spawn:client:setupSpawns', function(cData, new, apps)
     spawns = {}
     if not new then
         local lastCoords, lastPropertyId = lib.callback.await('qbx_spawn:server:getLastLocation')
@@ -253,6 +254,8 @@ AddEventHandler('qb-spawn:client:setupSpawns', function(cData, new, apps)
         local houses = lib.callback.await('qbx_spawn:server:getHouses')
         for i = 1, #houses do
             spawns[#spawns + 1] = houses[i]
+            spawns[#spawns].coords = json.decode(spawns[#spawns].door)
+            print(spawns[#spawns].coords)
         end
     else
         for _k, _v in pairs(apps) do
@@ -262,7 +265,6 @@ AddEventHandler('qb-spawn:client:setupSpawns', function(cData, new, apps)
             spawns[#spawns].coords = vector4(_v.door.x, _v.door.y, _v.door.z, _v.door.h)
         end
     end
-    print(json.encode(spawns, {indent = true}))
     Wait(400)
 
     managePlayer()

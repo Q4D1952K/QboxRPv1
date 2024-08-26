@@ -185,7 +185,7 @@ Config.Lang = {
 local _lang = GetConvar('repscripts:locale', 'en')
 Lang = Config.Lang[_lang]
 
-Config.CreateCharacterCoords = vector4(-1615.11, 393.12, 91.21)
+Config.CreateCharacterCoords = vector4(-1615.11, 393.12, 91.21, 157.39)
 
 Config.CamCoords = {
     -- mafia_brofx

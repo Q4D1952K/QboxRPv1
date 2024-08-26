@@ -3,7 +3,7 @@ Config.Target = 'ox_target' -- qb-target, ox_target
 Config.UseTalkNPC = false    -- means use rep-talkNPCv2
 Config.QBDefault = false    -- If u want use qb-menu, qb-input
 Config.Inventory = 'ox'     --qs, old-qb, new-qb
-Config.Debug = true         -- debug soils. If true, plant down a plant, and see the soil hashes in the f8 console
+Config.Debug = false         -- debug soils. If true, plant down a plant, and see the soil hashes in the f8 console
 
 Config.Items = {
     ['femaleseed'] = 'femaleseed',

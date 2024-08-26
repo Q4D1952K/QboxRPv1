@@ -244,7 +244,7 @@ RegisterNetEvent('qb-spawn:client:setupSpawns', function(cData, new, apps)
         spawns[#spawns + 1] = {
             label = locale('last_location'),
             coords = lastCoords,
-            propertyId = lastPropertyId
+            property_id = lastPropertyId
         }
 
         for i = 1, #config.spawns do
@@ -255,6 +255,7 @@ RegisterNetEvent('qb-spawn:client:setupSpawns', function(cData, new, apps)
         for i = 1, #houses do
             spawns[#spawns + 1] = houses[i]
             spawns[#spawns].coords = json.decode(spawns[#spawns].door_data)
+            spawns[#spawns].label = houses[i].apartment
             print(spawns[#spawns].coords)
         end
     else

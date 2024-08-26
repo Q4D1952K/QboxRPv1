@@ -311,17 +311,14 @@ RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
 end)
 
 local function CheckVPN()
-    for _, itemData in pairs(PlayerData.items) do
-        if itemData.name == 'vpn' then
-            return true
-        end
-    end
-    return false
+    local count = exports.ox_inventory:Search('count', 'vpn')
+    return count > 0
 end
 
-RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
-    PlayerData = val
-    Wait(100)
+AddEventHandler('ox_inventory:updateInventory', function(changes)
+    if not changes then
+        return
+    end
     local result = CheckVPN()
     if vpn ~= result then
         vpn = result
@@ -337,6 +334,10 @@ RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
         end
         TriggerServerEvent('rep-tablet:server:updateVPN', result)
     end
+end)
+
+RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
+    PlayerData = val
 end)
 
 -- Handles state if resource is restarted live.

@@ -47,13 +47,8 @@ local function Anim()
 end
 
 local function hasTablet()
-    if PlayerData.items then
-        for _, v in pairs(PlayerData.items) do
-            if v.name == 'tablet' then
-                return true
-            end
-        end
-    end
+    local count = exports.ox_inventory:Search('count', 'tablet')
+    return count > 0
 end
 exports('hasTablet', hasTablet)
 

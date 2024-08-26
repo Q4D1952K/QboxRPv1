@@ -79,8 +79,8 @@ AddEventHandler("ps-housing:server:registerProperty", function (propertyData, pr
         local player = QBCore.Functions.GetPlayerByCitizenId(propertyData.owner)
         local src = player.PlayerData.source
 
-        local property = Property.Get(id)
-        property:PlayerEnter(src)
+        -- local property = Property.Get(id)
+        -- property:PlayerEnter(src)
 
         Wait(1000)
 
@@ -90,7 +90,8 @@ AddEventHandler("ps-housing:server:registerProperty", function (propertyData, pr
         if result and result[1] then
             Debug("Player: " .. propertyData.owner .. " skin already exists!")
         else
-            TriggerClientEvent("qb-clothes:client:CreateFirstCharacter", src)
+            TriggerClientEvent("rep-multichar:client:initcoords", src)
+            -- TriggerClientEvent("qb-clothes:client:CreateFirstCharacter", src)
             Debug("Player: " .. propertyData.owner .. " is creating a new character!")
         end
 

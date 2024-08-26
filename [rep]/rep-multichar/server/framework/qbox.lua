@@ -1,5 +1,5 @@
 if not Framework.QBox() then print('miss') return end
-local startWithApartments = false
+local startWithApartments = true
 local  starterItems = {
     { name = 'phone', amount = 1 },
     { name = 'id_card', amount = 1, metadata = function(source)
@@ -79,7 +79,7 @@ RegisterNetEvent('rep-multichar:server:addNewCharacter', function(data, cid)
         TriggerEvent('qb-clothes:client:CreateFirstCharacter')
     else
         if startWithApartments then
-            TriggerClientEvent('apartments:client:setupSpawnUI', src, newData)
+            TriggerClientEvent('ps-housing:client:setupSpawnUI', src, newData)
         else
             TriggerClientEvent('qbx_core:client:spawnNoApartments',src)
         end
@@ -96,10 +96,12 @@ RegisterNetEvent('rep-multichar:server:startGame', function(data)
     lib.logger(src, 'Loaded', ('**%s** (%s |  ||%s|| | %s | %s | %s) loaded'):format(GetPlayerName(src), GetPlayerIdentifierByType(src, 'discord') or 'undefined', GetPlayerIdentifierByType(src, 'ip') or 'undefined', GetPlayerIdentifierByType(src, 'license2') or GetPlayerIdentifierByType(src, 'license') or 'undefined', cData.citizenid, src))
     print('^2[rep-multichar]^7 ' .. GetPlayerName(src) .. ' (Citizen ID: ' .. cData.citizenid .. ') logged in!')
     if startWithApartments then
-        TriggerClientEvent('apartments:client:setupSpawnUI',src, cData.citizenid)
+        TriggerClientEvent('ps-housing:client:setupSpawnUI', src, cData)
     elseif GetResourceState('qbx_spawn'):find('start') then
         TriggerClientEvent('qb-spawn:client:setupSpawns',src, cData.citizenid)
         TriggerClientEvent('qb-spawn:client:openUI',src, true)
+    else
+        TriggerClientEvent('rep-multichar:client:spawnLastLocation',src, cData)
     end
 end)
 

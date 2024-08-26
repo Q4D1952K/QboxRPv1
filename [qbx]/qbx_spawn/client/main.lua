@@ -216,8 +216,10 @@ local function inputHandler()
             FreezeEntityPosition(cache.ped, false)
 
             local spawnData = spawns[currentButtonID]
-            if spawnData.propertyId then
-                TriggerServerEvent('qbx_properties:server:enterProperty', { id = spawnData.propertyId, isSpawn = true })
+            if spawnData.property_id then
+                TriggerServerEvent('ps-housing:server:enterProperty', tostring(spawnData.property_id))
+            elseif spawnData.type == 'apartments' then
+                TriggerServerEvent("ps-housing:server:createNewApartment", spawnData.label)
             else
                 SetEntityCoords(cache.ped, spawnData.coords.x, spawnData.coords.y, spawnData.coords.z, false, false, false, false)
                 SetEntityHeading(cache.ped, spawnData.coords.w or 0.0)
@@ -234,25 +236,33 @@ local function inputHandler()
     stopCamera()
 end
 
-AddEventHandler('qb-spawn:client:setupSpawns', function()
+AddEventHandler('qb-spawn:client:setupSpawns', function(cData, new, apps)
     spawns = {}
+    if not new then
+        local lastCoords, lastPropertyId = lib.callback.await('qbx_spawn:server:getLastLocation')
+        spawns[#spawns + 1] = {
+            label = locale('last_location'),
+            coords = lastCoords,
+            propertyId = lastPropertyId
+        }
 
-    local lastCoords, lastPropertyId = lib.callback.await('qbx_spawn:server:getLastLocation')
-    spawns[#spawns + 1] = {
-        label = locale('last_location'),
-        coords = lastCoords,
-        propertyId = lastPropertyId
-    }
+        for i = 1, #config.spawns do
+            spawns[#spawns + 1] = config.spawns[i]
+        end
 
-    for i = 1, #config.spawns do
-        spawns[#spawns + 1] = config.spawns[i]
+        local houses = lib.callback.await('qbx_spawn:server:getHouses')
+        for i = 1, #houses do
+            spawns[#spawns + 1] = houses[i]
+        end
+    else
+        for _k, _v in pairs(apps) do
+            spawns[#spawns + 1] = {}
+            spawns[#spawns].type = 'apartments'
+            spawns[#spawns].label = _v.label
+            spawns[#spawns].coords = vector4(_v.door.x, _v.door.y, _v.door.z, _v.door.h)
+        end
     end
-
-    local houses = lib.callback.await('qbx_spawn:server:getHouses')
-    for i = 1, #houses do
-        spawns[#spawns + 1] = houses[i]
-    end
-
+    print(json.encode(spawns, {indent = true}))
     Wait(400)
 
     managePlayer()

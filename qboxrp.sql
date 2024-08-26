@@ -20,22 +20,6 @@ DROP DATABASE IF EXISTS `QboxRp`;
 CREATE DATABASE IF NOT EXISTS `QboxRp` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
 USE `QboxRp`;
 
--- Dumping structure for table QboxRp.apartments
-DROP TABLE IF EXISTS `apartments`;
-CREATE TABLE IF NOT EXISTS `apartments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `label` varchar(255) DEFAULT NULL,
-  `citizenid` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `citizenid` (`citizenid`),
-  KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Dumping data for table QboxRp.apartments: ~0 rows (approximately)
-DELETE FROM `apartments`;
-
 -- Dumping structure for table QboxRp.bank_accounts_new
 DROP TABLE IF EXISTS `bank_accounts_new`;
 CREATE TABLE IF NOT EXISTS `bank_accounts_new` (
@@ -698,44 +682,6 @@ CREATE TABLE IF NOT EXISTS `player_warns` (
 -- Dumping data for table QboxRp.player_warns: ~0 rows (approximately)
 DELETE FROM `player_warns`;
 
--- Dumping structure for table QboxRp.properties
-DROP TABLE IF EXISTS `properties`;
-CREATE TABLE IF NOT EXISTS `properties` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `property_name` varchar(255) NOT NULL,
-  `coords` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`coords`)),
-  `price` int(11) NOT NULL DEFAULT 0,
-  `owner` varchar(255) DEFAULT NULL,
-  `interior` varchar(255) NOT NULL,
-  `keyholders` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT json_object() CHECK (json_valid(`keyholders`)),
-  `rent_interval` int(11) DEFAULT NULL,
-  `interact_options` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT json_object() CHECK (json_valid(`interact_options`)),
-  `stash_options` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT json_object() CHECK (json_valid(`stash_options`)),
-  `decorations` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT json_object() CHECK (json_valid(`decorations`)),
-  PRIMARY KEY (`id`),
-  KEY `owner` (`owner`),
-  CONSTRAINT `properties_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `players` (`citizenid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Dumping data for table QboxRp.properties: ~0 rows (approximately)
-DELETE FROM `properties`;
-
--- Dumping structure for table QboxRp.properties_decorations
-DROP TABLE IF EXISTS `properties_decorations`;
-CREATE TABLE IF NOT EXISTS `properties_decorations` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `property_id` int(11) NOT NULL,
-  `model` varchar(255) NOT NULL,
-  `coords` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`coords`)),
-  `rotation` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`rotation`)),
-  PRIMARY KEY (`id`),
-  KEY `property_id` (`property_id`),
-  CONSTRAINT `properties_decorations_ibfk_1` FOREIGN KEY (`property_id`) REFERENCES `properties` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Dumping data for table QboxRp.properties_decorations: ~0 rows (approximately)
-DELETE FROM `properties_decorations`;
-
 -- Dumping structure for table QboxRp.vehicle_financing
 DROP TABLE IF EXISTS `vehicle_financing`;
 CREATE TABLE IF NOT EXISTS `vehicle_financing` (
@@ -941,6 +887,48 @@ CREATE TABLE IF NOT EXISTS `mdt_bolos` (
     UNIQUE (`plate`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP table IF EXISTS `properties`;
+
+CREATE TABLE IF NOT EXISTS `properties` (
+    `property_id` int(11) NOT NULL AUTO_INCREMENT,
+    `owner_citizenid` varchar(50) NULL,
+    `street` VARCHAR(100) NULL,
+    `region` VARCHAR(100) NULL,
+    `description` LONGTEXT NULL,
+    `has_access` JSON NULL DEFAULT (JSON_ARRAY()), -- [citizenid1, citizenid2, ...]
+    `extra_imgs` JSON NULL DEFAULT (JSON_ARRAY()),
+    `furnitures` JSON NULL DEFAULT (JSON_ARRAY()),
+    `for_sale` boolean NOT NULL DEFAULT 1,
+    `price` int(11) NOT NULL DEFAULT 0,
+    `shell` varchar(50) NOT NULL,
+    `apartment` varchar(50) NULL DEFAULT NULL, -- if NULL then it's a house
+    `door_data` JSON NULL DEFAULT NULL, -- {"x": 0.0, "y": 0.0, "z": 0.0, "h": 0.0, "length": 0.0, "width": 0.0}
+    `garage_data` JSON NULL DEFAULT NULL, -- {"x": 0.0, "y": 0.0, "z": 0.0} -- NULL if no garage
+    PRIMARY KEY (`property_id`),
+    CONSTRAINT `FK_owner_citizenid` FOREIGN KEY (`owner_citizenid`) REFERENCES `players` (`citizenid`) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `UQ_owner_apartment` UNIQUE (`owner_citizenid`, `apartment`) -- A character can only own one apartment
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- -- Dumping structure for table QboxRp.properties
+-- DROP TABLE IF EXISTS `properties`;
+-- CREATE TABLE IF NOT EXISTS `properties` (
+--   `id` int(11) NOT NULL AUTO_INCREMENT,
+--   `property_name` varchar(255) NOT NULL,
+--   `coords` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`coords`)),
+--   `price` int(11) NOT NULL DEFAULT 0,
+--   `owner` varchar(255) DEFAULT NULL,
+--   `interior` varchar(255) NOT NULL,
+--   `keyholders` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT json_object() CHECK (json_valid(`keyholders`)),
+--   `rent_interval` int(11) DEFAULT NULL,
+--   `interact_options` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT json_object() CHECK (json_valid(`interact_options`)),
+--   `stash_options` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT json_object() CHECK (json_valid(`stash_options`)),
+--   `decorations` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT json_object() CHECK (json_valid(`decorations`)),
+--   PRIMARY KEY (`id`),
+--   KEY `owner` (`owner`),
+--   CONSTRAINT `properties_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `players` (`citizenid`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 INSERT INTO `mdt_offenses` (`label`, `type`, `category`, `description`, `time`, `fine`, `points`) VALUES
     -- OFFENSES AGAINST PERSONS
     ('Assault', 'misdemeanor', 'OFFENSES AGAINST PERSONS', 'Unlawfully attacking another person.', 30, 1000, 0),
@@ -1067,7 +1055,6 @@ INSERT INTO `mdt_offenses` (`label`, `type`, `category`, `description`, `time`, 
     ('Littering in Natural Reserves', 'misdemeanor', 'OFFENSES INVOLVING THE WELL-BEING OF WILDLIFE', 'Disposing of waste in a natural reserve, negatively affecting wildlife.', 30, 2000, 0);
 
 ALTER TABLE `players`
-ADD IF NOT EXISTS `last_logged_out` timestamp NULL DEFAULT NULL AFTER `last_updated`,
 MODIFY COLUMN `name` varchar(50) NOT NULL COLLATE utf8mb4_unicode_ci;
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

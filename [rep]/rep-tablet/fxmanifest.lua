@@ -18,9 +18,5 @@ files {
 	'Ui/sounds/*.ogg'
 }
 
-dependencies {
-    'ps-ui',
-}
-
 shared_script 'config.lua'
 lua54 'yes'

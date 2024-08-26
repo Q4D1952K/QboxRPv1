@@ -1279,6 +1279,17 @@ return {
         }
     },
 
+    ["vpn"] = {
+        label = "VPN",
+        weight = 1500,
+        stack = true,
+        close = true,
+        description = "",
+        client = {
+            image = "vpn.png",
+        }
+    },
+
     ["snikkel_candy"] = {
         label = "Snikkel",
         weight = 100,

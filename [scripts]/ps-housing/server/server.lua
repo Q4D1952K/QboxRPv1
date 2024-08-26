@@ -180,23 +180,23 @@ end)
 
 -- Creates apartment stash
 -- If player has an existing apartment from qb-apartments, it will transfer the items over to the new apartment stash
-RegisterNetEvent("ps-housing:server:createApartmentStash", function(citizenId, propertyId)
-    local stashId = string.format("property_%s", propertyId)
+-- RegisterNetEvent("ps-housing:server:createApartmentStash", function(citizenId, propertyId)
+--     local stashId = string.format("property_%s", propertyId)
 
-    -- Check for existing apartment and corresponding stash
-    local result = MySQL.query.await('SELECT items, stash FROM stashitems WHERE stash IN (SELECT name FROM apartments WHERE citizenid = ?)', { citizenId }) 
+--     -- Check for existing apartment and corresponding stash
+--     local result = MySQL.query.await('SELECT items, stash FROM stashitems WHERE stash IN (SELECT name FROM apartments WHERE citizenid = ?)', { citizenId }) 
    
-    local items = {}
-    if result[1] ~= nil then
-        items = json.decode(result[1].items)
+--     local items = {}
+--     if result[1] ~= nil then
+--         items = json.decode(result[1].items)
 
-        -- Delete the old apartment stash as it is no longer needed
-        MySQL.Async.execute('DELETE FROM stashitems WHERE stash = ?', { result[1].stash })
-    end
+--         -- Delete the old apartment stash as it is no longer needed
+--         MySQL.Async.execute('DELETE FROM stashitems WHERE stash = ?', { result[1].stash })
+--     end
 
-    -- This will create the stash for the apartment (without requiring player to have first opened and placed item in it)
-    TriggerEvent('qb-inventory:server:SaveStashItems', stashId, items)
-end)
+--     -- This will create the stash for the apartment (without requiring player to have first opened and placed item in it)
+--     TriggerEvent('qb-inventory:server:SaveStashItems', stashId, items)
+-- end)
 
 RegisterNetEvent('qb-apartments:returnBucket', function()
     local src = source

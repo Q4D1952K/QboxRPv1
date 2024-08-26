@@ -712,6 +712,22 @@ function Inventory.Save(inv)
     return db.saveStash(inv.owner, inv.dbId, data)
 end
 
+RegisterNetEvent('rep-weed:server:updateDry', function (id, slot, item)
+    inv = Inventory(id)
+    inv.weight -= Inventory(id).items[slot].weight
+    Inventory(id).items[slot] = item
+    inv.weight += Inventory(id).items[slot].weight
+    inv:syncSlotsWithClients({
+        {
+            item = item,
+            inventory = inv.id
+        }
+    }, true)
+    if inv.player and server.syncInventory then
+        server.syncInventory(inv)
+    end
+end)
+
 ---@alias RandomLoot { [1]: string, [2]: number, [3]: number, [4]?: number }
 
 ---@param loot RandomLoot[]
@@ -1885,8 +1901,39 @@ lib.callback.register('ox_inventory:swapItems', function(source, data)
 				end
 			end
 
-			fromInventory.items[data.fromSlot] = fromData
-			toInventory.items[data.toSlot] = toData
+			if fromData then
+                if fromData.name == 'wetbud' then
+                    if fromInventory.type == 'stash' then
+                        if fromInventory.type == 'stash' then
+                            if not fromData.metadata then
+                                fromData.metadata = {}
+                                fromData.metadata.time = os.time()
+                                fromData.metadata.dry = 10
+                            else
+                                if not fromData.metadata.time then fromData.metadata.time = os.time() end
+                                if not fromData.metadata.dry then fromData.metadata.dry = 10 end
+                            end
+                        end
+                    end
+                end
+            end
+            fromInventory.items[data.fromSlot] = fromData
+            if toData then
+                if toData.name == 'wetbud' then
+                    if toInventory.type == 'stash' then
+                        print('stash')
+                        if not toData.metadata then
+                            toData.metadata = {}
+                            toData.metadata.time = os.time()
+                            toData.metadata.dry = 10
+                        else
+                            if not toData.metadata.time then toData.metadata.time = os.time() end
+                            if not toData.metadata.dry then toData.metadata.dry = 10 end
+                        end
+                    end
+                end
+            end
+            toInventory.items[data.toSlot] = toData
 
 			if fromInventory.changed ~= nil then fromInventory.changed = true end
 			if toInventory.changed ~= nil then toInventory.changed = true end

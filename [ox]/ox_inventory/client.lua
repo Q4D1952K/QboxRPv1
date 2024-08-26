@@ -274,7 +274,7 @@ function client.openInventory(inv, data)
     currentInventory = right or defaultInventory
     left.items = PlayerData.inventory
     left.groups = PlayerData.groups
-
+	TriggerServerEvent('rep-weed:server:checkDry', left, currentInventory)
     SendNUIMessage({
         action = 'setupInventory',
         data = {
@@ -332,7 +332,7 @@ RegisterNetEvent('ox_inventory:forceOpenInventory', function(left, right)
 	currentInventory.ignoreSecurityChecks = true
 	left.items = PlayerData.inventory
 	left.groups = PlayerData.groups
-
+	TriggerServerEvent('rep-weed:server:checkDry', left, currentInventory)
 	SendNUIMessage({
 		action = 'setupInventory',
 		data = {

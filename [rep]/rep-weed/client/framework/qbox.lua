@@ -1,6 +1,5 @@
 if not Framework.QBox() then return end
 local QBX = exports.qbx_core
-Framework.PlayerJob = QBX.job.name
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     Framework.PlayerJob = QBX.job.name

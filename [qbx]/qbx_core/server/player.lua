@@ -453,6 +453,7 @@ function CheckPlayerData(source, playerData)
     playerData.metadata.hunger = playerData.metadata.hunger or 100
     playerData.metadata.thirst = playerData.metadata.thirst or 100
     playerData.metadata.stress = playerData.metadata.stress or 0
+    playerData.metadata.weed_rep = playerData.metadata.weed_rep or 0
     if playerState then
         playerState:set('hunger', playerData.metadata.hunger, true)
         playerState:set('thirst', playerData.metadata.thirst, true)

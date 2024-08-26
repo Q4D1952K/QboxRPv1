@@ -509,17 +509,6 @@ return {
         }
     },
 
-    ["joint"] = {
-        label = "Joint",
-        weight = 0,
-        stack = true,
-        close = true,
-        description = "Sidney would be very proud at you",
-        client = {
-            image = "joint.png",
-        }
-    },
-
     ["sandwich"] = {
         label = "Sandwich",
         weight = 200,
@@ -1442,5 +1431,98 @@ return {
         client = {
             image = "rolex.png",
         }
+    },
+    ['femaleseed'] = {
+        label = 'Female Marijuana Seed',
+        weight = 1000,
+        consume = 0,
+        server = {
+            export = 'rep-weed.femaleseed',
+        },
+        description = 'Surely I can just plant this, right?'
+    },
+    ['maleseed'] = {
+        label = 'Male Marijuana Seed',
+        weight = 1000,
+        consume = 0,
+        description = 'Add this to a planted female seed to make it pregnant? You are pretty sure this seed has a penis.'
+    },
+    ['wateringcan'] = {
+        label = 'Watering Can',
+        weight = 7000,
+        consume = 0,
+        server = {
+            export = 'rep-weed.wateringcan',
+        },
+        description = 'Fill this at a river or lake.'
+    },
+    ['fertilizer'] = {
+        label = 'Fertilizer',
+        weight = 1000,
+        consume = 0,
+        description = 'Cool'
+    },
+    ['wetbud'] = {
+        label = 'Wet Bud (100 grams)',
+        weight = 35000,
+        consume = 0,
+        description = 'THIS CANT BE DRIED WITHOUT STRAIN... Needs to be stored somewhere dry.'
+    },
+    ['driedbud'] = {
+        label = 'Dried Bud (100 Grams)',
+        weight = 10000,
+        consume = 0,
+        server = {
+            export = 'rep-weed.driedbud',
+        },
+        description = 'Pack It?'
+    },
+    ['weedpackage'] = {
+        label = 'Suspicious Package',
+        weight = 25000,
+        consume = 0,
+        server = {
+            export = 'rep-weed.weedpackage',
+        },
+        description = 'Marked for Police Seizure'
+    },
+    ['qualityscales'] = {
+        label = 'Quality Scales',
+        weight = 2000,
+        consume = 0,
+        description = 'Weighs Baggies with no loss'
+    },
+    ['smallscales'] = {
+        label = 'Small Scales',
+        weight = 1000,
+        description = 'Weighs Baggies with minimal loss'
+    },
+    ['joint'] = {
+        label = '2g Joint',
+        weight = 1000,
+        consume = 0,
+        server = {
+            export = 'rep-weed.joint',
+        },
+        description = 'Its a Joint, man.'
+    },
+    ['emptybaggies'] = {
+        label = 'Empty Baggies',
+        weight = 1000,
+        description = 'Empty Baggies'
+    },
+    ['weedbaggie'] = {
+        label = 'Baggie (7g)',
+        weight = 1000,
+        consume = 0,
+        server = {
+            export = 'rep-weed.weedbaggie',
+        },
+        description = 'Sold on the streets'
+    },
+    ['rollingpaper'] = {
+        label = 'Rolling Paper',
+        weight = 200,
+        description = 'Required to roll joints!'
     },
 }

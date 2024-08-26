@@ -324,9 +324,8 @@ end)
 
 RegisterNUICallback('REMOVE_DATASET', function(data, cb)
     if data.name == 'Plants' then
+        removeWeed(data.index)
         Plants[data.index] = nil
-    elseif data.name == 'Strain' then
-        MyStrains[data.index] = nil
     end
     cb('true')
 end)

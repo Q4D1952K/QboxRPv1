@@ -122,7 +122,7 @@ end
 function notificaTion(_data)
     lib.notify({
         description = _data[1],
-        position = 'top',
+        position = 'bottom',
         type = _data[2],
         duration = 5000
     })

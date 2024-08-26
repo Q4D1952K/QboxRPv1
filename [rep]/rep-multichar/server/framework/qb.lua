@@ -1,8 +1,8 @@
-if not Framework.QBCore() then return end
+if not Framework.QBCore() or Framework.QBox() then return end
 
 local QBCore = exports['qb-core']:GetCoreObject()
 
-function GiveStarterItems(src)
+local function GiveStarterItems(src)
     local Player = QBCore.Functions.GetPlayer(src)
     for k, v in pairs(QBCore.Shared.StarterItems) do
         local info = {}

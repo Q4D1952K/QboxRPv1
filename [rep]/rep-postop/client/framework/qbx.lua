@@ -1,5 +1,6 @@
 if not Framework.QBox() then return end
 
+local QBX = exports.qbx_core
 Framework.PlayerJob = QBX.job.name
 Framework.PlayerJobGrade = QBX.job.grade.level
 

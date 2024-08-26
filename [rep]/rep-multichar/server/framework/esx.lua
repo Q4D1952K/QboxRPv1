@@ -16,7 +16,7 @@ local StarterItems = {
 
 }
 
-function GiveStarterItems(src)
+local function GiveStarterItems(src)
     local Player = ESX.GetPlayerFromId(src)
     for k, v in pairs(StarterItems) do
         local info = {}

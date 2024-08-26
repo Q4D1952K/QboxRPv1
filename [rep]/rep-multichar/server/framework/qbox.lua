@@ -1,21 +1,21 @@
 if not Framework.QBox() then print('miss') return end
 local startWithApartments = true
 local  starterItems = {
-    -- { name = 'phone', amount = 1 },
-    -- { name = 'id_card', amount = 1, metadata = function(source)
-    --         assert(GetResourceState('qbx_idcard') == 'started', 'qbx_idcard resource not found. Required to give an id_card as a starting item')
-    --         return exports.qbx_idcard:GetMetaLicense(source, {'id_card'})
-    --     end
-    -- },
-    -- { name = 'driver_license', amount = 1, metadata = function(source)
-    --         assert(GetResourceState('qbx_idcard') == 'started', 'qbx_idcard resource not found. Required to give an id_card as a starting item')
-    --         return exports.qbx_idcard:GetMetaLicense(source, {'driver_license'})
-    --     end
-    -- },
+    { name = 'phone', amount = 1 },
+    { name = 'id_card', amount = 1, metadata = function(source)
+            assert(GetResourceState('qbx_idcard') == 'started', 'qbx_idcard resource not found. Required to give an id_card as a starting item')
+            return exports.qbx_idcard:GetMetaLicense(source, {'id_card'})
+        end
+    },
+    { name = 'driver_license', amount = 1, metadata = function(source)
+            assert(GetResourceState('qbx_idcard') == 'started', 'qbx_idcard resource not found. Required to give an id_card as a starting item')
+            return exports.qbx_idcard:GetMetaLicense(source, {'driver_license'})
+        end
+    },
 }
 
 
-function GiveStarterItems(src)
+local function GiveStarterItems(src)
     if GetResourceState('ox_inventory') == 'missing' then return end
     while not exports.ox_inventory:GetInventory(src) do
         Wait(100)
@@ -23,8 +23,10 @@ function GiveStarterItems(src)
     for i = 1, #starterItems do
         local item = starterItems[i]
         if item.metadata and type(item.metadata) == 'function' then
+            print(item.name)
             exports.ox_inventory:AddItem(src, item.name, item.amount, item.metadata(src))
         else
+            print(item.name)
             exports.ox_inventory:AddItem(src, item.name, item.amount, item.metadata)
         end
     end
@@ -69,7 +71,7 @@ RegisterNetEvent('rep-multichar:server:addNewCharacter', function(data, cid)
     local newData = {}
     newData.cid = cid
     newData.charinfo = data
-    local success = exports['qbx_core']:Login(src, nil, newData)
+    local success = exports.qbx_core:Login(src, nil, newData)
     if not success then return end
     GiveStarterItems(src)
     if GetResourceState('qbx_spawn') == 'missing' then

@@ -578,7 +578,6 @@ function CreatePlayer(playerData, Offline)
     self.Functions = {}
     self.PlayerData = playerData
     self.Offline = Offline
-
     function self.Functions.UpdatePlayerData()
         if self.Offline then return end -- Unsupported for Offline Players
         TriggerEvent('QBCore:Player:SetPlayerData', self.PlayerData)
@@ -712,6 +711,7 @@ function CreatePlayer(playerData, Offline)
         end
         local oxmoneytype = moneytype == 'cash' and 'money' or moneytype
         if accountsAsItems[oxmoneytype] then
+            print('set Money')
             exports.ox_inventory:SetItem(self.PlayerData.source, moneytype, self.PlayerData.money[moneytype])
         end
     end

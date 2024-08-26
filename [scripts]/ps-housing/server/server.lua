@@ -98,7 +98,7 @@ AddEventHandler("ps-housing:server:registerProperty", function (propertyData, pr
         Framework[Config.Notify].Notify(src, "Open radial menu for furniture menu and place down your stash and clothing locker.", "info")
 
         -- This will create the stash for the apartment and migrate the items from the old apartment stash if applicable
-        TriggerEvent("ps-housing:server:createApartmentStash", propertyData.owner, id)
+        -- TriggerEvent("ps-housing:server:createApartmentStash", propertyData.owner, id)
     end
 end)
 

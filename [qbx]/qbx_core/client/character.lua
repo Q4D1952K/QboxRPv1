@@ -499,15 +499,15 @@ RegisterNetEvent('qbx_core:client:playerLoggedOut', function()
     chooseCharacter()
 end)
 
-CreateThread(function()
-    while true do
-        Wait(0)
-        if NetworkIsSessionStarted() then
-            pcall(function() exports.spawnmanager:setAutoSpawn(false) end)
-            Wait(250)
-            randomPed()
-            chooseCharacter()
-            break
-        end
-    end
-end)
+-- CreateThread(function()
+--     while true do
+--         Wait(0)
+--         if NetworkIsSessionStarted() then
+--             pcall(function() exports.spawnmanager:setAutoSpawn(false) end)
+--             Wait(250)
+--             randomPed()
+--             chooseCharacter()
+--             break
+--         end
+--     end
+-- end)

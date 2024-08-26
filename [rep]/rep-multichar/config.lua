@@ -1,21 +1,21 @@
 Config = {}
 Config.TimeMovie = 77 -- Time Wait Movie / second
-Config.Movie = false   -- Use Intro Movie
+Config.Movie = true   -- Use Intro Movie
 Config.Apparence = 'illenium-appearance' --'illenium-appearance', 'skinchanger'
 Config.EntityCoords = {
     -- mafia_brofx
-    x = 421.25,
-    y = -1507.54,
-    z = 33.81,
+    -- x = 421.25,
+    -- y = -1507.54,
+    -- z = 33.81,
     -- -- villa
     -- x = -1667.65,
     -- y = 393.21,
     -- z = 89.08
 
     -- Island
-    -- x = 4868.82,
-    -- y = -4961.96,
-    -- z = 3.44
+    x = 4868.82,
+    y = -4961.96,
+    z = 3.44
 }
 
 Config.Environment = {
@@ -185,35 +185,35 @@ Config.Lang = {
 local _lang = GetConvar('repscripts:locale', 'en')
 Lang = Config.Lang[_lang]
 
-Config.CreateCharacterCoords = vector4(-1615.11, 393.12, 91.21, 157.39)
+Config.CreateCharacterCoords = vector4(-1615.11, 393.12, 91.21)
 
 Config.CamCoords = {
     -- mafia_brofx
-    [4] = {
-        point = vector4(408.07, -1492.27, 34.86, 253.75),
-        pos = vector3(407.83, -1492.2, 34.95),
+    -- [4] = {
+    --     point = vector4(408.07, -1492.27, 34.86, 253.75),
+    --     pos = vector3(407.83, -1492.2, 34.95),
 
-        camFov = 70.00
-    },
-    [1] = {
-        -- WORLD_HUMAN_STAND_MOBILE
-        point = vector4(411.06, -1492.31, 33.81, 204.54),
-        pos = vector3(412.65, -1492.9, 34.43),
-        camFov = 55.00
-    },
-    [2] = {
-        --     -- male-lean4
-        --     -- female- WORLD_HUMAN_PROSTITUTE_HIGH_CLASS
-        point = vector4(413.9, -1489.53, 33.81, 115.17),
-        pos = vector3(412.15, -1489.54, 33.34),
-        camFov = 50.00
-    },
-    [3] = {
-        -- lean
-        point = vector4(411.75, -1495.43, 33.81, 200.68),
-        pos = vector3(409.85, -1494.62, 34.35),
-        camFov = 50.00
-    }
+    --     camFov = 70.00
+    -- },
+    -- [1] = {
+    --     -- WORLD_HUMAN_STAND_MOBILE
+    --     point = vector4(411.06, -1492.31, 33.81, 204.54),
+    --     pos = vector3(412.65, -1492.9, 34.43),
+    --     camFov = 55.00
+    -- },
+    -- [2] = {
+    --     --     -- male-lean4
+    --     --     -- female- WORLD_HUMAN_PROSTITUTE_HIGH_CLASS
+    --     point = vector4(413.9, -1489.53, 33.81, 115.17),
+    --     pos = vector3(412.15, -1489.54, 33.34),
+    --     camFov = 50.00
+    -- },
+    -- [3] = {
+    --     -- lean
+    --     point = vector4(411.75, -1495.43, 33.81, 200.68),
+    --     pos = vector3(409.85, -1494.62, 34.35),
+    --     camFov = 50.00
+    -- }
 
     -- -- villa
     -- [4] = {
@@ -242,67 +242,67 @@ Config.CamCoords = {
     -- }
 
     -- Island
-    -- [4] = {
-    --     pos = vector3(4867.16, -4959.49, 4.17),
-    --     point = vector4(4864.98, -4951.31, 2.64, 15.53),
-    --     camFov = 80.00
-    -- },
-    -- [1] = {
-    --     point = vector4(4866.61, -4951.78, 2.88, 29.99),
-    --     pos = vector3(4869.88, -4951.29, 3.5),
-    --     camFov = 30.00
-    -- },
-    -- [2] = {
-    --     point = vector4(4863.24, -4948.36, 2.29, 186.29),
-    --     pos = vector3(4863.85, -4950.57, 2.5),
-    --     camFov = 80.00
-    -- },
-    -- [3] = {
-    --     point = vector4(4863.27, -4955.09, 2.6, 257.05),
-    --     pos = vector3(4863.38, -4959.95, 65.71),
-    --     camFov = 2.00
-    -- }
+    [4] = {
+        pos = vector3(4867.16, -4959.49, 4.17),
+        point = vector4(4864.98, -4951.31, 2.64, 15.53),
+        camFov = 80.00
+    },
+    [1] = {
+        point = vector4(4866.61, -4951.78, 2.88, 29.99),
+        pos = vector3(4869.88, -4951.29, 3.5),
+        camFov = 30.00
+    },
+    [2] = {
+        point = vector4(4863.24, -4948.36, 2.29, 186.29),
+        pos = vector3(4863.85, -4950.57, 2.5),
+        camFov = 80.00
+    },
+    [3] = {
+        point = vector4(4863.27, -4955.09, 2.6, 257.05),
+        pos = vector3(4863.38, -4959.95, 65.71),
+        camFov = 2.00
+    }
 }
 
 Config.Animation = {
     -- mafia_brofx
-    [1] = {
-        ['male'] = {
-            scenario = "WORLD_HUMAN_STAND_MOBILE"
-        },
-        ['female'] = {
-            scenario = "WORLD_HUMAN_STAND_MOBILE"
-        }
-    },
+    -- [1] = {
+    --     ['male'] = {
+    --         scenario = "WORLD_HUMAN_STAND_MOBILE"
+    --     },
+    --     ['female'] = {
+    --         scenario = "WORLD_HUMAN_STAND_MOBILE"
+    --     }
+    -- },
 
-    [2] = {
-        ['male'] = {
-            dict = "amb@world_human_leaning@male@wall@back@foot_up@idle_a",
-            anim = "idle_a",
-            --[[    prop = {
-                model = '',
-                bone = 0,
-                x = 0,
-                y = 0,
-                z = 0,
-                rx = 0,
-                ry= 0,
-                rz = 0,
-                rotationOrder = 0, -- default 0
-            },]] --
-        },
-        ['female'] = {
-            scenario = 'WORLD_HUMAN_PROSTITUTE_HIGH_CLASS'
-        }
-    },
-    [3] = {
-        ['male'] = {
-            scenario = 'WORLD_HUMAN_LEANING'
-        },
-        ['female'] = {
-            scenario = 'WORLD_HUMAN_LEANING'
-        }
-    }
+    -- [2] = {
+    --     ['male'] = {
+    --         dict = "amb@world_human_leaning@male@wall@back@foot_up@idle_a",
+    --         anim = "idle_a",
+    --         --[[    prop = {
+    --             model = '',
+    --             bone = 0,
+    --             x = 0,
+    --             y = 0,
+    --             z = 0,
+    --             rx = 0,
+    --             ry= 0,
+    --             rz = 0,
+    --             rotationOrder = 0, -- default 0
+    --         },]] --
+    --     },
+    --     ['female'] = {
+    --         scenario = 'WORLD_HUMAN_PROSTITUTE_HIGH_CLASS'
+    --     }
+    -- },
+    -- [3] = {
+    --     ['male'] = {
+    --         scenario = 'WORLD_HUMAN_LEANING'
+    --     },
+    --     ['female'] = {
+    --         scenario = 'WORLD_HUMAN_LEANING'
+    --     }
+    -- }
     -- -- Villa
     -- [1] = {
     --     ['male'] = {
@@ -336,34 +336,34 @@ Config.Animation = {
     --     }
     -- }
     -- Island
-    -- [1] = {
-    --     ['male'] = {
-    --         dict = "amb@world_human_drinking@beer@male@idle_a",
-    --         anim = "idle_a"
-    --     },
-    --     ['female'] = {
-    --         dict = "amb@world_human_drinking@beer@female@idle_a",
-    --         anim = "idle_a"
-    --     }
-    -- },
-    -- [2] = {
-    --     ['male'] = {
-    --         dict = "dancing_wave_part_one@anim",
-    --         anim = "slide_dance_2"
-    --     },
-    --     ['female'] = {
-    --         dict = "anim@amb@nightclub@lazlow@hi_podium@",
-    --         anim = "danceidle_hi_11_buttwiggle_b_laz"
-    --     }
-    -- },
-    -- [3] = {
-    --     ['male'] = {
-    --         scenario = 'WORLD_HUMAN_SUNBATHE_BACK'
-    --     },
-    --     ['female'] = {
-    --         scenario = 'WORLD_HUMAN_SUNBATHE_BACK'
-    --     }
-    -- }
+    [1] = {
+        ['male'] = {
+            dict = "amb@world_human_drinking@beer@male@idle_a",
+            anim = "idle_a"
+        },
+        ['female'] = {
+            dict = "amb@world_human_drinking@beer@female@idle_a",
+            anim = "idle_a"
+        }
+    },
+    [2] = {
+        ['male'] = {
+            dict = "dancing_wave_part_one@anim",
+            anim = "slide_dance_2"
+        },
+        ['female'] = {
+            dict = "anim@amb@nightclub@lazlow@hi_podium@",
+            anim = "danceidle_hi_11_buttwiggle_b_laz"
+        }
+    },
+    [3] = {
+        ['male'] = {
+            scenario = 'WORLD_HUMAN_SUNBATHE_BACK'
+        },
+        ['female'] = {
+            scenario = 'WORLD_HUMAN_SUNBATHE_BACK'
+        }
+    }
 }
 
 Config.Masks = {

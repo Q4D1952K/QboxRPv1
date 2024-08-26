@@ -68,6 +68,7 @@ Drag and drop...
 
 - [QBcore Framework](https://github.com/qbcore-framework)
 - [ESX](https://github.com/esx-framework)
+- [PS- Ui] https://github.com/Project-Sloth/ps-ui
 
 ---
 
@@ -79,8 +80,3 @@ Drag and drop...
 - [NoPixel Inspired Chop Shop. With Phone Progresses!](https://forum.cfx.re/t/nopixel-inspired-chop-shop-with-phone-progresses/4942864/5)
 - [[PAID] [QBCORE] Advanced Realistic Trunk Space](https://forum.cfx.re/t/paid-qbcore-advanced-realistic-trunk-space/4891965/2)
 - [[RELEASE] [PAID] QBCore Realistic Vehiclekey with Hacking Device](https://forum.cfx.re/t/release-paid-qbcore-realistic-vehiclekey-with-hacking-device/4891955/10)
-
-> ## **DMCA Protection Certificate**
->
-> https://i.imgur.com/DMh5xiO.png
-> https://www.dmca.com/r/597rj6e

@@ -1,5 +1,5 @@
 if not Framework.QBox() then print('miss') return end
-local startWithApartments = GetResourceState('qbx_apartments'):find('start')
+local startWithApartments = false
 local  starterItems = {
     { name = 'phone', amount = 1 },
     { name = 'id_card', amount = 1, metadata = function(source)
@@ -31,7 +31,6 @@ function GiveStarterItems(src)
 end
 
 lib.callback.register('rep-multichar:callback:getPlayerData', function(source)
-    print('cb')
     local src = source
     local identifier = Framework.GetIdentifier(src)
     local player = {}
@@ -91,18 +90,12 @@ end)
 RegisterNetEvent('rep-multichar:server:startGame', function(data)
     local src = source
     local cData = { citizenid = data }
-    local success =  exports['qbx_core']:Login(src, cData.citizenid)
+    local success =  exports.qbx_core:Login(src, cData.citizenid)
     if not success then return end
-    exports.qbx_core:SetPlayerBucket(source, 0)
-    logger.log({
-        source = 'qbx_core',
-        webhook = "",
-        event = 'Loaded',
-        color = 'green',
-        message = ('**%s** (%s |  ||%s|| | %s | %s | %s) loaded'):format(GetPlayerName(source), GetPlayerIdentifierByType(source, 'discord') or 'undefined', GetPlayerIdentifierByType(source, 'ip') or 'undefined', GetPlayerIdentifierByType(source, 'license2') or GetPlayerIdentifierByType(source, 'license') or 'undefined', cData.citizenid, source)
-    })
+    exports.qbx_core:SetPlayerBucket(src, 0)
+    lib.logger(src, 'Loaded', ('**%s** (%s |  ||%s|| | %s | %s | %s) loaded'):format(GetPlayerName(src), GetPlayerIdentifierByType(src, 'discord') or 'undefined', GetPlayerIdentifierByType(src, 'ip') or 'undefined', GetPlayerIdentifierByType(src, 'license2') or GetPlayerIdentifierByType(src, 'license') or 'undefined', cData.citizenid, src))
     print('^2[rep-multichar]^7 ' .. GetPlayerName(src) .. ' (Citizen ID: ' .. cData.citizenid .. ') logged in!')
-    if GetResourceState('qbx_apartments'):find('start') then
+    if startWithApartments then
         TriggerClientEvent('apartments:client:setupSpawnUI',src, cData.citizenid)
     elseif GetResourceState('qbx_spawn'):find('start') then
         TriggerClientEvent('qb-spawn:client:setupSpawns',src, cData.citizenid)

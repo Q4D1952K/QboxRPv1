@@ -18,17 +18,13 @@ end
 -- Queue code
 
 local config = require 'config.queue'
-local maxPlayers = GlobalState.MaxPlayers
+local maxPlayers = GetConvarInt('sv_maxclients', 48)
 
 -- destructure frequently used config options
 local waitingEmojis = config.waitingEmojis
 local waitingEmojiCount = #waitingEmojis
 local useAdaptiveCard = config.useAdaptiveCard
 local generateCard = config.generateCard
-
----@class SubQueue : SubQueueConfig
----@field positions table<string, number> Player license to sub-queue position map.
----@field size number
 
 ---@type SubQueue[]
 local subQueues = {}
@@ -41,11 +37,6 @@ for i = 1, #config.subQueues do
         size = 0,
     }
 end
-
----@class PlayerQueueData
----@field waitingSeconds number
----@field subQueueIndex number
----@field globalPos number
 
 ---Player license to queue data map.
 ---@type table<string, PlayerQueueData>

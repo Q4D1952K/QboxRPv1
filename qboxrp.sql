@@ -1066,6 +1066,9 @@ INSERT INTO `mdt_offenses` (`label`, `type`, `category`, `description`, `time`, 
     ('Use of Harmful Pesticides', 'misdemeanor', 'OFFENSES INVOLVING THE WELL-BEING OF WILDLIFE', 'Using pesticides that are known to cause significant harm to wildlife.', 90, 5000, 0),
     ('Littering in Natural Reserves', 'misdemeanor', 'OFFENSES INVOLVING THE WELL-BEING OF WILDLIFE', 'Disposing of waste in a natural reserve, negatively affecting wildlife.', 30, 2000, 0);
 
+ALTER TABLE `players`
+ADD IF NOT EXISTS `last_logged_out` timestamp NULL DEFAULT NULL AFTER `last_updated`,
+MODIFY COLUMN `name` varchar(50) NOT NULL COLLATE utf8mb4_unicode_ci;
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;

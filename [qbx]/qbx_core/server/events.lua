@@ -53,12 +53,6 @@ AddEventHandler('playerDropped', function(reason)
     QBX.Players[src] = nil
 end)
 
----@class Deferrals https://docs.fivem.net/docs/scripting-reference/events/list/playerConnecting/#deferring-connections
----@field defer fun() initialize deferrals for the current resource. Required to wait at least 1 tick before calling other deferrals methods.
----@field update fun(message: string) sends a progress message to the connecting client
----@field presentCard fun(card: unknown|string, cb?: fun(data: unknown, rawData: string)) send an adaptive card to the client https://learn.microsoft.com/en-us/adaptive-cards/authoring-cards/getting-started and capture user input via callback.
----@field done fun(failureReason?: string) finalizes deferrals. If failureReason is present, user will be refused connection and shown reason. Need to wait 1 tick after calling other deferral methods before calling done.
-
 -- Player Connecting
 ---@param name string
 ---@param _ any
@@ -200,4 +194,32 @@ RegisterNetEvent('QBCore:ToggleDuty', function()
         player.Functions.SetJobDuty(true)
         Notify(src, locale('info.on_duty'))
     end
+end)
+
+---Syncs the player's hunger, thirst, and stress levels with the statebags
+---@param bagName string
+---@param meta 'hunger' | 'thirst' | 'stress'
+---@param value number
+local function playerStateBagCheck(bagName, meta, value)
+    if not value then return end
+    local plySrc = GetPlayerFromStateBagName(bagName)
+    if not plySrc then return end
+    CreateThread(function()
+        local player = QBX.Players[plySrc]
+        if not player then return end
+        if player.PlayerData.metadata[meta] == value and Player(plySrc).state[meta] == value then return end
+        player.Functions.SetMetaData(meta, value)
+    end)
+end
+
+AddStateBagChangeHandler('hunger', nil, function(bagName, _, value)
+    playerStateBagCheck(bagName, 'hunger', value)
+end)
+
+AddStateBagChangeHandler('thirst', nil, function(bagName, _, value)
+    playerStateBagCheck(bagName, 'thirst', value)
+end)
+
+AddStateBagChangeHandler('stress', nil, function(bagName, _, value)
+    playerStateBagCheck(bagName, 'stress', value)
 end)

@@ -526,6 +526,7 @@ AddEventHandler('onResourceStop', function(r)
         for id, plant in pairs(Plants) do
             removeWeed(id)
         end
+        DeleteEntity(bossNpc)
     end
 end)
 

@@ -46,6 +46,21 @@ end
 exports("pNotifyGroup", pNotifyGroup)
 
 --Lấy Id của group bằng members
+local function getGroup(src)
+    if not Players[src] then return nil end
+    for group, _ in pairs(Groups) do
+        for _, v in pairs (Groups[group].members) do
+            if v.player == src then
+                return Groups[group]
+            end
+        end
+    end
+    return nil
+end
+
+exports("getGroup", getGroup)
+
+--Lấy Id của group bằng members
 local function getGroupByMembers(src)
     if not Players[src] then return nil end
     for group, _ in pairs(Groups) do

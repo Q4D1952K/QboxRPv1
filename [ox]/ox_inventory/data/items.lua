@@ -729,6 +729,38 @@ return {
         }
     },
 
+    ["deliverylist"] = {
+        label = "Delivery List",
+        weight = 0,
+        stack = false,
+        close = false,
+        description = "A long list of customers and deliveries..",
+    },
+
+    ["package"] = {
+        label = "Suspicious Package",
+        weight = 7500,
+        stack = false,
+        close = false,
+        description = "Package covered in tape and milk stickers. Marked for Police Seizure",
+    },
+
+    ["rolls"] = {
+        label = "Roll of Small Notes",
+        weight = 25,
+        stack = false,
+        close = false,
+        description = "Lots of low denominators - Indicates drug sales",
+    },
+
+    ["bands"] = {
+        label = "Band of Notes",
+        weight = 50,
+        stack = false,
+        close = false,
+        description = "Lots of low denominators - Indicates drug sales",
+    },
+
     ["thermite"] = {
         label = "Thermite",
         weight = 1000,

@@ -34,4 +34,16 @@ return {
             disableVehicle = true
         }
     },
+    package = {
+        model = `prop_idol_case_01`,
+        pos = vec3(-0.20, 0.43, 0.05),
+        rot = vec3(91.0, 0.0, -265.0),
+        bone = 24817,
+        disableKeys = {
+            disableSprint = true,
+            disableJump = true,
+            disableAttack = true,
+            disableVehicle = true
+        }
+    },
 }

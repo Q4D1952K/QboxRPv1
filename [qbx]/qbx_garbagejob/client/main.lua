@@ -184,7 +184,7 @@ local function DeliverAnim()
 end
 
 function TakeAnim()
-    if lib.progressBar({
+    if lib.progressCircle({
             duration = math.random(3000, 5000),
             label = locale('info.picking_bag'),
             useWhileDead = false,
@@ -267,7 +267,7 @@ local function runWorkLoop()
                     if IsControlJustPressed(0, 51) and hasBag then
                         StopAnimTask(cache.ped, 'missfbi4prepp1', '_bag_walk_garbage_man', 1.0)
                         DeliverAnim()
-                        if lib.progressBar({
+                        if lib.progressCircle({
                                 duration = 2000,
                                 label = locale('info.progressbar'),
                                 useWhileDead = false,

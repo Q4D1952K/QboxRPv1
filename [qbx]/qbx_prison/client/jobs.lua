@@ -56,7 +56,7 @@ end
 --- This will be triggered once you interact with a job location to perform your job at
 local function startWork()
     isWorking = true
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = math.random(5000, 10000),
         label = locale("info.working_electricity"),
         useWhileDead = false,

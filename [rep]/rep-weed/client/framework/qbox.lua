@@ -2,7 +2,6 @@ if not Framework.QBox() then return end
 local QBX = exports.qbx_core
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-    Framework.PlayerJob = QBX.job.name
     if Config.UseTalkNPC then
         talkNPC()
     else
@@ -195,6 +194,9 @@ function Framework.Notification(_msg, _type, _time)
     exports.qbx_core:Notify(_msg, _type, _time)
 end
 
+function Framework.checkJob(filters)
+    return QBX:HasGroup(filters)
+end
 
 function Framework.GetCurrentCop()
     return lib.callback.await('rep-weed:callback:GetCurrentCop', false)
@@ -204,12 +206,8 @@ function Framework.getIdentifier()
     return QBX.citizenid
 end
 
-RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
-    Framework.PlayerJob = job.name
-end)
-
 function Framework.Progressbar(_name, _label, _duration, _canCancel, _onFinish, _onCancel)
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = _duration,
         label = _label,
         position = 'bottom',

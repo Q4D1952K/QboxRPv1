@@ -54,7 +54,7 @@ local function wineProcessing()
     lib.callback('qbx_vineyard:server:grapeJuicesNeeded', false, function(result)
         if result then
             loadIngredients = true
-            if lib.progressBar({
+            if lib.progressCircle({
                 duration = 5000,
                 label = Lang:t('progress.process_wine'),
                 useWhileDead = false,
@@ -84,7 +84,7 @@ local function juiceProcessing()
     lib.callback('qbx_vineyard:server:grapesNeeded', false, function(result)
         if result then
             loadIngredients = true
-            if lib.progressBar({
+            if lib.progressCircle({
                 duration = 5000,
                 label = Lang:t('progress.process_juice'),
                 useWhileDead = false,

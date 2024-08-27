@@ -6,7 +6,7 @@ if not lib then return end
 exports('Keyboard', lib.inputDialog)
 
 exports('Progress', function(options, completed)
-	local success = lib.progressBar(options)
+	local success = lib.progressCircle(options)
 
 	if completed then
 		completed(not success)

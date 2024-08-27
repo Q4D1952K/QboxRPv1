@@ -43,7 +43,7 @@ local function startFirework(asset, entityCoords)
 end
 
 lib.callback.register('qbx_fireworks:client:useFirework', function(asset)
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = 3000,
         label = locale('placing'),
         useWhileDead = false,

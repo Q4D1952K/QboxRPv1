@@ -457,7 +457,7 @@ RegisterNetEvent('qbx_recyclejob:client:target:pickupPackage', function()
 
     scrapAnim()
 
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = config.pickupActionDuration,
         label = locale("text.picking_up_the_package"),
         useWhileDead = false,
@@ -489,7 +489,7 @@ RegisterNetEvent('qbx_recyclejob:client:target:dropPackage', function()
     scrapAnim()
     destroyDeliveryTarget()
 
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = config.deliveryActionDuration,
         label = locale("text.unpacking_the_package"),
         useWhileDead = false,

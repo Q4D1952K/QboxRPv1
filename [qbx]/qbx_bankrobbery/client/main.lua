@@ -68,7 +68,7 @@ function OpenLocker(bankId, lockerId) -- Globally Used
             local drillObject = CreateObject(`hei_prop_heist_drill`, pos.x, pos.y, pos.z, true, true, true)
             AttachEntityToEntity(drillObject, cache.ped, GetPedBoneIndex(cache.ped, 57005), 0.14, 0, -0.01, 90.0, -90.0, 180.0, true, true, false, true, 1, true)
             isDrilling = true
-            if lib.progressBar({
+            if lib.progressCircle({
                 duration = 20000,
                 label = locale('general.breaking_open_safe'),
                 canCancel = true,
@@ -113,7 +113,7 @@ function OpenLocker(bankId, lockerId) -- Globally Used
             local drillObject = CreateObject(`hei_prop_heist_drill`, pos.x, pos.y, pos.z, true, true, true)
             AttachEntityToEntity(drillObject, cache.ped, GetPedBoneIndex(cache.ped, 57005), 0.14, 0, -0.01, 90.0, -90.0, 180.0, true, true, false, true, 1, true)
             isDrilling = true
-            if lib.progressBar({
+            if lib.progressCircle({
                 duration = 20000,
                 label = locale('general.breaking_open_safe'),
                 canCancel = true,
@@ -155,7 +155,7 @@ function OpenLocker(bankId, lockerId) -- Globally Used
         end
     else
         isDrilling = true
-        if lib.progressBar({
+        if lib.progressCircle({
             duration = 20000,
             label = locale('general.breaking_open_safe'),
             canCancel = true,

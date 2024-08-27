@@ -116,7 +116,7 @@ RegisterNUICallback('success', function(_, cb)
     startLockpick(false)
     openingRegisterHandler(config.openRegisterTime)
     alertPolice()
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = config.openRegisterTime,
         label = locale('text.emptying_the_register'),
         useWhileDead = false,

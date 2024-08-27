@@ -1,5 +1,5 @@
 local isVisible = false
-local progressBar = Config.progressbar == 'circle' and lib.progressCircle or lib.progressBar
+local progressBar = Config.progressbar == 'circle' and lib.progressCircle or lib.progressCircle
 PlayerPed = cache.ped
 
 lib.onCache('ped', function(newPed)

@@ -24,7 +24,7 @@ RegisterNetEvent('qbx_truckrobbery:client:missionEnded', resetMission)
 local function lootTruck()
     local looting = true
 	CreateThread(function()
-        if lib.progressBar({
+        if lib.progressCircle({
             duration = config.lootDuration,
             label = locale('info.looting_truck'),
             useWhileDead = false,
@@ -79,7 +79,7 @@ local function plantBomb()
     TriggerEvent('ox_inventory:disarm', cache.playerId)
 	Wait(500)
 
-	if lib.progressBar({
+	if lib.progressCircle({
 		duration = 5000,
 		label = locale('info.planting_bomb'),
 		useWhileDead = false,

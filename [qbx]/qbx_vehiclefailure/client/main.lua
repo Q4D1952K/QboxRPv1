@@ -47,7 +47,7 @@ end
 ---@param veh number
 local function cleanVehicle(veh)
     TaskStartScenarioInPlace(cache.ped, 'WORLD_HUMAN_MAID_CLEAN', 0, true)
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = math.random(10000, 20000),
         label = locale('progress.clean_veh'),
         useWhileDead = false,
@@ -103,7 +103,7 @@ end
 ---@param timeUpperBound integer
 local function repairVehicle(veh, engineHealth, itemName, timeLowerBound, timeUpperBound)
     openVehicleDoors(veh)
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = math.random(timeLowerBound, timeUpperBound),
         label = locale('progress.repair_veh'),
         useWhileDead = false,

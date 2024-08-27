@@ -87,7 +87,7 @@ local function scrapVehicle()
     isBusy = true
     local scrapTime = math.random(28000, 37000)
     scrapVehicleAnim(scrapTime)
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = scrapTime,
         label = locale('text.scrap_vehicle'),
         useWhileDead = false,

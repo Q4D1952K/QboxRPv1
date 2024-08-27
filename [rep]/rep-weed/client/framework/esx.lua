@@ -1,18 +1,17 @@
 if not Framework.ESX() then return end
 
 local ESX = exports.es_extended:getSharedObject()
-if ESX.PlayerData then
-    if ESX.PlayerData.job then
-        Framework.PlayerJob = ESX.PlayerData.job.name
-    end
-    Framework.PlayerJobGrade = ESX.PlayerData.grade
+
+local function setPlayerData(playerData)
+    Framework.PlayerJob = playerData.job
+end
+
+if ESX.PlayerLoaded then
+    setPlayerData(ESX.PlayerData)
 end
 
 RegisterNetEvent("esx:playerLoaded", function(xPlayer, isNew)
-    if isNew then
-        return
-    end
-    Framework.PlayerJob = xPlayer.job.name
+    setPlayerData(xPlayer)
     if Config.UseTalkNPC then
         talkNPC()
     else
@@ -202,13 +201,36 @@ RegisterNetEvent("esx:playerLoaded", function(xPlayer, isNew)
 end)
 
 RegisterNetEvent('esx:setJob', function (job, lastJob)
-    Framework.PlayerJob = job.name
+    Framework.PlayerJob = job
 end)
 
-RegisterNetEvent('esx:setPlayerData', function(key, value)
-    if key ~= 'job' then return end
-    Framework.PlayerJob = value.name
-end)
+function Framework.checkJob(filters)
+    local _type = type(filters)
+    if _type == 'string' then
+        local data = Framework.PlayerJob
+        if filters == data?.name then
+            return true
+        end
+    elseif _type == 'table' then
+        local tabletype = table.type(filters)
+        if tabletype == 'hash' then
+            for name, grade in pairs(filters) do
+                local data = Framework.PlayerJob
+                if data?.name == name and grade <= data.grade then
+                    return true
+                end
+            end
+        elseif tabletype == 'array' then
+            for j = 1, #filters do
+                local name = filters[j]
+                local data = Framework.PlayerJob
+                if data?.name == name then
+                    return true
+                end
+            end
+        end
+    end
+end
 
 function Framework.GetCurrentCop()
     return lib.callback.await('rep-weed:callback:GetCurrentCop', false)
@@ -223,7 +245,7 @@ function Framework.getIdentifier()
 end
 
 function Framework.Progressbar(_name, _label, _duration, _canCancel, _onFinish, _onCancel)
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = _duration,
         label = _label,
         position = 'bottom',

@@ -149,7 +149,7 @@ end
 
 ---@param data ProgressProps
 ---@return boolean?
-function lib.progressBar(data)
+function lib.progressCircle(data)
     while progress ~= nil do Wait(0) end
 
     if not interruptProgress(data) then

@@ -25,7 +25,7 @@ RegisterNetEvent('qbx_bankrobbery:UseBankcardB', function()
     if CurrentCops < config.minPacificPolice then return exports.qbx_core:Notify(locale('error.minimum_police_required', {police = config.minPacificPolice}), 'error') end
     if pacificConfig.isOpened then return exports.qbx_core:Notify(locale('error.bank_already_open'), 'error') end
 
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = 7500,
         label = locale('general.validating_bankcard'),
         canCancel = true,
@@ -61,7 +61,7 @@ RegisterNetEvent('electronickit:UseElectronickit', function()
             if not pacificConfig.isOpened then
                 local hasItems = (exports.ox_inventory:Search('count', 'trojan_usb') > 0) and (exports.ox_inventory:Search('count', 'electronickit') > 0)
                 if hasItems then
-                    if lib.progressBar({
+                    if lib.progressCircle({
                         duration = 7500,
                         label = locale('general.connecting_hacking_device'),
                         canCancel = true,

@@ -74,7 +74,7 @@ functions.LoadModel = lib.requestModel
 ---@deprecated use lib.requestAnimSet from ox_lib
 functions.LoadAnimSet = lib.requestAnimSet
 
----@deprecated use lib.progressBar from ox_lib
+---@deprecated use lib.progressCircle from ox_lib
 ---@param label string
 ---@param duration integer ms
 ---@param useWhileDead boolean
@@ -85,7 +85,7 @@ functions.LoadAnimSet = lib.requestAnimSet
 ---@param onFinish fun()
 ---@param onCancel fun()
 function functions.Progressbar(_, label, duration, useWhileDead, canCancel, disableControls, animation, prop, _, onFinish, onCancel)
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = duration,
         label = label,
         useWhileDead = useWhileDead,

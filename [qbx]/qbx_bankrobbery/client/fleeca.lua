@@ -31,7 +31,7 @@ RegisterNetEvent('electronickit:UseElectronickit', function()
     local hasItems = (exports.ox_inventory:Search('count', 'trojan_usb') > 0) and (exports.ox_inventory:Search('count', 'electronickit') > 0)
     if not hasItems then return exports.qbx_core:Notify(locale('error.missing_item'), 'error') end
 
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = 7500,
         label = locale('general.connecting_hacking_device'),
         canCancel = true,

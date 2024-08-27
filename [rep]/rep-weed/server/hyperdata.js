@@ -14,8 +14,25 @@ on("rep-weed:register", function(name, data){
 
 on("rep-weed:sync", function(name, index, index2, data){
     if(index2 == 'add') {
+        if (!DATASET[name]) {
+            DATASET[name] = {}; // Khởi tạo nếu chưa tồn tại
+        }
+        if (!DATASET[name][index]) {
+            DATASET[name][index] = {}; // Khởi tạo nếu chưa tồn tại
+        }
         DATASET[name][index] = data
     } else {
+        if (!DATASET[name]) {
+            console.log(`DATASET[name] không tồn tại: ${name}`);
+            return; // Ngắt không cho chạy tiếp
+        }
+        if (!DATASET[name][index]) {
+            console.log(`DATASET[name][index] không tồn tại: ${name}[${index}]`);
+            return; // Ngắt không cho chạy tiếp
+        }
+        if (!DATASET[name][index][index2]) {
+            DATASET[name][index][index2] = {}; // Khởi tạo nếu cần
+        }
         DATASET[name][index][index2] = data
     }
     io.emit("SYNC_DATASET", {name, index, index2, data})

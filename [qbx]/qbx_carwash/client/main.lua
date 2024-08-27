@@ -3,7 +3,7 @@ local price = require 'config.shared'.price
 
 RegisterNetEvent('qbx_carwash:client:washCar', function()
     if source == '' then return end
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = 6000,
         label = locale('washing'),
         useWhileDead = false,

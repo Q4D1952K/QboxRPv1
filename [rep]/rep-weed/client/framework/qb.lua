@@ -2,17 +2,10 @@ if not Framework.QBCore() or Framework.QBox() then return end
 
 local QBCore = exports['qb-core']:GetCoreObject()
 local CurrentCops = 0
-
 local PlayerData = QBCore.Functions.GetPlayerData()
 
-if PlayerData.job then
-    Framework.PlayerJob = PlayerData.job.name
-    Framework.PlayerJobGrade = PlayerData.job.grade.level
-end
-
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-    local PlayerData = QBCore.Functions.GetPlayerData()
-    Framework.PlayerJob = PlayerData.job.name
+    PlayerData = QBCore.Functions.GetPlayerData()
     if Config.UseTalkNPC then
         talkNPC()
     else
@@ -201,9 +194,32 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     Config.TacoShop.points = lib.callback.await('rep-weed:callback:getConfigTaco', false)
 end)
 
-RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
-    Framework.PlayerJob = job.name
+RegisterNetEvent('QBCore:Player:SetPlayerData', function(value)
+    PlayerData = value
 end)
+
+function Framework.checkJob(filters)
+    local _type = type(filters)
+    if _type == 'string' then
+        return PlayerData.job.name == filters
+    elseif _type == 'table' then
+        local tabletype = table.type(filters)
+        if tabletype == 'hash' then
+            for name, grade in pairs(filters) do
+                if PlayerData.job.name == name and grade <= PlayerData.job.grade.level then
+                    return true
+                end
+            end
+        elseif tabletype == 'array' then
+            for j = 1, #filters do
+                local name = filters[j]
+                if PlayerData.job.name == name then
+                    return true
+                end
+            end
+        end
+    end
+end
 
 -- Police
 RegisterNetEvent('police:SetCopCount', function(amount) -- Update your police count
@@ -215,7 +231,7 @@ function Framework.GetCurrentCop()
 end
 
 function Framework.GetPlayerData()
-    return QBCore.Functions.GetPlayerData()
+    return PlayerData
 end
 
 function Framework.Notification(_msg, _type, _time)
@@ -223,7 +239,7 @@ function Framework.Notification(_msg, _type, _time)
 end
 
 function Framework.getIdentifier()
-    local PlayerData = QBCore.Functions.GetPlayerData()
+    local PlayerData = PlayerData
     return PlayerData.citizenid
 end
 
@@ -249,7 +265,7 @@ function Framework.Progressbar(_name, _label, _duration, _canCancel, _onFinish, 
     --         end
     --     end
     -- end)
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = _duration,
         label = _label,
         position = 'bottom',

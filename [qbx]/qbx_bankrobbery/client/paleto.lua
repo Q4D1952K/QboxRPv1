@@ -15,7 +15,7 @@ RegisterNetEvent('qbx_bankrobbery:UseBankcardA', function()
     if CurrentCops < config.minPaletoPolice then return exports.qbx_core:Notify(locale('error.minimum_police_required', {police = config.minPaletoPolice}), 'error') end
     if paletoConfig.isOpened then return exports.qbx_core:Notify(locale('error.bank_already_open'), 'error') end
 
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = 7500,
         label = locale('general.validating_bankcard'),
         canCancel = true,

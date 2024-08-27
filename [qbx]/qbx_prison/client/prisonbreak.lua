@@ -40,7 +40,7 @@ RegisterNetEvent('electronickit:UseElectronickit', function()
     end
 
     TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = math.random(5000, 10000),
         label = locale("info.connecting_device"),
         useWhileDead = false,

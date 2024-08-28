@@ -1,3 +1,10 @@
+# Item Clothes Installation
+
+Refer to INSTALL/tutorial.md for a detailed installation guide.
+
+**If you want custom ox_inventory redesign you can message me in discord: toshko**
+
+![image](preview.png)
 # ox_inventory
 
 A complete inventory system for FiveM, implementing items, weapons, shops, and more without any strict framework dependency.
@@ -23,6 +30,7 @@ We do not guarantee compatibility or support for third-party resources.
 - [esx](https://github.com/esx-framework/esx_core)
 - [qbox](https://github.com/Qbox-project/qbx_core)
 - [nd_core](https://github.com/ND-Framework/ND_Core)
+- [qb-core](https://github.com/qbcore-framework/qb-core) (LIMITED SUPPORT! Use qbox instead)
 
 ## ✨ Features
 

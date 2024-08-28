@@ -369,7 +369,7 @@ lib.callback.register('ox_inventory:useItem', function(source, itemName, slot, m
 				end
 			elseif not item.weapon and server.UseItem then
                 inventory.usingItem = data
-				-- This is used to call an external useItem function, i.e. ESX.UseItem
+				-- This is used to call an external useItem function, i.e. ESX.UseItem / QBCore.Functions.CanUseItem
 				-- If an error is being thrown on item use there is no internal solution. We previously kept a list
 				-- of usable items which led to issues when restarting resources (for obvious reasons), but config
 				-- developers complained the inventory broke their items. Safely invoking registered item callbacks
@@ -462,7 +462,7 @@ RegisterCommand('convertinventory', function(source, args)
 	local convert = arg and conversionScript[arg]
 
 	if not convert then
-		return warn('Invalid conversion argument. Valid options: esx, esxproperty')
+		return warn('Invalid conversion argument. Valid options: esx, esxproperty, qb, linden')
 	end
 
 	CreateThread(convert)
@@ -470,16 +470,16 @@ end, true)
 
 
 lib.addCommand({'additem', 'giveitem'}, {
-    help = 'Gives an item to a player with the given id',
-    params = {
-        { name = 'target', type = 'playerId', help = 'The player to receive the item' },
-        { name = 'item', type = 'string', help = 'The name of the item' },
-        { name = 'count', type = 'number', help = 'The amount of the item to give', optional = true },
-        { name = 'type', help = 'Sets the "type" metadata to the value', optional = true },
-    },
-    restricted = 'group.admin',
+	help = 'Gives an item to a player with the given id',
+	params = {
+		{ name = 'target', type = 'playerId', help = 'The player to receive the item' },
+		{ name = 'item', type = 'string', help = 'The name of the item' },
+		{ name = 'count', type = 'number', help = 'The amount of the item to give', optional = true },
+		{ name = 'type', help = 'Sets the "type" metadata to the value', optional = true },
+	},
+	restricted = 'group.admin',
 }, function(source, args)
-    local item = Items(args.item)
+	local item = Items(args.item)
 
     if item then
         local inventory = Inventory(args.target) --[[@as OxInventory]]
@@ -553,7 +553,7 @@ lib.addCommand({'additem', 'giveitem'}, {
         if server.loglevel > 0 then
             lib.logger(source.owner, 'admin', ('"%s" gave %sx %s to "%s"'):format(source.label, count, item.name, inventory.label))
         end
-    end
+	end
 end)
 
 lib.addCommand('removeitem', {

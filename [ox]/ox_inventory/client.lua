@@ -415,7 +415,7 @@ local function canUseItem(isAmmo)
 	and not lib.progressActive()
 	and not IsPedRagdoll(ped)
 	and not IsPedFalling(ped)
-    and not IsPedShooting(playerPed)
+	and not IsPedShooting(playerPed)
 end
 
 ---@param data table
@@ -518,8 +518,7 @@ local function useSlot(slot, noAnim)
 			if IsCinematicCamRendering() then SetCinematicModeActive(false) end
 
 			if currentWeapon then
-                if not currentWeapon.timer or currentWeapon.timer ~= 0 then return end
-
+				if not currentWeapon.timer or currentWeapon.timer ~= 0 then return end
 				local weaponSlot = currentWeapon.slot
 				currentWeapon = Weapon.Disarm(currentWeapon)
 

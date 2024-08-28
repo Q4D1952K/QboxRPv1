@@ -39,6 +39,8 @@ return {
         pos = vec3(-0.20, 0.43, 0.05),
         rot = vec3(91.0, 0.0, -265.0),
         bone = 24817,
+        dict = 'anim@heists@box_carry@',
+        anim = 'idle',
         disableKeys = {
             disableSprint = true,
             disableJump = true,

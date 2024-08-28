@@ -1,0 +1,1474 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+.clothingstore{
+    width: 100%;
+    height: 100%;
+    overflow: none;
+    background-color: red;
+    user-select: none;
+    display: block;
+    background-image:radial-gradient(circle, rgba(5, 5, 95, 0.031) 18%, rgba(247,178,15) 49%);
+}
+
+.clothingstoretext{
+    position: absolute;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 35px;
+    font-weight: 600;
+    color: white;
+    top: 20px;
+    left: 30px;
+}
+
+.clothingstoretextline{
+    position: absolute;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 35px;
+    font-weight: 600;
+    width: 180px;
+    border-bottom: 4px solid white;
+    top: 75px;
+    left: 27px;
+}
+
+.clothinglist{
+    position: absolute;
+    top: 125px;
+    left: 27px;
+    width: 400px;
+    height: 450px;
+    /* background-color: rgb(227, 223, 223); */
+    /* direction: rtl;
+    overflow:auto; */
+}
+
+   .clothinglistbutton{
+    display: block;
+    width: 90%;
+    height: 45px;
+    /* padding: 12px 70px; */
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-top: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(120, 116, 116, 0.537);
+   }
+
+   .clothinglistbutton:hover{
+    background-color: #F7B20F;
+    box-shadow: 0 0px 2px 0 #F7B20F, 0 2px 5px 0 #F7B20F;
+    border: 2px solid #aaa9a5;
+   }
+
+
+   .scroller {
+	/* margin-left: 30px; */
+	float: left;
+    width: 400px;
+    height: 450px;
+	/* background: #d71818; */
+	overflow-y: scroll;
+	/* margin-top: 137px; */
+   direction: rtl;
+
+}
+
+
+#style-4::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.179);
+	background-color: #F5F5F5 transparent !important;
+    border-radius: 10px;
+    width: 1px;
+    /* width: 5px; */
+}
+
+#style-4::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: rgba(255, 0, 0, 0);
+    border-radius: 10px;
+}
+
+#style-4::-webkit-scrollbar-thumb
+{
+	background-color: #bd8c00;
+	/* border: 2px solid #555555; */
+    border-radius: 10px;
+    /* width: 1px; */
+    height: 50px;
+}
+
+
+
+#style-4::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 10px; 
+   
+}
+
+#style-4::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 13px;
+    
+}
+
+
+.clothingstoreunderlist{
+    position: absolute;
+    bottom: 130px;
+    width: 200px;
+    left: -35px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 40px;
+    font-weight: 600;
+    color: white;
+    /* background-color: RED; */
+    transform: rotate(-90deg);
+}
+
+
+.clothinglowermenu{
+    position: absolute;
+    width: 350px;
+    height: 250px;
+    /* background-color: red; */
+    bottom: 40px;
+    left: 130px;
+
+}
+
+.clothinglowermenubutton{
+    display: inline-block;
+    padding: 15px 20px;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(101, 99, 99, 0.875);
+    margin: 6px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.clothinglowermenubutton:hover{
+    background-color: #F7B20F;
+  box-shadow: 0 0px 2px 0 #F7B20F, 0 2px 5px 0 #F7B20F;
+    border: 2px solid #aaa9a5;
+}
+
+.clothingmarketsystem::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 3px rgb(0, 0, 0);
+	background-color: #F5F5F5 transparent !important;
+    border-radius: 10px;
+    width: 1px;
+    /* width: 5px; */
+}
+
+.clothingmarketsystem::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: rgba(255, 0, 0, 0);
+    border-radius: 10px;
+}
+
+.clothingmarketsystem::-webkit-scrollbar-thumb
+{
+	background-color: #bd8c00;
+	/* border: 2px solid #555555; */
+    border-radius: 10px;
+    /* width: 1px; */
+    height: 50px;
+}
+
+
+
+.clothingmarketsystem::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 10px; 
+   
+}
+
+.clothingmarketsystem::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 13px;
+    
+}
+.clothingmarketsystembutton{
+    width: 80%;
+    height: 37px;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(101, 99, 99, 0.875);
+    border-radius: 5px;
+    float: left;
+    margin-bottom: 3px;
+    margin-left: 10px;
+    /* margin-right: 20px; */
+}
+
+
+.wtftrash{
+    /* position: absolute; */
+    /* position: absolute; */
+    display: inline-block;
+    padding: 7px 10px;
+    background-color: #9c2e28;
+    border: 2px solid rgba(168, 164, 164, 0.537);
+    margin-bottom: 5px;
+    margin-right:-47px;
+
+    border-radius: 5px;
+}
+.downmenubutton {
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(101, 99, 99, 0.875);
+    color: rgb(247, 241, 241);
+  padding: 5px 10px !important; /* Some padding */
+  font-size: 12px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  border-radius:5px;
+  margin-top: 15px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  display: block;
+  margin-right: 20px;
+  min-width: 25px;
+  margin-bottom: 5px;
+  
+  
+}
+
+.hover{
+    background-color: #F7B20F;
+  box-shadow: 0 0px 2px 0 #F7B20F, 0 2px 5px 0 #F7B20F;
+    border: 2px solid #aaa9a5;
+}
+
+.hover2{
+    background-color: #968e66 !important;
+    border: 1px solid #aaa9a5;
+  /* border: 1px solid #b1a112 !important;  */
+
+}
+/* Darker background on mouse-over */
+.downmenubutton:hover {
+  background-color: rgba(170, 170, 39, 0.712);
+  border: 2px solid #b1a112;
+  color: rgb(247, 241, 241);
+}
+
+.downmenubuttoncircle{
+  position: absolute;
+  display:inline;
+  padding: 2px 5px !important;
+  border-radius: 20px;
+  margin-top: -35px;
+  margin-left: 170px;
+  background-color: #e11c1ccc;
+  z-index: 2;
+  
+}
+
+
+.scroller2 {
+	/* margin-left: 30px; */
+	float: right;
+    width: 300px;
+    height: 90px;
+	/* background: #d71818; */
+	overflow-y: scroll;
+	/* margin-top: 137px; */
+   direction: rtl;
+
+}
+
+
+
+
+
+.clothingmarkettoplam{
+    position: absolute;
+    bottom: 10px;
+    left: 30px;
+    /* background-color: red; */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: white;
+}
+
+
+.clothingmarketwalletbuttons{
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+
+.clothingmarketcash{
+    display: inline-block;
+    margin-right: 5px;
+    padding: 2px 20px;
+    background-color: #F7B20F;
+  /* box-shadow: 0 0px 2px 0 #F7B20F, 0 2px 5px 0 #F7B20F; */
+  border-radius: 5px;
+}
+
+.clothingmarketcash:hover{
+    background-color: #e6da99;
+  /* box-shadow: 0 0px 2px 0 #e6da99, 0 6px 5px 0 #e6da99; */
+}
+
+
+.clothingmarketyourinfo{
+    position: absolute;
+    left: -120px;
+    bottom: 0px;
+    /* width: 200px; */
+    /* height: 100px; */
+    /* background-color: red; */
+}
+
+.clothingmarketbattan{
+    width: 105px;
+    height: 20px;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(101, 99, 99, 0.875);
+    margin-top: 5px;
+    border-radius: 5px;
+    color: #F7B20F;
+    display: block;
+}
+
+.clothingtopslider{
+    position: absolute;
+    left: 45%;
+    bottom: 100px;
+    width: 350px;
+    display: block;
+   
+}
+
+.clothingconfirm{
+    position: absolute;
+    left: 45%;
+    bottom: 15px;
+    width: 350px;
+    /* display: block; */
+   
+}
+
+.clothingtopslidertext{
+    position: absolute;
+    top: 12px;
+    left: -80px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: whitesmoke;
+}
+.clothingtopsliderconfirm{
+    display: inline-block;
+  vertical-align: middle;
+  font-size: 2em;
+  font-weight: 600;
+  font-family: Arial, sans-serif;
+  margin-left: 100px; 
+  background: #f7b10f96;
+  padding: 10px 40px;
+  border-radius: 10px;
+  color: rgba(59, 55, 55, 0.587);
+}
+
+.clothingtopsliderconfirm:hover{
+    background: #f7b10f;
+}
+
+input,
+output {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: Arial, sans-serif;
+  /* margin-left: 10px; */
+}
+
+output {
+  background: #f1d327ae;
+  padding: 5px 16px;
+  border-radius: 3px;
+  color: rgba(59, 55, 55, 0.587);
+}
+
+input[type=range] {
+  height: 25px;
+  -webkit-appearance: none;
+  margin: 10px 0;
+  width: 80%;
+  background-color: transparent;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: rgba(170, 170, 39, 0.712);
+  border-radius: 1px;
+  border: 0px solid #000000;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px #000000;
+  border: 1px solid rgba(170, 170, 39, 0.712);
+  height: 15px;
+  width: 15px;
+  border-radius: 3px;
+  background: #f2f2f0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -5px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #F7B20F;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: #F7B20F;
+  border-radius: 1px;
+  border: 0px solid #000000;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px #000000;
+  border: 1px solid rgba(170, 170, 39, 0.712);
+  height: 18px;
+  width: 18px;
+  border-radius: 25px;
+  background: rgba(170, 170, 39, 0.712);
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #F7B20F;
+  border: 0px solid #000000;
+  border-radius: 2px;
+  box-shadow: 0px 0px 0px #000000;
+}
+input[type=range]::-ms-fill-upper {
+  background: rgba(170, 170, 39, 0.712);
+  border: 0px solid #000000;
+  border-radius: 2px;
+  box-shadow: 0px 0px 0px #000000;
+}
+input[type=range]::-ms-thumb {
+  margin-top: 1px;
+  box-shadow: 0px 0px 0px #000000;
+  border: 1px solid rgba(170, 170, 39, 0.712);
+  height: 18px;
+  width: 18px;
+  border-radius: 25px;
+  background: rgba(170, 170, 39, 0.712);
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #F7B20F;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #F7B20F;
+}
+
+.clothingcamerainfo{
+    position: absolute;
+    width: 300px;
+    height: 80px;
+    /* background-color: red; */
+    right: 27px;
+    bottom: 300px;
+    display: block;
+}
+.tattoocamerainfo{
+    position: absolute;
+    width: 300px;
+    height: 80px;
+    /* background-color: red; */
+    right: 27px;
+    bottom: 300px;
+    display: block;
+}
+
+.charactercreatemenu{
+    width: 100%;
+    height: 100%;
+    overflow: none;
+    background-color: red;
+    user-select: none;
+    /* display: block; */
+    background-image:radial-gradient(circle, rgba(224,224,235,0.03125) 18%, rgba(247,178,15) 49%);
+}
+
+.leftmomanddad{
+    position: absolute;
+    top: 200px;
+    left: 27px;
+    width: 320px;
+    height: 500px;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(101, 99, 99, 0.875);
+}
+.leftmomanddadtopbuttons{
+    position: absolute;
+    width: 320px;
+    top: -55px;
+    display: flex;
+    text-align: center;
+}
+
+
+
+
+.mombutton{
+    display: inline-block; 
+    width:100%;  padding:15px; 
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 1px solid rgba(101, 99, 99, 0.875);
+     border-radius: 3px;
+     font-family: 'Montserrat', sans-serif; 
+     font-weight: 700;
+     color: whitesmoke;  
+     font-size: 14px;
+}
+.fatherbutton{
+    display: inline-block; 
+     text-align: center; 
+     width:100%;  
+     padding:15px;
+     margin-left: 2px;
+     background-color: rgba(36, 37, 36, 0.476);
+    border: 1px solid rgba(101, 99, 99, 0.875);
+       border-radius: 3px;
+       font-family: 'Montserrat', sans-serif; 
+       font-weight: 700;
+       color: whitesmoke;  
+       font-size: 14px;
+}
+
+.mombutton:hover{
+    background-color: #967866;
+    border: 1px solid #aaa9a5;
+}
+
+.fatherbutton:hover{
+    background-color: #968e66;
+    border: 1px solid #aaa9a5;
+}
+
+
+.fathermotherimagebutton{
+    display: inline-block;
+    margin-left: 11px;
+    margin-top: 15px;
+    width:80px;
+    height: 100px;
+    background-color: #000000;
+
+     border: 2px solid rgba(101, 99, 99, 0.875); 
+}
+
+.hover3{
+    /* background-color: #968e66 !important; */
+    border: 2px solid #968e66;  
+  /* border: 1px solid #b1a112 !important;  */
+
+}
+
+.fathermotherimagebutton:hover{
+    border: 2px solid rgba(170, 170, 39, 0.712);   
+}
+.fathermotherimagebutton img {
+    display: block;
+   width: 100%;
+  
+}
+
+
+
+#thisismomdad{
+    overflow: auto;
+    width: 330px;
+    height: 480px;
+}
+
+
+
+#thisismomdad::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 3px rgb(0, 0, 0);
+	background-color: #F5F5F5 transparent !important;
+    border-radius: 10px;
+    width: 1px;
+    /* width: 5px; */
+}
+
+#thisismomdad::-webkit-scrollbar
+{
+	width: 4px;
+	background-color: rgba(255, 0, 0, 0);
+    border-radius: 10px;
+}
+
+#thisismomdad::-webkit-scrollbar-thumb
+{
+	background-color: #b1a112;
+	/* border: 2px solid #555555; */
+    border-radius: 10px;
+    /* width: 1px; */
+    height: 50px;
+}
+
+
+
+#thisismomdad::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 10px; 
+   
+}
+
+#thisismomdad::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 13px;
+    
+}
+
+
+.createcharacterinfo{
+    position: absolute;
+    width: 300px;
+    height: 80px;
+    /* background-color: red; */
+    left: 27px;
+    bottom: 60px;
+
+}
+
+.propclear{
+    position: inline-block;
+    padding: 5px 5px;
+    background-color: #968e66;
+    border: 1px solid #aaa9a5;
+    /* border: 1px solid rgba(101, 99, 99, 0.875); */
+    font-family: 'Roboto Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.729);
+    border-radius: 2px;
+    text-align: center;
+    display: block;
+}
+
+.tspropclear{
+    position: inline-block;
+    padding: 5px 5px;
+    background-color: #968e66;
+    border: 1px solid #aaa9a5;
+    /* border: 1px solid rgba(101, 99, 99, 0.875); */
+    font-family: 'Roboto Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.729);
+    border-radius: 2px;
+    text-align: center;
+}
+
+.createclothingpropclear{
+    position: absolute;
+    /* width: 300px; */
+    /* height: 80px; */
+    background-color: red;
+    right: 45px;
+    bottom: 340px;
+    z-index: 4;
+
+}
+.tattoopropclear{
+    position: absolute;
+    /* width: 300px; */
+    /* height: 80px; */
+    background-color: red;
+    right: 45px;
+    bottom: 340px;
+    z-index: 4;
+
+}
+
+.createcharactercreatebuttons{
+    position: absolute;
+    width: 300px;
+    /* height: 80px; */
+    /* background-color: red; */
+    left: 42%;
+    bottom: 30px;
+}
+
+.createbutton{
+    position: inline-block;
+    padding: 15px 50px;
+    background-color: #968e66;
+    border: 1px solid #aaa9a5;
+    /* border: 1px solid rgba(101, 99, 99, 0.875); */
+    font-family: 'Roboto Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.729);
+    border-radius: 2px;
+    text-align: center;
+}
+
+
+
+.headcamera{
+    position: relative;
+    display: inline-block;
+    padding: 15px;
+    /* width: 50px;
+    height: 50px; */
+    background-color: #968e66;
+    border: 1px solid #aaa9a5;
+    /* border: 1px solid rgba(101, 99, 99, 0.875); */
+    text-align: center;
+}
+
+.headcamera:hover{
+    background-color: rgba(170, 170, 39, 0.712) !important;
+    border: 1px solid #aaa9a5;  
+}
+.resetbutton{
+    position: inline-block;
+    padding: 10px 5px;
+    background-color: rgba(179, 179, 169, 0.519);
+    /* border: 1px solid rgba(101, 99, 99, 0.875); */
+    font-family: 'Roboto Mono', monospace;
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.729);
+    border-radius: 2px;
+    text-align: center;
+}
+
+
+.rightcreatemenu{
+    position: absolute;
+    top: 110px;
+    right: 27px;
+    width: 320px;
+    height: 600px;
+
+}
+
+
+.leftcreatemenu{
+    position: absolute;
+    top: 110px;
+    left: 27px;
+    width: 320px;
+    height: 600px;
+
+}
+
+
+
+
+.rightcreatemenubutton{
+    display: flex;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 1px solid rgba(101, 99, 99, 0.875);
+   padding: 15px 20px;
+   border-radius: 2px;
+   margin-top: 5px;
+    text-align:center;
+}
+
+.rightcreatemenubutton2{
+    display: inline-block;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 1px solid rgba(101, 99, 99, 0.875);
+   padding: 30px 10px;
+   border-radius: 2px;
+   margin-top: 5px;
+    text-align:center;
+}
+
+.genderbuttons{
+    padding: 10px 15px;
+    display: inline-block;
+    background-color: #968e66;
+    border: 1px solid #aaa9a5;
+}
+.genderbuttons:hover{
+    background-color: rgba(170, 170, 39, 0.712) !important;
+    border: 1px solid #aaa9a5;
+}
+
+.hover4{
+    background-color: rgba(170, 170, 39, 0.712) !important;
+    border: 1px solid #aaa9a5;
+}
+
+.rightcreatemenubuttonfull{
+    width: 150px;
+    height: 40px;
+    /* background-color: red; */
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 600;
+    text-align: left;
+}
+
+.rightcreatemenubuttonfull2{
+    width: 280px;
+    /* height: 40px; */
+    /* background-color: red; */
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 600;
+    text-align: left;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.arrowpart{
+    /* display: inline-block; */
+    /* position: relative; */
+    display: flex;
+    width: 250px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    justify-content: space-between
+    /* background-color: red; */
+    /* margin-top: 10px; */
+}
+
+.quantity-arrow-minus{
+    display: block;
+    padding: 5px 15px;
+    background-color: #968e66;
+    border: 1px solid #aaa9a5;
+    color: white;
+}
+.quantity-arrow-plus{
+    display: block;
+    padding: 5px 15px;
+    background-color: #968e66;
+    border: 1px solid #aaa9a5;
+    color: white;
+}
+
+.update_cart{
+    display: block;
+    width: 70px;
+    text-align: center;
+    font-size: 13px;
+    background: rgba(183, 183, 148, 0.504);
+    outline: none;
+    border:none;
+    color: white;
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 600;
+}
+
+.topcreatemenuallbutton{
+    position: absolute;
+    top: 30px;
+    left: 35%;
+    width: 600px;
+    height: 100px;
+    display: inline-block;
+    /* background-color: #9c2e28; */
+    
+}
+
+
+.menusstyle{
+    display: inline-block;
+    width: 100%;
+}
+
+.num{
+    position: absolute;
+    right: 6px;
+    padding: 5px 10px;
+    background-color: rgba(255, 0, 0, 0);
+    color: rgba(245, 245, 245, 0.65);
+    font-size: 14px;
+}
+
+
+.color_palette {
+  border-radius: 2px;
+  border: 1px solid #a1a1a1;
+  margin: 4px;
+  width: 15px;
+  height: 15px;
+  display: inline-flex;
+}
+.color_palette:hover {
+  border: 1px solid #004792 !important;
+}
+.color_palette.active {
+  border: 1px solid #004792 !important;
+}
+
+
+.clothingnotify{
+  position: absolute;
+  left: 40%;
+  top: 35%;
+padding: 50px 160px;
+background-color: #968e66;
+    /* border: 1px solid #aaa9a5; */
+  /* box-shadow: 0 0px 2px 0 #F7B20F, 0 6px 20px 0 #F7B20F; */
+  display: block;
+}
+.clothingnotifytext{
+  text-align: center;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.644);
+  font-family: 'Ubuntu', sans-serif;
+}
+
+
+/* ---------------------------------------------- Tattoo part --------------------------------------------  */
+.tattoonotify{
+  position: absolute;
+  left: 40%;
+  top: 35%;
+padding: 50px 160px;
+background-color: #968e66;
+    /* border: 1px solid #aaa9a5; */
+  /* box-shadow: 0 0px 2px 0 #F7B20F, 0 6px 20px 0 #F7B20F; */
+  display: block;
+}
+.tattoonotifytext{
+  text-align: center;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.644);
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.tattoostore{
+    /* position: absolute; */
+    width: 100%;
+    height: 100%;
+    overflow: none;
+    background-color: red;
+    user-select: none;
+    display: block;
+    /* background-image:radial-gradient(circle, rgba(224,224,235,0.03125) 18%, rgba(247,178,15) 49%); */
+    /* left: 50px; */
+}
+   .tattoostoretext{
+    position: absolute;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 35px;
+    font-weight: 600;
+    color: white;
+    
+    top: 20px;
+    left: 30px;
+}
+
+   .tattoostoretextline{
+    position: absolute;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 35px;
+    font-weight: 600;
+    width: 180px;
+    border-bottom: 4px solid white;
+    top: 75px;
+    left: 27px;
+   }
+
+   .tattoolist{
+    position: absolute;
+    top: 125px;
+    left: 27px;
+    width: 400px;
+    height: 450px;
+    /* background-color: rgb(227, 223, 223); */
+    /* direction: rtl;
+    overflow:auto; */
+   }
+
+
+   .tattoolistbutton{
+    display: block;
+    width: 90%;
+    height: 45px;
+    /* padding: 12px 70px; */
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-top: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(120, 116, 116, 0.537);
+   }
+
+   .tattoolistbutton:hover{
+    background-color: #F7B20F;
+  box-shadow: 0 0px 2px 0 #F7B20F, 0 2px 5px 0 #F7B20F;
+    border: 2px solid #aaa9a5;
+   }
+
+
+
+   .tattoostoreunderlist{
+    position: absolute;
+    bottom: 130px;
+    width: 220px;
+    left: -35px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 40px;
+    font-weight: 600;
+    color: white;
+    /* background-color: RED; */
+    transform: rotate(-90deg);
+}
+
+
+.tattoolowermenu{
+    position: absolute;
+    /* display: inline-block; */
+    width: 250px;
+    height: 150px;
+    /* background-color: red; */
+    bottom: 144px;
+    left: 140px;
+
+
+}
+
+.tattoolowermenubutton{
+    display: inline-block;
+    padding: 15px 20px;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(101, 99, 99, 0.875);
+    margin: 6px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.tattoolowermenubutton:hover{
+    background-color: #F7B20F;
+  box-shadow: 0 0px 2px 0 #F7B20F, 0 2px 5px 0 #F7B20F;
+    border: 2px solid #aaa9a5;
+}
+
+
+
+.tattoomarketadd{
+    position: absolute;
+    right: 27px;
+    bottom: 80px;
+    width: 350px;
+    height: 200px;
+    border-radius: 5px;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(101, 99, 99, 0.875);
+}
+
+.tattoomarketsystem{
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    /* background-color: black; */
+    top: 20px;
+    left: 35px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.tattoomarketsystem::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 3px rgb(0, 0, 0);
+	background-color: #F5F5F5 transparent !important;
+    border-radius: 10px;
+    width: 1px;
+    /* width: 5px; */
+}
+
+.tattoomarketsystem::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: rgba(255, 0, 0, 0);
+    border-radius: 10px;
+}
+
+.tattoomarketsystem::-webkit-scrollbar-thumb
+{
+	background-color: #bd8c00;
+	/* border: 2px solid #555555; */
+    border-radius: 10px;
+    /* width: 1px; */
+    height: 50px;
+}
+
+
+
+.tattoomarketsystem::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 10px; 
+   
+}
+
+.tattoomarketsystem::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 13px;
+    
+}
+.tattoomarketsystembutton{
+    width: 80%;
+    height: 37px;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(101, 99, 99, 0.875);
+    border-radius: 5px;
+    float: left;
+    margin-bottom: 3px;
+    margin-left: 10px;
+    /* margin-right: 20px; */
+}
+
+
+.tattoowtftrash{
+    /* position: absolute; */
+    /* position: absolute; */
+    display: inline-block;
+    padding: 7px 10px;
+    background-color: #9c2e28;
+    border: 2px solid rgba(168, 164, 164, 0.537);
+    margin-bottom: 5px;
+    margin-right:-47px;
+
+    border-radius: 5px;
+}
+.tattoodownmenubutton {
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(101, 99, 99, 0.875);
+    color: rgb(247, 241, 241);
+  padding: 5px 10px !important; /* Some padding */
+  font-size: 12px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  border-radius:5px;
+  margin-top: 15px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  display: block;
+  margin-right: 20px;
+  min-width: 25px;
+  margin-bottom: 5px;
+  
+  
+}
+
+.tattoohover{
+    background-color: #F7B20F;
+  box-shadow: 0 0px 2px 0 #F7B20F, 0 2px 5px 0 #F7B20F;
+    border: 2px solid #aaa9a5;
+}
+
+.tattoohover2{
+    background-color: #968e66 !important;
+    border: 1px solid #aaa9a5;
+  /* border: 1px solid #b1a112 !important;  */
+
+}
+/* Darker background on mouse-over */
+.tattoodownmenubutton:hover {
+  background-color: rgba(170, 170, 39, 0.712);
+  border: 2px solid #b1a112;
+  color: rgb(247, 241, 241);
+}
+
+.hover5{
+    background-color: #F7B20F;
+  box-shadow: 0 0px 2px 0 #F7B20F, 0 2px 5px 0 #F7B20F;
+    border: 2px solid #aaa9a5;
+}
+
+.tattoodownmenubuttoncircle{
+  position: absolute;
+  display:inline;
+  padding: 2px 5px !important;
+  border-radius: 20px;
+  margin-top: -35px;
+  margin-left: 170px;
+  background-color: #e11c1ccc;
+  z-index: 2;
+  
+}
+
+
+
+
+.tattoomarkettoplam{
+    position: absolute;
+    bottom: 10px;
+    left: 30px;
+    /* background-color: red; */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: white;
+}
+
+
+.tattoomarketwalletbuttons{
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+
+.tattoomarketcash{
+    display: inline-block;
+    margin-right: 5px;
+    padding: 2px 20px;
+    background-color: #F7B20F;
+  /* box-shadow: 0 0px 2px 0 #F7B20F, 0 2px 5px 0 #F7B20F; */
+  border-radius: 5px;
+}
+
+.tattoomarketcash:hover{
+    background-color: #e6da99;
+  /* box-shadow: 0 0px 2px 0 #e6da99, 0 6px 5px 0 #e6da99; */
+}
+
+
+.tattoomarketyourinfo{
+    position: absolute;
+    left: -120px;
+    bottom: 0px;
+    /* width: 200px; */
+    /* height: 100px; */
+    /* background-color: red; */
+}
+
+.tattoomarketbattan{
+    width: 105px;
+    height: 20px;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 2px solid rgba(101, 99, 99, 0.875);
+    margin-top: 5px;
+    border-radius: 5px;
+    color: #F7B20F;
+}
+
+
+.tattootopslider{
+    position: absolute;
+    left: 45%;
+    top: 15px;
+    width: 350px;
+    display: block;
+   
+}
+
+
+.tattootopsliderconfirm{
+    display: inline-block;
+  vertical-align: middle;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: Arial, sans-serif;
+  margin-left: 120px; 
+  background: #f1d327ae;
+  padding: 5px 16px;
+  border-radius: 3px;
+  color: rgba(59, 55, 55, 0.587);
+}
+
+.tattootopsliderconfirm:hover{
+    background: #786a1dae;
+}
+
+.wardrobemain{
+    position: absolute;
+    top: 200px;
+    left: 27px;
+    width: 320px;
+    height: 400px;
+    background-color: rgba(36, 37, 36, 0.476);
+    overflow: hidden; 
+    display: block;
+    overflow-y: auto; 
+}
+.wardrobe{
+    display: flex;
+    background-color: rgba(36, 37, 36, 0.476);
+    border: 1px solid rgba(101, 99, 99, 0.875);
+   width: 90%;
+   height: 30px;
+   border-radius: 2px;
+   margin: 25px 15px;
+    text-align:center;
+  
+}
+.wardrobename{
+    float: left;
+    width: 150px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.613);
+    font-size: 13px;
+    /* text-transform: uppercase; */
+    margin: 6px;
+    /* background-color: red; */
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+}
+
+.wardrobebutton1{
+    float: right;
+    width: 50px;
+    height: 17px;
+    /* padding: 7px 10px; */
+    background-color: rgba(170, 170, 39, 0.712);
+    border: 1px solid #b1a112;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.wardrobebutton2{
+    /* float: right; */
+    width: 50px;
+    height: 17px;
+    /* padding: 7px 10px; */
+    background-color: rgba(170, 46, 39, 0.712);
+    border: 1px solid rgba(170, 46, 39, 0.712);
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    margin: 5px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+.wardrobetop{
+    /* position: absolute; */
+    position: relative;
+    text-align: center;
+    margin-top: 5px;
+    font-family: Arial, sans-serif;
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    white-space: nowrap;
+    z-index: 10;
+ 
+}
+
+
+#style-12::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.179);
+	background-color: #F5F5F5 transparent !important;
+    border-radius: 10px;
+    width: 1px;
+    /* width: 5px; */
+}
+
+#style-12::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: rgba(255, 0, 0, 0);
+    border-radius: 10px;
+}
+
+#style-12::-webkit-scrollbar-thumb
+{
+    background-color: rgba(170, 170, 39, 0.712);
+	/* border: 2px solid #555555; */
+    border-radius: 10px;
+    /* width: 1px; */
+    height: 50px;
+}
+
+
+
+#style-12::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 10px; 
+   
+}
+
+#style-12::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 13px;
+    
+}
+
+.wardrobecreate{
+    position: absolute;
+    bottom: 380px;
+    left: 27px;
+    width: 320px;
+    padding: 10px 0px;
+    background-color: rgba(170, 170, 39, 0.712);
+    border: 1px solid #b1a112;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+  
+}
+
+.wardrobeinput{
+    position: absolute;
+    bottom: 430px;
+    left: 27px;
+    width: 310px;
+    /* padding: 10px 0px; */
+    /* background-color: rgba(170, 170, 39, 0.712); */
+    /* border: 1px solid #b1a112; */
+    /* text-align: center; */
+    font-family: Arial, sans-serif;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+  
+}

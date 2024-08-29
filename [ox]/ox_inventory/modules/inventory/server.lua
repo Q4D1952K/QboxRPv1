@@ -161,6 +161,7 @@ local function loadInventoryData(data, player, ignoreSecurityChecks)
 			end
 
 			local model, class = lib.callback.await('ox_inventory:getVehicleData', source, data.netid)
+			local weight = lib.callback.await('rep-scripts/callback/getTrunkInfo', source, model, class) -- Vehicles[data.type].models[model] or Vehicles[data.type][class]
 			local storage = Vehicles[data.type].models[model] or Vehicles[data.type][class]
             local dbId
 
@@ -170,7 +171,7 @@ local function loadInventoryData(data, player, ignoreSecurityChecks)
                 dbId = data.id:sub(6)
             end
 
-            inventory = Inventory.Create(data.id, plate, data.type, storage[1], 0, storage[2], false, nil, nil, dbId)
+            inventory = Inventory.Create(data.id, plate, data.type, weight, 0, storage[2], false, nil, nil, dbId)
 		end
 	elseif data.type == 'policeevidence' then
 		inventory = Inventory.Create(data.id, locale('police_evidence'), data.type, 100, 0, 100000, false)

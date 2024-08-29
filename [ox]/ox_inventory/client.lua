@@ -820,7 +820,7 @@ local function registerCommands()
 
 			if entityType ~= 2 then return end
 
-			Inventory.OpenTrunk(entity)
+			-- Inventory.OpenTrunk(entity)
 		end
 	})
 
@@ -1885,4 +1885,103 @@ lib.callback.register('ox_inventory:getVehicleData', function(netid)
 	if entity then
 		return GetEntityModel(entity), GetVehicleClass(entity)
 	end
+end)
+
+local VehicleWeightModifiers = {
+    [0] = {BaseWeight = 65,MaxWeight = 75000},  -- Compacts
+    [1] = {BaseWeight = 125,MaxWeight = 150000}, --Sedans
+    [2]= {BaseWeight = 100,MaxWeight = 250000}, --SUVs
+    [3]= {BaseWeight = 40,MaxWeight = 125000}, --Coupes
+    [4]= {BaseWeight = 40,MaxWeight = 125000}, --Muscle
+    [5] = {BaseWeight = 40,MaxWeight = 100000}, -- Sports Classics
+    [6] = {BaseWeight = 40,MaxWeight = 100000}, --Sports
+    [7] = {BaseWeight = 25,MaxWeight = 100000}, --Super
+    [8] = {BaseWeight = 0,MaxWeight = 0}, --Motorcycles
+    [9] = {BaseWeight = 100,MaxWeight = 300000}, --Off-road
+    [10] = {BaseWeight = 150,MaxWeight = 500000}, --Industrial
+    [11] = {BaseWeight = 125,MaxWeight = 500000}, --Utility
+    [12] = {BaseWeight = 250,MaxWeight = 400000}, --van
+    [13] = {BaseWeight = 0,MaxWeight = 0}, --Cycles
+    [14] = {BaseWeight = 50,MaxWeight = 150000}, --boats
+    [15] = {BaseWeight = 50,MaxWeight = 200000}, --Helicopters
+    [16] = {BaseWeight = 50,MaxWeight = 2000000}, --Planes
+    [17] = {BaseWeight = 50,MaxWeight = 600000}, -- Service
+    [18] = {BaseWeight = 100,MaxWeight = 250000}, --Emergency
+    [19] = {BaseWeight = 100,MaxWeight = 250000}, --Military
+    [20] = {BaseWeight = 125,MaxWeight = 500000}, -- Commerical
+    [21] = {BaseWeight = 100,MaxWeight = 250000}--Trains
+}
+
+local VehicleWeightOverrides = { 
+    ['flatbed'] = 100000,
+    ['sandking'] = 750000,
+	['sandking2'] = 750000,
+	["rebel"] = 400000,
+	["rebel2"] = 400000,
+	["yosemite"] = 400000,
+	["yosemite3"] = 400000,
+	["slamvan"] = 400000,
+	["slamvan2"] = 400000,
+	["slamvan3"] = 400000,
+	["caracara"] = 750000,
+	["caracara2"] = 750000,
+	["everon"] = 600000,
+	["bodhi2"] = 600000,
+	["f150"] = 700000,
+	["riata"] = 600000,
+	["dubsta3"] = 600000,
+	["kamacho"] = 600000,
+	["rr14"] = 600000,
+	["22g63"] = 600000,
+	["bagger"] = 350000,
+	["brioso2"] = 500000,
+	["sultanrs"] = 100000,
+  --[[  
+
+    "dukes2": 125.0, // meth dropoffs adjustment
+    "mustang19": 150.0,
+    "brioso2": 500.0,
+    "sultanrs": 100.0,
+    //Emeregency Vehicles
+    "npolvic": 700.0,
+    "npolexp": 1000.0,
+    "npolchar": 700.0,
+    "npolstang": 250.0,
+    "npolvette": 250.0,
+    "npolchal": 250.0,
+    "npolmm": 300.0,
+    "npolblazer": 300.0,
+    "npolretinue": 600.0,
+    "bcat": 1500.0, ]]
+}
+
+local function CheckWeight(vehModel, vehicleClass)
+    local maxweight = 0
+    for k,v in pairs(VehicleWeightOverrides) do
+        if vehModel == GetHashKey(k) then
+            maxweight = v
+            return maxweight
+        end
+    end
+    local min, max = GetModelDimensions(vehModel)
+    local vehVolume = ((max.x - min.x) * (max.y - min.y) * (max.z - min.z) * 5)
+    local seats = GetVehicleModelNumberOfSeats(vehModel)
+    local classBaseWeight = VehicleWeightModifiers[vehicleClass].BaseWeight
+    if classBaseWeight == 0 then
+        maxweight = 0
+        return maxweight
+    end
+    local classMaxWeight = VehicleWeightModifiers[vehicleClass].MaxWeight
+    local vehSeatMod = (classBaseWeight * seats)
+    local vehWeightCalc = ((classBaseWeight * vehVolume - vehSeatMod) / 2);
+    local vehWeightCalc = math.ceil(vehWeightCalc / 500) * 10000
+    if vehWeightCalc > classMaxWeight then
+        vehWeightCalc = classMaxWeight
+    end
+    return vehWeightCalc
+end
+
+lib.callback.register('rep-scripts/callback/getTrunkInfo', function(model, class)
+	local weight = CheckWeight(model, class)
+	return weight or 0
 end)

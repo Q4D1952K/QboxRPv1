@@ -113,7 +113,6 @@ lib.callback.register('ms:GetClothingListProp', function()
     return ClotheListProps
 end)
 
-
 RegisterNUICallback("appearance_change_component", function(component, cb)
     client.setPedComponent(cache.ped, component)
     AddToListComponent(component)

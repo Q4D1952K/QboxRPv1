@@ -55,9 +55,9 @@ Config.NewCharacterSections = {
     HeadBlend = true,
     FaceFeatures = true,
     HeadOverlays = true,
-    Components = true,
-    Props = true,
-    Tattoos = true
+    Components = false,
+    Props = false,
+    Tattoos = false
 }
 
 Config.GenderBasedOnPed = true
@@ -85,7 +85,7 @@ Config.DisableComponents = {
     Bags = false,
     Shoes = false,
     ScarfAndChains = false,
-    BodyArmor = false,
+    BodyArmor = true,
     Shirts = false,
     Decals = false,
     Jackets = false

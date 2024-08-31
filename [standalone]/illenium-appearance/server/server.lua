@@ -173,20 +173,52 @@ end)
 
 RegisterServerEvent("clothes:GiveFirstClothing", function(Props, Comps)
     local src = source
+    local ped = GetPlayerPed(src)
+    local hash = GetEntityModel(ped)
+    local gender = 'female'
+    if hash == 1885233650 then
+        gender = 'male'
+    end
     for k, v in pairs(Comps) do
         if tonumber(v[2]) ~= -99 and tonumber(v[1]) ~= -99 then
-            exports.ox_inventory:AddItem(src, k, 1, { texture = tonumber(v[2]), drawable = tonumber(v[1]) })
+            local _index, dataItems = exports['rep-base']:checkClothes(src, k, tonumber(v[1]), tonumber(v[2]))
+            if _index then
+                exports.ox_inventory:AddItem(src, 'clothing', 1, {
+                    gender = gender,
+                    idCloth = _index,
+                    typeCloth = k,
+                    texture = tonumber(v[2]),
+                    label = dataItems.label,
+                    image = dataItems.image,
+                })
+            end
         end
     end
     for k, v in pairs(Props) do
         if tonumber(v[2]) ~= -99 and tonumber(v[1]) ~= -99 then
-            exports.ox_inventory:AddItem(src, k, 1, { texture = tonumber(v[2]), drawable = tonumber(v[1]) })
+            local _index, dataItems = exports['rep-base']:checkClothes(src, k, tonumber(v[1]), tonumber(v[2]))
+            if _index then
+                exports.ox_inventory:AddItem(src, 'clothing', 1, {
+                    gender = gender,
+                    idCloth = _index,
+                    typeCloth = k,
+                    texture = tonumber(v[2]),
+                    label = dataItems.label,
+                    image = dataItems.image,
+                })
+            end
         end
     end
 end)
 
 RegisterServerEvent("illenium-appearance:server:chargeCustomer", function(shopType)
     local src = source
+    local ped = GetPlayerPed(src)
+    local hash = GetEntityModel(ped)
+    local gender = 'female'
+    if hash == 1885233650 then
+        gender = 'male'
+    end
     local money = getMoneyForShop(shopType)
     if Framework.RemoveMoney(src, "cash", money) then
         lib.notify(src, {
@@ -200,12 +232,32 @@ RegisterServerEvent("illenium-appearance:server:chargeCustomer", function(shopTy
             local tableClothingComp = lib.callback.await('ms:GetClothingListComp', src)
             for k, v in pairs(tableClothingComp) do
                 if tonumber(v[2]) ~= -99 and tonumber(v[1]) ~= -99 then
-                    exports.ox_inventory:AddItem(src, k, 1, { texture = tonumber(v[2]), drawable = tonumber(v[1]) })
+                    local _index, dataItems = exports['rep-base']:checkClothes(src, k, tonumber(v[1]), tonumber(v[2]))
+                    if _index then
+                        exports.ox_inventory:AddItem(src, 'clothing', 1, {
+                            gender = gender,
+                            idCloth = _index,
+                            typeCloth = k,
+                            texture = tonumber(v[2]),
+                            label = dataItems.label,
+                            image = dataItems.image,
+                        })
+                    end
                 end
             end
             for k, v in pairs(tableClothingProp) do
                 if tonumber(v[2]) ~= -99 and tonumber(v[1]) ~= -99 then
-                    exports.ox_inventory:AddItem(src, k, 1, { texture = tonumber(v[2]), drawable = tonumber(v[1]) })
+                    local _index, dataItems = exports['rep-base']:checkClothes(src, k, tonumber(v[1]), tonumber(v[2]))
+                    if _index then
+                        exports.ox_inventory:AddItem(src, 'clothing', 1, {
+                            gender = gender,
+                            idCloth = _index,
+                            typeCloth = k,
+                            texture = tonumber(v[2]),
+                            label = dataItems.label,
+                            image = dataItems.image,
+                        })
+                    end
                 end
             end
         end

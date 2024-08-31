@@ -185,8 +185,7 @@ function InitializeCharacter(gender, onSubmit, onCancel)
                 end
             end
             TriggerServerEvent("clothes:GiveFirstClothing", ClotheListPropsStart, ClotheListComponentsStart)
-            exports['ms-itemclothes']:clearSkin()
-
+            exports['rep-base']:clearSkin()
             if onSubmit then
                 onSubmit()
             end
@@ -801,7 +800,7 @@ RegisterNetEvent("illenium-appearance:client:reloadSkin", function(bypassChecks)
     reloadSkinTimer = GetGameTimer()
     BackupPlayerStats()
 
-    -- exports['ms-itemclothes']:canChangeClothes(true)
+    -- exports['rep-base']:canChangeClothes(true)
 
     lib.callback("illenium-appearance:server:getAppearance", false, function(appearance)
         if not appearance then

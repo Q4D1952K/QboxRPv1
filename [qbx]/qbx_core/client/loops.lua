@@ -10,7 +10,7 @@ CreateThread(function()
             if ((playerState.hunger or 0) <= 0 or (playerState.thirst or 0) <= 0) and not playerState.isDead then
                 local currentHealth = GetEntityHealth(cache.ped)
                 local decreaseThreshold = math.random(5, 10)
-                SetEntityHealth(cache.ped, currentHealth - decreaseThreshold)
+                -- SetEntityHealth(cache.ped, currentHealth - decreaseThreshold)
             end
         end
     end

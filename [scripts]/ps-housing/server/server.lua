@@ -75,7 +75,7 @@ AddEventHandler("ps-housing:server:registerProperty", function (propertyData, pr
     TriggerClientEvent("ps-housing:client:addProperty", -1, propertyData)
 
     if propertyData.apartment and not preventEnter then
-        local player = exports.qbx_core:GetPlayerByCitizenId(propertyData.owne)
+        local player = exports.qbx_core:GetPlayerByCitizenId(propertyData.owner)
         local src = player.PlayerData.source
 
         -- local property = Property.Get(id)

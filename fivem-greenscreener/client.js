@@ -56,7 +56,7 @@ async function takeScreenshotForComponent(pedType, type, component, drawable, te
 
 	SetEntityRotation(ped, camInfo.rotation.x, camInfo.rotation.y, camInfo.rotation.z, 2, false);
 
-	emitNet('takeScreenshot', `${pedType}_${_type}_${drawable}${texture ? `_${texture}`: ''}`, 'clothing');
+	emitNet('takeScreenshot', `${pedType}_${_type}_${drawable}_${texture}`, 'clothing');
 	await Delay(2000);
 	return;
 }
@@ -209,7 +209,7 @@ function setWeatherTime() {
 	SetWeatherTypePersist('EXTRASUNNY');
 	SetWeatherTypeNow('EXTRASUNNY');
 	SetWeatherTypeNowPersist('EXTRASUNNY');
-	NetworkOverrideClockTime(18, 0, 0);
+	NetworkOverrideClockTime(6, 0, 0);
 	NetworkOverrideClockMillisecondsPerGameMinute(1000000);
 }
 
@@ -492,11 +492,11 @@ RegisterCommand('customscreenshot', async (source, args) => {
 						if (config.includeTextures) {
 							for (let texture = 0; texture < textureVariationCount; texture++) {
 								await LoadComponentVariation(ped, component, drawable, texture);
-								await takeScreenshotForComponent(pedType, type, component, drawable, texture, cameraSettings);
+								await takeScreenshotForComponent(pedType, type, component, drawable, texture, cameraSettings, config.cameraSettings[type][component].type);
 							}
 						} else {
 							await LoadComponentVariation(ped, component, drawable);
-							await takeScreenshotForComponent(pedType, type, component, drawable, null, cameraSettings);
+							await takeScreenshotForComponent(pedType, type, component, drawable, null, cameraSettings, config.cameraSettings[type][component].type);
 						}
 					}
 				} else if (type === 'PROPS') {
@@ -512,11 +512,11 @@ RegisterCommand('customscreenshot', async (source, args) => {
 						if (config.includeTextures) {
 							for (let texture = 0; texture < textureVariationCount; texture++) {
 								await LoadPropVariation(ped, component, prop, texture);
-								await takeScreenshotForComponent(pedType, type, component, prop, texture, cameraSettings);
+								await takeScreenshotForComponent(pedType, type, component, prop, texture, cameraSettings, config.cameraSettings[type][component].type);
 							}
 						} else {
 							await LoadPropVariation(ped, component, prop);
-							await takeScreenshotForComponent(pedType, type, component, prop, null, cameraSettings);
+							await takeScreenshotForComponent(pedType, type, component, prop, null, cameraSettings, config.cameraSettings[type][component].type);
 						}
 					}
 				}
@@ -527,11 +527,11 @@ RegisterCommand('customscreenshot', async (source, args) => {
 					if (config.includeTextures) {
 						for (let texture = 0; texture < textureVariationCount; texture++) {
 							await LoadComponentVariation(ped, component, drawable, texture);
-							await takeScreenshotForComponent(pedType, type, component, drawable, texture, cameraSettings);
+							await takeScreenshotForComponent(pedType, type, component, drawable, texture, cameraSettings, config.cameraSettings[type][component].type);
 						}
 					} else {
 						await LoadComponentVariation(ped, component, drawable);
-						await takeScreenshotForComponent(pedType, type, component, drawable, null, cameraSettings);
+						await takeScreenshotForComponent(pedType, type, component, drawable, null, cameraSettings, config.cameraSettings[type][component].type);
 					}
 				} else if (type === 'PROPS') {
 					const textureVariationCount = GetNumberOfPedPropTextureVariations(ped, component, prop);
@@ -539,11 +539,11 @@ RegisterCommand('customscreenshot', async (source, args) => {
 					if (config.includeTextures) {
 						for (let texture = 0; texture < textureVariationCount; texture++) {
 							await LoadPropVariation(ped, component, prop, texture);
-							await takeScreenshotForComponent(pedType, type, component, prop, texture, cameraSettings);
+							await takeScreenshotForComponent(pedType, type, component, prop, texture, cameraSettings, config.cameraSettings[type][component].type);
 						}
 					} else {
 						await LoadPropVariation(ped, component, prop);
-						await takeScreenshotForComponent(pedType, type, component, prop, null, cameraSettings);
+						await takeScreenshotForComponent(pedType, type, component, prop, null, cameraSettings, config.cameraSettings[type][component].type);
 					}
 				}
 			}

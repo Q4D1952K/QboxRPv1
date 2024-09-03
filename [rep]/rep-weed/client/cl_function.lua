@@ -292,6 +292,19 @@ RegisterNUICallback('REGISTER_DATASET', function(data, cb)
     cb('true')
 end)
 
+RegisterNetEvent('REGISTER_DATASET', function (data)
+    print('REGISTER_DATASET', json.encode(data, {indent = true}))
+    if data.name == 'Plants' then
+        for _index, _value in pairs(data.data) do
+            Plants[tonumber(_index)] = _value
+        end
+    elseif data.name == 'Strain' then
+        for _index, _value in pairs(data.data) do
+            MyStrains[tonumber(_index)] = _value
+        end
+    end
+end)
+
 RegisterNUICallback('UPDATE_DATASET', function(data, cb)
     local _data = data.data
     for k, v in pairs(Plants) do
@@ -303,6 +316,19 @@ RegisterNUICallback('UPDATE_DATASET', function(data, cb)
         end
     end
     cb('true')
+end)
+
+RegisterNetEvent('UPDATE_DATASET', function (data)
+    print('UPDATE_DATASET', json.encode(data, {indent = true}))
+    local _data = data.data
+    for k, v in pairs(Plants) do
+        if _data[tostring(k)] then
+            Plants[k].water = _data[tostring(k)].water
+        else
+            removeWeed(k)
+            Plants[k] = nil
+        end
+    end
 end)
 
 RegisterNUICallback('SYNC_DATASET', function(data, cb)
@@ -322,12 +348,37 @@ RegisterNUICallback('SYNC_DATASET', function(data, cb)
     cb('true')
 end)
 
+RegisterNetEvent('SYNC_DATASET', function (data)
+    print('SYNC_DATASET', json.encode(data, {indent = true}))
+    if data.name == 'Plants' then
+        if data.index2 == 'add' then
+            Plants[data.index] = data.data
+        else
+            Plants[data.index][data.index2] = data.data
+        end
+    elseif data.name == 'Strain' then
+        if data.index2 == 'add' then
+            MyStrains[data.index] = data.data
+        else
+            MyStrains[data.index][data.index2] = data.data
+        end
+    end
+end)
+
 RegisterNUICallback('REMOVE_DATASET', function(data, cb)
     if data.name == 'Plants' then
         removeWeed(data.index)
         Plants[data.index] = nil
     end
     cb('true')
+end)
+
+RegisterNetEvent('REMOVE_DATASET', function (data)
+    print('REMOVE_DATASET', json.encode(data, {indent = true}))
+    if data.name == 'Plants' then
+        removeWeed(data.index)
+        Plants[data.index] = nil
+    end
 end)
 
 AddEventHandler('onResourceStart', function(r)
@@ -514,9 +565,13 @@ AddEventHandler('onResourceStart', function(r)
                 distance = 1.5
             })
         end
-        SendNUIMessage({
-            event = "connect"
-        })
+        if Config.HyperData then
+            SendNUIMessage({
+                event = "connect"
+            })
+        else
+            TriggerServerEvent('rep-weed:join')
+        end
         Config.TacoShop.points = lib.callback.await('rep-weed:callback:getConfigTaco', false)
     end
 end)

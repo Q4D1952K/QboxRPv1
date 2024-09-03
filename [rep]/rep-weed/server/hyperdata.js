@@ -9,7 +9,11 @@ const DATASET = {}
 
 on("rep-weed:register", function(name, data){
     DATASET[name] = data
-    io.emit("REGISTER_DATASET", {name, data})
+    if (Config.HyperData) {
+        io.emit("REGISTER_DATASET", {name, data})
+    } else {
+        emitNet("REGISTER_DATASET", -1, {name, data})
+    }
 })
 
 on("rep-weed:sync", function(name, index, index2, data){
@@ -35,17 +39,36 @@ on("rep-weed:sync", function(name, index, index2, data){
         }
         DATASET[name][index][index2] = data
     }
-    io.emit("SYNC_DATASET", {name, index, index2, data})
+    if (Config.HyperData) {
+        io.emit("SYNC_DATASET", {name, index, index2, data})
+    } else {
+        emitNet("SYNC_DATASET", -1, {name, index, index2, data})
+    }
 })
 
 on("rep-weed:remove", function(name, index){
     delete DATASET[name][index]
-    io.emit("REMOVE_DATASET", {name, index})
+    if (Config.HyperData) {
+        io.emit("REMOVE_DATASET", {name, index})
+    } else {
+        emitNet("REMOVE_DATASET", -1, {name, index})
+    }
 })
 
 on("rep-weed:update", function(data){
     DATASET['Plants'] = data
-    io.emit("UPDATE_DATASET", {data})
+    if (Config.HyperData) {
+        io.emit("UPDATE_DATASET", {data})
+    } else {
+        emitNet("UPDATE_DATASET", -1, {data})
+    }
+})
+
+RegisterNetEvent("rep-weed:join", function(){
+    console.log(source)
+    for(var name in DATASET){
+        emitNet("REGISTER_DATASET", source, {name, data: DATASET[name]})
+    }
 })
 
 io.on("connection", (socket)=>{

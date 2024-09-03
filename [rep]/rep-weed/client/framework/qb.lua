@@ -189,9 +189,13 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
             distance = 1.5
         })
     end
-    SendNUIMessage({
-        event = "connect"
-    })
+    if Config.HyperData then
+        SendNUIMessage({
+            event = "connect"
+        })
+    else
+        TriggerServerEvent('rep-weed:join')
+    end
     Config.TacoShop.points = lib.callback.await('rep-weed:callback:getConfigTaco', false)
 end)
 
@@ -266,7 +270,7 @@ function Framework.Progressbar(_name, _label, _duration, _canCancel, _onFinish, 
     --         end
     --     end
     -- end)
-    if lib.progressCircle({
+    if lib.progressBar({
         duration = _duration,
         label = _label,
         position = 'bottom',

@@ -1,12 +1,8 @@
 if not Framework.QBox() then return end
-
 local QBX = exports.qbx_core
-Framework.PlayerJob = QBX.job.name
-Framework.PlayerJobGrade = QBX.job.grade.level
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-    Framework.PlayerJob = QBX.job.name
-    Framework.PlayerJobGrade = QBX.job.grade.level
+    Wait(5000)
     if Config.UseTalkNPC then
         talkNPC()
     else
@@ -291,10 +287,9 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     EndTextCommandSetBlipName(blips.company)
 end)
 
-RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
-    Framework.PlayerJob = job.name
-    Framework.PlayerJobGrade = job.grade.level
-end)
+function Framework.checkJob(filters)
+    return QBX:HasGroup(filters)
+end
 
 function Framework.Notification(_msg, _type, _time)
     exports.qbx_core:Notify(_msg, _type, _time)

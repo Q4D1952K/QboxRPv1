@@ -1,17 +1,12 @@
-if not Framework.QBCore() then return end
+if not Framework.QBCore() or Framework.QBox() then return end
 
 local QBCore = exports['qb-core']:GetCoreObject()
 
 local PlayerData = QBCore.Functions.GetPlayerData()
-if PlayerData.job then
-    Framework.PlayerJob = PlayerData.job.name
-    Framework.PlayerJobGrade = PlayerData.job.grade.level
-end
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
+    Wait(5000)
     PlayerData = QBCore.Functions.GetPlayerData()
-    Framework.PlayerJob = PlayerData.job.name
-    Framework.PlayerJobGrade = PlayerData.job.grade.level
     if Config.UseTalkNPC then
         talkNPC()
     else
@@ -296,10 +291,32 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     EndTextCommandSetBlipName(blips.company)
 end)
 
-RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
-    Framework.PlayerJob = job.name
-    Framework.PlayerJobGrade = job.grade.level
+RegisterNetEvent('QBCore:Player:SetPlayerData', function(value)
+    PlayerData = value
 end)
+
+function Framework.checkJob(filters)
+    local _type = type(filters)
+    if _type == 'string' then
+        return PlayerData.job.name == filters
+    elseif _type == 'table' then
+        local tabletype = table.type(filters)
+        if tabletype == 'hash' then
+            for name, grade in pairs(filters) do
+                if PlayerData.job.name == name and grade <= PlayerData.job.grade.level then
+                    return true
+                end
+            end
+        elseif tabletype == 'array' then
+            for j = 1, #filters do
+                local name = filters[j]
+                if PlayerData.job.name == name then
+                    return true
+                end
+            end
+        end
+    end
+end
 
 function Framework.Notification(_msg, _type, _time)
     QBCore.Functions.Notify(_msg, _type, _time)

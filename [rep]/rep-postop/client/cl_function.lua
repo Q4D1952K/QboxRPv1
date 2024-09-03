@@ -153,7 +153,7 @@ function talkNPC()
                 checkManage()
             end,
             canInteract = function()
-                return Framework.PlayerJob == 'postop' and Framework.PlayerJobGrade > 0
+                return Framework.checkJob({['postop'] = 1})
             end
         },
         [7] = {
@@ -241,7 +241,7 @@ function targetNPC()
                 label = Lang.target.checkManage.label,
                 distance = 1.5,
                 canInteract = function ()
-                    return Framework.PlayerJob == 'postop' and Framework.PlayerJobGrade > 0
+                    return Framework.checkJob({['postop'] = 1})
                 end
             },
         })
@@ -306,7 +306,7 @@ function targetNPC()
                     icon = Lang.target.checkManage.icon,
                     label = Lang.target.checkManage.label,
                     canInteract = function ()
-                        return Framework.PlayerJob == 'postop' and Framework.PlayerJobGrade > 0
+                        return Framework.checkJob({['postop'] = 1})
                     end
                 },
             },

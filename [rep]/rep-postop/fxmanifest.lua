@@ -8,7 +8,6 @@ version "3.0.0"
 shared_scripts { '@ox_lib/init.lua', 'config.lua' }
 
 client_scripts { 
-    -- '@qbx_core/modules/playerdata.lua', -- If use QBX
     'client/framework/*.lua',
     'client/*.lua' }
 
@@ -25,8 +24,6 @@ escrow_ignore {
     'config.lua',
     'README.MD',
 }
--- If use ESX
--- shared_script '@es_extended/imports.lua'
 
 lua54 'yes'
 dependency 'ox_lib'

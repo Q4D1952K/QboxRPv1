@@ -1,6 +1,7 @@
 if not Framework.QBox() then return end
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
+    Wait(5000)
     if Config.UseTalkNPC then
         talkNPC()
     else

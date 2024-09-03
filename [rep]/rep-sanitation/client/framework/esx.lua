@@ -3,7 +3,7 @@ if not Framework.ESX() then return end
 local ESX = exports.es_extended:getSharedObject()
 
 RegisterNetEvent("esx:playerLoaded", function(xPlayer, isNew)
-    Framework.PlayerData = xPlayer
+    Wait(5000)
     if Config.UseTalkNPC then
         talkNPC()
     else

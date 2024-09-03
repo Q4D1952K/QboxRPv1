@@ -1,4 +1,4 @@
-if not Framework.QBCore() then return end
+if not Framework.QBCore() or Framework.QBox() then return end
 
 local QBCore = exports['qb-core']:GetCoreObject()
 

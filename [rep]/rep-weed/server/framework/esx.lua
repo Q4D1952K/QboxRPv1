@@ -78,7 +78,7 @@ end)
 lib.callback.register('rep-weed:callback:GetCurrentCop', function()
     local xPlayers = ESX.GetExtendedPlayers('job', 'police')
     return #xPlayers
-end)
+ end)
 
 if Config.Inventory == 'ox' then
     exports(Config.Items["wateringcan"], function(event, item, inventory, slot, data)

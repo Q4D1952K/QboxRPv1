@@ -495,7 +495,7 @@ AddEventHandler('qb-garbagejob:client:RequestRoute', function()
                     end
 
                     garbageVehicle = veh
-                    exports['cdn-fuel'](veh, 100.0)
+                    exports['cdn-fuel']:(veh, 100.0)
                     SetVehicleFixed(veh)
                     currentStop = firstStop
                     currentStopNum = 1

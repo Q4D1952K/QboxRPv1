@@ -1,5 +1,5 @@
 -- Variables
-local QBCore = exports.qbx_core
+local QBX = exports.qbx_core
 
 -- Functions
 local function GlobalTax(value)
@@ -10,13 +10,23 @@ end
 -- Events
 RegisterNetEvent("cdn-fuel:server:electric:OpenMenu", function(amount, inGasStation, hasWeapon, purchasetype, FuelPrice)
 	local src = source
-	if not src then print("SRC is nil!") return end
-	local player = QBCore.Functions.GetPlayer(src)
-	if not player then print("Player is nil!") return end
-	local FuelCost = amount*FuelPrice
+	if not src then
+		print("SRC is nil!")
+		return
+	end
+	local player = QBX:GetPlayer(src)
+	if not player then
+		print("Player is nil!")
+		return
+	end
+	local FuelCost = amount * FuelPrice
 	local tax = GlobalTax(FuelCost)
 	local total = tonumber(FuelCost + tax)
-	if not amount then if Config.FuelDebug then print("Electric Recharge Amount is invalid!") end TriggerClientEvent('QBCore:Notify', src, Lang:t("electric_more_than_zero"), 'error') return end
+	if not amount then
+		if Config.FuelDebug then print("Electric Recharge Amount is invalid!") end
+		exports.qbx_core:Notify(src, Lang:t("electric_more_than_zero"), 'error')
+		return
+	end
 	Wait(50)
 	if inGasStation and not hasWeapon then
 		if Config.RenewedPhonePayment and purchasetype == "bank" then
@@ -35,7 +45,8 @@ RegisterNetEvent("cdn-fuel:server:electric:OpenMenu", function(amount, inGasStat
 						header = "",
 						icon = "fas fa-info-circle",
 						isMenuHeader = true,
-						txt = Lang:t("menu_purchase_station_header_1")..math.ceil(total)..Lang:t("menu_purchase_station_header_2"),
+						txt = Lang:t("menu_purchase_station_header_1") ..
+						math.ceil(total) .. Lang:t("menu_purchase_station_header_2"),
 					},
 					{
 						header = Lang:t("menu_purchase_station_confirm_header"),

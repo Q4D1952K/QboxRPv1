@@ -30,7 +30,7 @@ shared_scripts {
     -- 'locales/ee.lua', -- Estonian Locales
 }
 
-exports { -- Call with exports['cdn-fuel']GetFuel or exports['cdn-fuel']SetFuel
+exports { -- Call with exports['cdn-fuel']:GetFuel or exports['cdn-fuel']:SetFuel
     'GetFuel',
     'SetFuel'
 }

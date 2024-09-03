@@ -234,15 +234,28 @@ return {
         }
     },
 
-    ["jerry_can"] = {
-        label = "Jerrycan 20L",
-        weight = 20000,
-        stack = true,
+    ["jerrycan"] = {
+        label = "Jerrycan 15L",
+        weight = 15000,
+        stack = false,
         close = true,
-        description = "A can full of Fuel",
-        client = {
-            image = "jerry_can.png",
-        }
+        consume = 0,
+        description = "A Jerry Can made to hold gasoline",
+        server = {
+            export = 'cdn-fuel.jerrycan',
+        },
+    },
+
+    ["syphoningkit"] = {
+        label = "Syphoning Kit",
+        weight = 5000,
+        stack = false,
+        close = true,
+        consume = 0,
+        description = "A kit made to siphon gasoline from vehicles",
+        server = {
+            export = 'cdn-fuel.syphoningkit',
+        },
     },
 
     ["xtcbaggy"] = {

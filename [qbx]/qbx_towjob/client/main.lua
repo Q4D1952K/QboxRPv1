@@ -397,7 +397,7 @@ RegisterNetEvent('qb-tow:client:SpawnNPCVehicle', function()
     if VehicleSpawned then return end
     local netId = lib.callback.await('qb-tow:server:spawnVehicle', false, CurrentLocation.model, vec3(CurrentLocation.x, CurrentLocation.y, CurrentLocation.z))
     local veh = NetToVeh(netId)
-    exports['cdn-fuel'](veh, 0.0)
+    exports['cdn-fuel']:(veh, 0.0)
     VehicleSpawned = true
 end)
 

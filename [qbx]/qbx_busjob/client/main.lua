@@ -276,7 +276,7 @@ RegisterNetEvent("qbx_busjob:client:TakeVehicle", function(data)
         return
     end
 
-    SetVehicleFuelLevel(veh, 100.0)
+    exports['cdn-fuel']:(veh, 100.0)
     SetVehicleEngineOn(veh, true, true, false)
     lib.hideContext()
     TriggerEvent('qbx_busjob:client:DoBusNpc')

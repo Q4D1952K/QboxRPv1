@@ -357,7 +357,7 @@ local function repairPart(part)
             SetVehicleFixed(veh)
             SetVehicleEngineHealth(veh, enhealth)
             if GetVehicleFuelLevel(veh) ~= realFuel then
-                SetVehicleFuelLevel(veh, realFuel)
+                exports['cdn-fuel']:(veh, realFuel)
             end
         else
             TriggerServerEvent("vehiclemod:server:updatePart", plate, part, sharedConfig.maxStatusValues[part])
@@ -454,7 +454,7 @@ local function spawnListVehicle(model)
     end
     local veh = NetworkGetEntityFromNetworkId(netId)
     SetVehicleNumberPlateText(veh, "MECH"..tostring(math.random(1000, 9999)))
-    SetVehicleFuelLevel(veh, 100.0)
+    exports['cdn-fuel']:(veh, 100.0)
     TaskWarpPedIntoVehicle(cache.ped, veh, -1)
     TriggerEvent("vehiclekeys:client:SetOwner", qbx.getVehiclePlate(veh))
     SetVehicleEngineOn(veh, true, true, false)

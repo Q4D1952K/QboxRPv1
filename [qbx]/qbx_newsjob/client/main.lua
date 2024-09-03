@@ -36,8 +36,7 @@ local function takeOutVehicle(vehType, coords)
     if vehClass == 12 then
         SetVehicleLivery(veh, 2)
     end
-    SetVehicleFuelLevel(veh, 100.0)
-    SetVehicleFuelLevel(veh, 100.0)
+    exports['cdn-fuel']:(veh, 100.0)
     TaskWarpPedIntoVehicle(cache.ped, veh, -1)
     SetVehicleEngineOn(veh, true, true, false)
     CurrentPlate = qbx.getVehiclePlate(veh)

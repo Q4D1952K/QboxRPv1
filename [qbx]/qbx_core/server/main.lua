@@ -18,7 +18,7 @@ end
 
 ---@type 'strict'|'relaxed'|'inactive'
 local bucketLockDownMode = GetConvar('qbx:bucketlockdownmode', 'inactive')
-SetRoutingBucketEntityLockdownMode(0, bucketLockDownMode)
+SetRoutingBucketEntityLockdownMode(0, 'relaxed')
 
 QBX = {}
 QBX.Shared = require 'shared.main'

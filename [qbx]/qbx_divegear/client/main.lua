@@ -59,20 +59,15 @@ local function deleteGear()
 end
 
 local function attachGear()
-    local maskModel = `p_d_scuba_mask_s`
-    local tankModel = `p_s_scuba_tank_s`
-    lib.requestModel(maskModel)
-    lib.requestModel(tankModel)
-
-    currentGear.tank = CreateObject(tankModel, 1.0, 1.0, 1.0, true, true, false)
+    currentGear.tank = NetToObj(lib.callback.await('rep-base:callback:spawnObj', false, `p_s_scuba_tank_s`, vector3(1.0, 1.0, 1.0)))
     local bone1 = GetPedBoneIndex(cache.ped, 24818)
     AttachEntityToEntity(currentGear.tank, cache.ped, bone1, -0.25, -0.25, 0.0, 180.0, 90.0, 0.0, true, true, false, false, 2, true)
 
-    currentGear.mask = CreateObject(maskModel, 1.0, 1.0, 1.0, true, true, false)
+    currentGear.mask = NetToObj(lib.callback.await('rep-base:callback:spawnObj', false, `p_d_scuba_mask_s`, vector3(1.0, 1.0, 1.0)))
     local bone2 = GetPedBoneIndex(cache.ped, 12844)
     AttachEntityToEntity(currentGear.mask, cache.ped, bone2, 0.0, 0.0, 0.0, 180.0, 90.0, 0.0, true, true, false, false, 2, true)
-    SetModelAsNoLongerNeeded(maskModel)
-    SetModelAsNoLongerNeeded(tankModel)
+    SetModelAsNoLongerNeeded(`p_d_scuba_mask_s`)
+    SetModelAsNoLongerNeeded(`p_s_scuba_tank_s`)
 end
 
 local function takeOffSuit()

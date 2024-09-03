@@ -270,7 +270,7 @@ function Framework.Progressbar(_name, _label, _duration, _canCancel, _onFinish, 
     --         end
     --     end
     -- end)
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = _duration,
         label = _label,
         position = 'bottom',

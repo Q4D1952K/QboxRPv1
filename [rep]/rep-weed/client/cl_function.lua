@@ -293,7 +293,6 @@ RegisterNUICallback('REGISTER_DATASET', function(data, cb)
 end)
 
 RegisterNetEvent('REGISTER_DATASET', function (data)
-    print('REGISTER_DATASET', json.encode(data, {indent = true}))
     if data.name == 'Plants' then
         for _index, _value in pairs(data.data) do
             Plants[tonumber(_index)] = _value
@@ -319,7 +318,6 @@ RegisterNUICallback('UPDATE_DATASET', function(data, cb)
 end)
 
 RegisterNetEvent('UPDATE_DATASET', function (data)
-    print('UPDATE_DATASET', json.encode(data, {indent = true}))
     local _data = data.data
     for k, v in pairs(Plants) do
         if _data[tostring(k)] then
@@ -349,7 +347,6 @@ RegisterNUICallback('SYNC_DATASET', function(data, cb)
 end)
 
 RegisterNetEvent('SYNC_DATASET', function (data)
-    print('SYNC_DATASET', json.encode(data, {indent = true}))
     if data.name == 'Plants' then
         if data.index2 == 'add' then
             Plants[data.index] = data.data
@@ -374,7 +371,6 @@ RegisterNUICallback('REMOVE_DATASET', function(data, cb)
 end)
 
 RegisterNetEvent('REMOVE_DATASET', function (data)
-    print('REMOVE_DATASET', json.encode(data, {indent = true}))
     if data.name == 'Plants' then
         removeWeed(data.index)
         Plants[data.index] = nil

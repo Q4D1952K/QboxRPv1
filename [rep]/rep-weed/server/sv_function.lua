@@ -81,3 +81,5 @@ local function getExpStrain(n, p, pk)
 end
 
 exports('getExpStrain', getExpStrain)
+
+TriggerEvent('rep-weed:config', Config)

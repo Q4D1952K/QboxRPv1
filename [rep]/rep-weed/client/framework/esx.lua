@@ -250,7 +250,7 @@ function Framework.getIdentifier()
 end
 
 function Framework.Progressbar(_name, _label, _duration, _canCancel, _onFinish, _onCancel)
-    if lib.progressBar({
+    if lib.progressCircle({
         duration = _duration,
         label = _label,
         position = 'bottom',

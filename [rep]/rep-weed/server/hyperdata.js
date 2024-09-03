@@ -6,6 +6,11 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const DATASET = {}
+const Config = {};
+
+on("rep-weed:config", function(data){
+    Config = data
+})
 
 on("rep-weed:register", function(name, data){
     DATASET[name] = data

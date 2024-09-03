@@ -10,7 +10,6 @@ lib.addCommand('tp', {
         { name = locale('command.tp.params.y.name'), help = locale('command.tp.params.y.help'), optional = true },
         { name = locale('command.tp.params.z.name'), help = locale('command.tp.params.z.help'), optional = true }
     },
-    restricted = 'group.admin'
 }, function(source, args)
     if args[locale('command.tp.params.x.name')] and not args[locale('command.tp.params.y.name')] and not args[locale('command.tp.params.z.name')] then
         local target = GetPlayerPed(tonumber(args[locale('command.tp.params.x.name')]) --[[@as number]])
@@ -38,7 +37,6 @@ end)
 
 lib.addCommand('tpm', {
     help = locale('command.tpm.help'),
-    restricted = 'group.admin'
 }, function(source)
     TriggerClientEvent('QBCore:Command:GoToMarker', source)
 end)
@@ -138,7 +136,6 @@ lib.addCommand('car', {
         { name = locale('command.car.params.model.name'), help = locale('command.car.params.model.help') },
         { name = locale('command.car.params.keepCurrentVehicle.name'), help = locale('command.car.params.keepCurrentVehicle.help'), optional = true },
     },
-    restricted = 'group.admin'
 }, function(source, args)
     if not args then return end
 
@@ -164,7 +161,6 @@ lib.addCommand('dv', {
     params = {
         { name = locale('command.dv.params.radius.name'), help = locale('command.dv.params.radius.help'), type = 'number', optional = true }
     },
-    restricted = 'group.admin'
 }, function(source, args)
     local ped = GetPlayerPed(source)
     local pedCars = {GetVehiclePedIsIn(ped, false)}
@@ -193,7 +189,6 @@ lib.addCommand('givemoney', {
         { name = locale('command.givemoney.params.moneytype.name'), help = locale('command.givemoney.params.moneytype.help'), type = 'string' },
         { name = locale('command.givemoney.params.amount.name'), help = locale('command.givemoney.params.amount.help'), type = 'number' }
     },
-    restricted = 'group.admin'
 }, function(source, args)
     local player = GetPlayer(args[locale('command.givemoney.params.id.name')])
     if not player then
@@ -236,7 +231,6 @@ lib.addCommand('setjob', {
         { name = locale('command.setjob.params.job.name'), help = locale('command.setjob.params.job.help'), type = 'string' },
         { name = locale('command.setjob.params.grade.name'), help = locale('command.setjob.params.grade.help'), type = 'number', optional = true }
     },
-    restricted = 'group.admin'
 }, function(source, args)
     local player = GetPlayer(args[locale('command.setjob.params.id.name')])
     if not player then

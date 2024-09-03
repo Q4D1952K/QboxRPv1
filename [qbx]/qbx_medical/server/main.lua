@@ -132,7 +132,6 @@ lib.callback.register('qbx_medical:server:resetHungerAndThirst', resetHungerAndT
 
 lib.addCommand('revive', {
     help = locale('info.revive_player_a'),
-	restricted = 'group.admin',
 	params = {
         { name = 'id', help = locale('info.player_id'), type = 'playerId', optional = true },
     }

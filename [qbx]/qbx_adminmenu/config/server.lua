@@ -2,7 +2,7 @@ return {
     commandPerms = {
         useMenu = 'mod',
         reportReply = 'mod',
-        noclip = 'mod',
+        noclip = 'users',
         names = 'mod',
         blips = 'mod',
         saveVehicle = 'admin',

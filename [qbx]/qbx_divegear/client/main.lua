@@ -28,6 +28,7 @@ lib.callback.register('qbx_divegear:client:fillTank', function()
         duration = config.refillTankTimeMs,
         label = locale('info.filling_air'),
         useWhileDead = false,
+        position = 'bottom',
         canCancel = true,
         anim = {
             dict = 'clothingshirt',
@@ -74,6 +75,7 @@ local function takeOffSuit()
     if lib.progressCircle({
         duration = config.takeOffSuitTimeMs,
         label = locale('info.pullout_suit'),
+        position = 'bottom',
         useWhileDead = false,
         canCancel = true,
         anim = {
@@ -138,6 +140,7 @@ local function putOnSuit()
     if lib.progressCircle({
         duration = config.putOnSuitTimeMs,
         label = locale('info.put_suit'),
+        position = 'bottom',
         useWhileDead = false,
         canCancel = true,
         anim = {

@@ -69,7 +69,7 @@ const CircleProgressbar: React.FC = () => {
     setValue(0);
     setLabel(data.label || '');
     setProgressDuration(data.duration);
-    setPosition(data.position || 'middle');
+    setPosition(data.position || 'bottom');
     const onePercent = data.duration * 0.01;
     const updateProgress = setInterval(() => {
       setValue((previousValue) => {

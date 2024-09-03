@@ -17,6 +17,7 @@ local function takeCoral(coralIndex)
         duration = times * 1000,
         label = Lang:t('info.collecting_coral'),
         canCancel = true,
+        position = 'bottom',
         useWhileDead = false,
         allowSwimming = true,
         disable = {

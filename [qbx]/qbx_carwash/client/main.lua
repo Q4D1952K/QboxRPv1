@@ -7,6 +7,7 @@ RegisterNetEvent('qbx_carwash:client:washCar', function()
         duration = 6000,
         label = locale('washing'),
         useWhileDead = false,
+        position = 'bottom',
         canCancel = false,
         disable = {
             move = true,

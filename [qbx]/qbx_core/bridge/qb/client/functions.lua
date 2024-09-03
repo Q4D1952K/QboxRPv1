@@ -88,6 +88,7 @@ function functions.Progressbar(_, label, duration, useWhileDead, canCancel, disa
     if lib.progressCircle({
         duration = duration,
         label = label,
+        position = 'bottom',
         useWhileDead = useWhileDead,
         canCancel = canCancel,
         disable = {

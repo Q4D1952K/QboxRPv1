@@ -29,6 +29,7 @@ RegisterNetEvent('qbx_bankrobbery:UseBankcardB', function()
         duration = 7500,
         label = locale('general.validating_bankcard'),
         canCancel = true,
+        position = 'bottom',
         useWhileDead = false,
         disable = {
             move = true,
@@ -65,6 +66,7 @@ RegisterNetEvent('electronickit:UseElectronickit', function()
                         duration = 7500,
                         label = locale('general.connecting_hacking_device'),
                         canCancel = true,
+                        position = 'bottom',
                         useWhileDead = false,
                         disable = {
                             move = true,

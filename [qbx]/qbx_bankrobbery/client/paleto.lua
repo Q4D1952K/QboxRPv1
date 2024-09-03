@@ -19,6 +19,7 @@ RegisterNetEvent('qbx_bankrobbery:UseBankcardA', function()
         duration = 7500,
         label = locale('general.validating_bankcard'),
         canCancel = true,
+        position = 'bottom',
         useWhileDead = false,
         disable = {
             move = true,

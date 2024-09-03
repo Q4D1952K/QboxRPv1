@@ -72,6 +72,7 @@ function OpenLocker(bankId, lockerId) -- Globally Used
                 duration = 20000,
                 label = locale('general.breaking_open_safe'),
                 canCancel = true,
+                position = 'bottom',
                 useWhileDead = false,
                 disable = {
                     move = true,
@@ -117,6 +118,7 @@ function OpenLocker(bankId, lockerId) -- Globally Used
                 duration = 20000,
                 label = locale('general.breaking_open_safe'),
                 canCancel = true,
+                position = 'bottom',
                 useWhileDead = false,
                 disable = {
                     move = true,
@@ -159,6 +161,7 @@ function OpenLocker(bankId, lockerId) -- Globally Used
             duration = 20000,
             label = locale('general.breaking_open_safe'),
             canCancel = true,
+            position = 'bottom',
             useWhileDead = false,
             disable = {
                 move = true,

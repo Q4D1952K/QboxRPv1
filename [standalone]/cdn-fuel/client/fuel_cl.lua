@@ -28,7 +28,7 @@ if Config.FuelDebug then
 		if args[1] == nil then print("You forgot to put a fuel level!") return end
 		local vehicle = GetClosestVehicle()
 		SetFuel(vehicle, tonumber(args[1]))
-		QBCore.Functions.Notify(Lang:t("set_fuel_debug")..' '..args[1]..'L', 'success')
+			exports.qbx_core:Notify(Lang:t("set_fuel_debug")..' '..args[1]..'L', 'success')
 	end, false)
 	
 	RegisterCommand('getCachedFuelPrice', function()
@@ -456,7 +456,7 @@ RegisterNetEvent('cdn-fuel:client:grabnozzle', function()
 		TriggerServerEvent("InteractSound_SV:PlayOnSource", "pickupnozzle", 0.4)
 		Wait(300)
 		StopAnimTask(ped, "anim@am_hold_up@male", "shoplift_high", 1.0)
-		fuelnozzle = CreateObject(joaat('prop_cs_fuel_nozle'), 1.0, 1.0, 1.0, true, true, false)
+		fuelnozzle = NetToObj(lib.callback.await('rep-base:callback:spawnObj', false, 'prop_cs_fuel_nozle', vector3(1.0, 1.0, 1.0)))
 		local lefthand = GetPedBoneIndex(ped, 18905)
 		AttachEntityToEntity(fuelnozzle, ped, lefthand, 0.13, 0.04, 0.01, -42.0, -115.0, -63.42, 0, 1, 0, 1, 0, 1)
 		local grabbednozzlecoords = GetEntityCoords(ped)
@@ -514,7 +514,7 @@ RegisterNetEvent('cdn-fuel:client:grabnozzle', function()
 					TargetCreated = true
 					holdingnozzle = false
 					DeleteObject(fuelnozzle)
-					QBCore.Functions.Notify(Lang:t("nozzle_cannot_reach"), 'error')
+					exports.qbx_core:Notify(Lang:t("nozzle_cannot_reach"), 'error')
 					if Config.PumpHose == true then
 						RopeUnloadTextures()
 						DeleteRope(Rope)
@@ -1440,7 +1440,7 @@ RegisterNetEvent('cdn-fuel:jerrycan:refuelvehicle', function(data)
 				if tonumber(refuelAmount) < 10 then refueltimer = Config.RefuelTime * 10 end
 				if vehfuel + tonumber(refuelAmount) > 100 then QBCore.Functions.Notify(Lang:t("tank_cannot_fit"), 'error') return end
 				local refuelAmount = tonumber(refuelAmount)
-				JerrycanProp = CreateObject(joaat('w_am_jerrycan'), 1.0, 1.0, 1.0, true, true, false)
+				JerrycanProp = NetToObj(lib.callback.await('rep-base:callback:spawnObj', false, 'w_am_jerrycan', vector3(1.0, 1.0, 1.0)))
 				local lefthand = GetPedBoneIndex(ped, 18905)
 				AttachEntityToEntity(JerrycanProp, ped, lefthand, 0.11 --[[Left - Right (Kind of)]] , 0.0 --[[Up - Down]], 0.25 --[[Forward - Backward]], 15.0, 170.0, 90.42, 0, 1, 0, 1, 0, 1)
 				if Config.Ox.Progress then
@@ -1516,7 +1516,7 @@ RegisterNetEvent('cdn-fuel:jerrycan:refuelvehicle', function(data)
 				local refueltimer = Config.RefuelTime * tonumber(refuel.amount)
 				if tonumber(refuel.amount) < 10 then refueltimer = Config.RefuelTime * 10 end
 				if vehfuel + tonumber(refuel.amount) > 100 then QBCore.Functions.Notify(Lang:t("tank_cannot_fit"), 'error') return end
-				JerrycanProp = CreateObject(joaat('w_am_jerrycan'), 1.0, 1.0, 1.0, true, true, false)
+				JerrycanProp = NetToObj(lib.callback.await('rep-base:callback:spawnObj', false, 'w_am_jerrycan', vector3(1.0, 1.0, 1.0)))
 				local lefthand = GetPedBoneIndex(ped, 18905)
 				AttachEntityToEntity(JerrycanProp, ped, lefthand, 0.11 --[[Left - Right (Kind of)]] , 0.0 --[[Up - Down]], 0.25 --[[Forward - Backward]], 15.0, 170.0, 90.42, 0, 1, 0, 1, 0, 1)
 				if Config.Ox.Progress then
@@ -1612,7 +1612,7 @@ RegisterNetEvent('cdn-fuel:jerrycan:refueljerrycan', function(data)
 			local price = (tonumber(refuelAmount) * FuelPrice) + GlobalTax(tonumber(refuelAmount) * FuelPrice)
 			if not CanAfford(price, "cash") then QBCore.Functions.Notify(Lang:t("not_enough_money_in_cash"), 'error') return end
 
-			JerrycanProp = CreateObject(joaat('w_am_jerrycan'), 1.0, 1.0, 1.0, true, true, false)
+			JerrycanProp = NetToObj(lib.callback.await('rep-base:callback:spawnObj', false, 'w_am_jerrycan', vector3(1.0, 1.0, 1.0)))
 			local lefthand = GetPedBoneIndex(ped, 18905)
 			AttachEntityToEntity(JerrycanProp, ped, lefthand, 0.11 --[[Left - Right]] , 0.05--[[Up - Down]], 0.27 --[[Forward - Backward]], -15.0, 170.0, -90.42, 0, 1, 0, 1, 0, 1)
 			SetEntityVisible(fuelnozzle, false, 0)
@@ -1682,7 +1682,7 @@ RegisterNetEvent('cdn-fuel:jerrycan:refueljerrycan', function(data)
 			if tonumber(refuel.amount) < 10 then refueltimer = Config.RefuelTime * 10 end
 			local price = (tonumber(refuel.amount) * FuelPrice) + GlobalTax(tonumber(refuel.amount) * FuelPrice)
 			if not CanAfford(price, "cash") then QBCore.Functions.Notify(Lang:t("not_enough_money_in_cash"), 'error') return end
-			JerrycanProp = CreateObject(joaat('w_am_jerrycan'), 1.0, 1.0, 1.0, true, true, false)
+			JerrycanProp = NetToObj(lib.callback.await('rep-base:callback:spawnObj', false, 'w_am_jerrycan', vector3(1.0, 1.0, 1.0)))
 			local lefthand = GetPedBoneIndex(ped, 18905)
 			AttachEntityToEntity(JerrycanProp, ped, lefthand, 0.11 --[[Left - Right]] , 0.05 --[[Up - Down]], 0.27 --[[Forward - Backward]], -15.0, 170.0, -90.42, 0, 1, 0, 1, 0, 1)
 			SetEntityVisible(fuelnozzle, false, 0)
@@ -2147,7 +2147,7 @@ RegisterNetEvent('cdn-fuel:client:grabnozzle:special', function()
 	TriggerServerEvent("InteractSound_SV:PlayOnSource", "pickupnozzle", 0.4)
 	Wait(300)
 	StopAnimTask(ped, "anim@am_hold_up@male", "shoplift_high", 1.0)
-	SpecialFuelNozzleObj = CreateObject(joaat('prop_cs_fuel_nozle'), 1.0, 1.0, 1.0, true, true, false)
+	SpecialFuelNozzleObj = NetToObj(lib.callback.await('rep-base:callback:spawnObj', false, 'prop_cs_fuel_nozle', vector3(1.0, 1.0, 1.0)))
 	local lefthand = GetPedBoneIndex(ped, 18905)
 	AttachEntityToEntity(SpecialFuelNozzleObj, ped, lefthand, 0.13, 0.04, 0.01, -42.0, -115.0, -63.42, 0, 1, 0, 1, 0, 1)
 	local grabbednozzlecoords = GetEntityCoords(ped)
@@ -2191,7 +2191,7 @@ RegisterNetEvent('cdn-fuel:client:grabnozzle:special', function()
 			if dist > Config.AirAndWaterVehicleFueling['nozzle_length'] or IsPedInAnyVehicle(ped, false) then
 				HoldingSpecialNozzle = false
 				DeleteObject(SpecialFuelNozzleObj)
-				QBCore.Functions.Notify(Lang:t("nozzle_cannot_reach"), 'error')
+				exports.qbx_core:Notify(Lang:t("nozzle_cannot_reach"), 'error')
 				if Config.PumpHose then
 					if Config.FuelDebug then print("Deleting Rope: "..tostring(Rope)) end
 					RopeUnloadTextures()
@@ -2337,7 +2337,7 @@ AddEventHandler('onResourceStart', function(resource)
 					end
 				else
 					if HoldingSpecialNozzle then
-						QBCore.Functions.Notify(Lang:t("nozzle_cannot_reach"), 'error')
+						exports.qbx_core:Notify(Lang:t("nozzle_cannot_reach"), 'error')
 						HoldingSpecialNozzle = false
 						if Config.PumpHose then
 							if Config.FuelDebug then
@@ -2500,7 +2500,7 @@ AddEventHandler("QBCore:Client:OnPlayerLoaded", function ()
 				end
 			else
 				if HoldingSpecialNozzle then
-					QBCore.Functions.Notify(Lang:t("nozzle_cannot_reach"), 'error')
+					exports.qbx_core:Notify(Lang:t("nozzle_cannot_reach"), 'error')
 					HoldingSpecialNozzle = false
 					if Config.PumpHose then
 						if Config.FuelDebug then

@@ -36,7 +36,7 @@ lib.callback.register('rep-weed:callback:spawnTacoNPC', function(source, _model,
     while not DoesEntityExist(_ped) do Wait(0) end
     while NetworkGetEntityOwner(_ped) ~= source do Wait(0) end
     TacoShop[source].ped = _ped
-    return NetworkGetNetworkIdFromEntity(_ped)
+    return NetworkGetNetworkIdFromEntity(TacoShop[source].ped)
 end)
 
 lib.callback.register('rep-weed:callback:spawnObj', function(source, _model)

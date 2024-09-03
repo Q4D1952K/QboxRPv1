@@ -960,12 +960,12 @@ Config.InitialPlayerClothes = {
             },
             {
                 component_id = 3, -- Upper Body
-                drawable = 0,
+                drawable = 15,
                 texture = 0
             },
             {
                 component_id = 4, -- Lower Body
-                drawable = 0,
+                drawable = 15,
                 texture = 0
             },
             {
@@ -975,7 +975,7 @@ Config.InitialPlayerClothes = {
             },
             {
                 component_id = 6, -- Shoes
-                drawable = 0,
+                drawable = 35,
                 texture = 0
             },
             {
@@ -985,7 +985,7 @@ Config.InitialPlayerClothes = {
             },
             {
                 component_id = 8, -- Shirt
-                drawable = 0,
+                drawable = 15,
                 texture = 0
             },
             {
@@ -1000,7 +1000,7 @@ Config.InitialPlayerClothes = {
             },
             {
                 component_id = 11, -- Jacket
-                drawable = 0,
+                drawable = 15,
                 texture = 0
             }
         },
@@ -1058,12 +1058,12 @@ Config.InitialPlayerClothes = {
             },
             {
                 component_id = 3, -- Upper Body
-                drawable = 0,
+                drawable = 15,
                 texture = 0
             },
             {
                 component_id = 4, -- Lower Body
-                drawable = 0,
+                drawable = 21,
                 texture = 0
             },
             {
@@ -1073,7 +1073,7 @@ Config.InitialPlayerClothes = {
             },
             {
                 component_id = 6, -- Shoes
-                drawable = 0,
+                drawable = 34,
                 texture = 0
             },
             {
@@ -1083,7 +1083,7 @@ Config.InitialPlayerClothes = {
             },
             {
                 component_id = 8, -- Shirt
-                drawable = 0,
+                drawable = 15,
                 texture = 0
             },
             {
@@ -1098,7 +1098,7 @@ Config.InitialPlayerClothes = {
             },
             {
                 component_id = 11, -- Jacket
-                drawable = 0,
+                drawable = 15,
                 texture = 0
             }
         },

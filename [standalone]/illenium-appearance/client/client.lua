@@ -184,7 +184,7 @@ function InitializeCharacter(gender, onSubmit, onCancel)
                     end
                 end
             end
-            TriggerServerEvent("clothes:GiveFirstClothing", ClotheListPropsStart, ClotheListComponentsStart)
+        --    TriggerServerEvent("clothes:GiveFirstClothing", ClotheListPropsStart, ClotheListComponentsStart)
             exports['rep-base']:clearSkin()
             if onSubmit then
                 onSubmit()

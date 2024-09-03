@@ -93,7 +93,7 @@ local function takeOutImpound(vehicle)
 
     local properties = lib.callback.await('qb-garage:server:GetVehicleProperties', false, vehicle.plate)
     lib.setVehicleProperties(veh, properties)
-    exports['cdn-fuel']:(veh, vehicle.fuel)
+    exports['cdn-fuel']:SetFuel(veh, vehicle.fuel)
     doCarDamage(veh, vehicle)
     TriggerServerEvent('police:server:TakeOutImpound', vehicle.plate, currentGarage)
     SetVehicleEngineOn(veh, true, true, false)
@@ -120,7 +120,7 @@ local function takeOutVehicle(vehicleInfo)
 
     setCarItemsInfo()
     SetEntityHeading(veh, coords.w)
-    exports['cdn-fuel']:(veh, 100.0)
+    exports['cdn-fuel']:SetFuel(veh, 100.0)
     if config.vehicleSettings[vehicleInfo] then
         if config.vehicleSettings[vehicleInfo].extras then
             qbx.setVehicleExtras(veh, config.vehicleSettings[vehicleInfo].extras)
@@ -228,7 +228,7 @@ local function spawnHelicopter()
     SetVehicleLivery(heli , 0)
     SetVehicleMod(heli, 0, 48, false)
     SetEntityHeading(heli, coords.w)
-    exports['cdn-fuel']:(heli, 100.0)
+    exports['cdn-fuel']:SetFuel(heli, 100.0)
     SetVehicleEngineOn(heli, true, true, false)
 end
 

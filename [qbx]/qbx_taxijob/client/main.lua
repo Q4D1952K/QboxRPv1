@@ -475,7 +475,7 @@ RegisterNetEvent('qb-taxi:client:TakeVehicle', function(data)
         if CanSpawn then
             local netId = lib.callback.await('qb-taxi:server:spawnTaxi', false, data.model, coords)
             local veh = NetToVeh(netId)
-            exports['cdn-fuel']:(veh, 100.0)
+            exports['cdn-fuel']:SetFuel(veh, 100.0)
             SetVehicleEngineOn(veh, true, true, false)
         else
             exports.qbx_core:Notify(Lang:t('info.no_spawn_point'), 'error')

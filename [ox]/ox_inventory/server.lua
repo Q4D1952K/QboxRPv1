@@ -497,44 +497,44 @@ lib.addCommand({'additem', 'giveitem'}, {
                 metadata = {}
             end
             metadata.strain = "Unknown"
-            metadata.n = 0
-            metadata.p = 0
-            metadata.k = 0
+            metadata.n = 1
+            metadata.p = 1
+            metadata.k = 1
             metadata.remainweight = 100
         elseif args.item == "weedpackage" then
             if not metadata then
                     metadata = {}
             end
             metadata.strain = "Unknown"
-            metadata.n = 0
-            metadata.p = 0
-            metadata.k = 0
+            metadata.n = 1
+            metadata.p = 1
+            metadata.k = 1
             metadata.remainweight = 100
         elseif args.item == "weedbaggie" then
             if not metadata then
                     metadata = {}
             end
             metadata.strain = "Unknown"
-            metadata.n = 0
-            metadata.p = 0
-            metadata.k = 0
+            metadata.n = 1
+            metadata.p = 1
+            metadata.k = 1
         elseif args.item == "wetbud" then
             if not metadata then
                     metadata = {}
             end
             metadata.strain = "Unknown"
-            metadata.n = 0
-            metadata.p = 0
-            metadata.k = 0
+            metadata.n = 1
+            metadata.p = 1
+            metadata.k = 1
             metadata.dry = 0
         elseif args.item == "joint" then
             if not metadata then
                     metadata = {}
             end
             metadata.strain = "Unknown"
-            metadata.n = 0
-            metadata.p = 0
-            metadata.k = 0
+            metadata.n = 1
+            metadata.p = 1
+            metadata.k = 1
         elseif args.item == "wateringcan" then
             if not metadata then
                 metadata = {}

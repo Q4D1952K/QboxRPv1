@@ -965,7 +965,7 @@ Config.InitialPlayerClothes = {
             },
             {
                 component_id = 4, -- Lower Body
-                drawable = 15,
+                drawable = 21,
                 texture = 0
             },
             {
@@ -975,7 +975,7 @@ Config.InitialPlayerClothes = {
             },
             {
                 component_id = 6, -- Shoes
-                drawable = 35,
+                drawable = 34,
                 texture = 0
             },
             {

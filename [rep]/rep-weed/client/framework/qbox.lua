@@ -208,7 +208,7 @@ function Framework.GetCurrentCop()
 end
 
 function Framework.getIdentifier()
-    return QBX.citizenid
+    return QBX:GetPlayerData().citizenid
 end
 
 function Framework.Progressbar(_name, _label, _duration, _canCancel, _onFinish, _onCancel)

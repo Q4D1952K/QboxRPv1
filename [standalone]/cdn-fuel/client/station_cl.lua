@@ -1,6 +1,7 @@
 if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stations are a Config Option, instead of forced. Set this option in shared/config.lua!
     -- Variables
-    local QBCore = exports.qbx_core
+    local QBX = exports.qbx_core
+    local QBCore = exports['qb-core']:GetCoreObject()
     local PedsSpawned = false
 
     -- These are for fuel pickup:

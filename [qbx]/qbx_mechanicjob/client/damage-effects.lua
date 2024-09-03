@@ -140,15 +140,15 @@ end
 local function leakFuel(vehicle, plate)
     local fuel = GetVehicleFuelLevel(vehicle)
     if VehicleStatus[plate].fuel <= 80 and VehicleStatus[plate].fuel >= 60 then
-        exports['cdn-fuel']:(vehicle, fuel - 2.0)
+        exports['cdn-fuel'](vehicle, fuel - 2.0)
     elseif VehicleStatus[plate].fuel <= 59 and VehicleStatus[plate].fuel >= 40 then
-        exports['cdn-fuel']:(vehicle, fuel - 4.0)
+        exports['cdn-fuel'](vehicle, fuel - 4.0)
     elseif VehicleStatus[plate].fuel <= 39 and VehicleStatus[plate].fuel >= 20 then
-        exports['cdn-fuel']:(vehicle, fuel - 6.0)
+        exports['cdn-fuel'](vehicle, fuel - 6.0)
     elseif VehicleStatus[plate].fuel <= 19 and VehicleStatus[plate].fuel >= 6 then
-        exports['cdn-fuel']:(vehicle, fuel - 8.0)
+        exports['cdn-fuel'](vehicle, fuel - 8.0)
     else
-        exports['cdn-fuel']:(vehicle, fuel - 10.0)
+        exports['cdn-fuel'](vehicle, fuel - 10.0)
     end
 end
 

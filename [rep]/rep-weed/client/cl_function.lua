@@ -180,8 +180,8 @@ function targetNPC()
                     action = function()
                         TriggerServerEvent('rep-weed:server:collectPackageGood')
                     end,
-                    icon = Lang.target.checkManage.icon,
-                    label = Lang.target.checkManage.label,
+                    icon = Lang.target.collectPackage.icon,
+                    label = Lang.target.collectPackage.label,
                     canInteract = function()
                         return canCollect
                     end,
@@ -197,7 +197,7 @@ function setInventoryDisabled(bool)
         LocalPlayer.state.invBusy = bool
     elseif Config.Inventory == 'qs' then
         exports['qs-inventory']:setInventoryDisabled(bool)
-    elseif Config.Inventory == 'old_qb' or Config.Inventory == 'new_qb' then
+    elseif Config.Inventory == 'old-qb' or Config.Inventory == 'new-qb' then
         LocalPlayer.state:set("inv_busy", bool, true)
     end
 end
@@ -220,7 +220,7 @@ function hasItem(_item, _count)
         else
             return false
         end
-    elseif Config.Inventory == 'old_qb' or Config.Inventory == 'new_qb' then
+    elseif Config.Inventory == 'old-qb' or Config.Inventory == 'new-qb' then
         return exports['qb-inventory']:HasItem(_item)
     end
 end
@@ -526,7 +526,6 @@ AddEventHandler('onResourceStop', function(r)
         for id, plant in pairs(Plants) do
             removeWeed(id)
         end
-        DeleteEntity(bossNpc)
     end
 end)
 

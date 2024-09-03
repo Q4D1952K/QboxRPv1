@@ -5,6 +5,7 @@ local CurrentCops = 0
 local PlayerData = QBCore.Functions.GetPlayerData()
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
+    Wait(5000)
     PlayerData = QBCore.Functions.GetPlayerData()
     if Config.UseTalkNPC then
         talkNPC()
@@ -265,7 +266,7 @@ function Framework.Progressbar(_name, _label, _duration, _canCancel, _onFinish, 
     --         end
     --     end
     -- end)
-    if lib.progressCircle({
+    if lib.progressBar({
         duration = _duration,
         label = _label,
         position = 'bottom',

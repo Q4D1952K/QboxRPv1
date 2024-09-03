@@ -283,7 +283,7 @@ function functions.SpawnVehicle(model, cb, coords, isnetworked, teleportInto)
     SetNetworkIdCanMigrate(netid, true)
     SetVehicleNeedsToBeHotwired(veh, false)
     SetVehRadioStation(veh, 'OFF')
-    exports['cdn-fuel']:(veh, 100.0)
+    exports['cdn-fuel'](veh, 100.0)
     SetModelAsNoLongerNeeded(model)
     if teleportInto then TaskWarpPedIntoVehicle(cache.ped, veh, -1) end
     if cb then cb(veh) end
@@ -456,7 +456,7 @@ function functions.SetVehicleProperties(vehicle, props)
     end
 
     if props.fuelLevel then
-        exports['cdn-fuel']:(vehicle, props.fuelLevel + 0.0)
+        exports['cdn-fuel'](vehicle, props.fuelLevel + 0.0)
     end
 
     if props.oilLevel then

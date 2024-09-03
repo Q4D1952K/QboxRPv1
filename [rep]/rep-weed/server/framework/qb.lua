@@ -26,9 +26,9 @@ function Framework.AddItem(src, _item, _amount, _metadata, _slot)
         return exports.ox_inventory:AddItem(src, _item, _amount, _metadata, _slot)
     elseif Config.Inventory == 'qs' then
         return exports['qs-inventory']:AddItem(src, _item, _amount, _slot, _metadata)
-    elseif Config.Inventory == 'new_qb' then
+    elseif Config.Inventory == 'new-qb' then
         return exports['qb-inventory']:AddItem(src, _item, _amount, _slot, _metadata)
-    elseif Config.Inventory == 'old_qb' then
+    elseif Config.Inventory == 'old-qb' then
         local Player = QBCore.Functions.GetPlayer(src)
         return Player.Functions.AddItem(_item, _amount, _slot, _metadata)
     end
@@ -39,9 +39,9 @@ function Framework.RemoveItem(src, _item, _amount, _slot)
         return exports.ox_inventory:RemoveItem(src, _item, _amount, nil, _slot)
     elseif Config.Inventory == 'qs' then
         return exports['qs-inventory']:RemoveItem(src, _item, _amount, _slot)
-    elseif Config.Inventory == 'new_qb' then
+    elseif Config.Inventory == 'new-qb' then
         return exports['qb-inventory']:RemoveItem(src, _item, _amount, _slot)
-    elseif Config.Inventory == 'old_qb' then
+    elseif Config.Inventory == 'old-qb' then
         local Player = QBCore.Functions.GetPlayer(src)
         return Player.Functions.RemoveItem(_item, _amount, _slot)
     end

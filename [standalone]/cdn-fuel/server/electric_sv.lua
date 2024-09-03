@@ -1,5 +1,5 @@
 -- Variables
-local QBCore = exports[Config.Core]:GetCoreObject()
+local QBCore = exports.qbx_core
 
 -- Functions
 local function GlobalTax(value)

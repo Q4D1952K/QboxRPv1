@@ -1,5 +1,5 @@
 -- Variables
-local QBCore = exports[Config.Core]:GetCoreObject()
+local QBCore = exports.qbx_core
 local fuelSynced = false
 local inGasStation = false
 local inBlacklisted = false

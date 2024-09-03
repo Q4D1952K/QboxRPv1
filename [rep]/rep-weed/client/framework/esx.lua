@@ -11,6 +11,7 @@ if ESX.PlayerLoaded then
 end
 
 RegisterNetEvent("esx:playerLoaded", function(xPlayer, isNew)
+    Wait(5000)
     setPlayerData(xPlayer)
     if Config.UseTalkNPC then
         talkNPC()
@@ -245,7 +246,7 @@ function Framework.getIdentifier()
 end
 
 function Framework.Progressbar(_name, _label, _duration, _canCancel, _onFinish, _onCancel)
-    if lib.progressCircle({
+    if lib.progressBar({
         duration = _duration,
         label = _label,
         position = 'bottom',

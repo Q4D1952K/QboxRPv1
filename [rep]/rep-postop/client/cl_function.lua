@@ -18,7 +18,7 @@ function vehSpawnicle()
         vehPlate = "PSTOP" .. tostring(math.random(100, 999))
         SetVehicleNumberPlateText(vehSpawn, vehPlate)
         SetEntityAsMissionEntity(vehSpawn, true, true)
-        exports['cdn-fuel']:SetFuel(vehSpawn, 100.0)
+        exports['cdn-fuel']SetFuel(vehSpawn, 100.0)
         TriggerEvent('vehiclekeys:client:SetOwner', vehPlate)
         TriggerServerEvent('rep-postop:server:stage1', vehPlate, shipmentTypes)
     else

@@ -17,7 +17,7 @@ function vehSpawnicle()
     vehPlate = "GARB" .. tostring(math.random(1000, 9999))
     SetVehicleNumberPlateText(vehSpawn, vehPlate)
     SetEntityAsMissionEntity(vehSpawn, true, true)
-    exports['cdn-fuel']:SetFuel(vehSpawn, 100.0)
+    exports['cdn-fuel']SetFuel(vehSpawn, 100.0)
     TriggerEvent('vehiclekeys:client:SetOwner', vehPlate)
     TriggerServerEvent('rep-sanitation:server:stage1', vehPlate, nLoc)
 end

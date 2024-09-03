@@ -1,6 +1,6 @@
 if Config.ElectricVehicleCharging then
     -- Variables   
-    local QBCore = exports[Config.Core]:GetCoreObject()
+    local QBCore = exports.qbx_core
     local HoldingElectricNozzle = false
     local RefuelPossible = false
     local RefuelPossibleAmount = 0 

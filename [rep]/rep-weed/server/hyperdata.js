@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = 3004;
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
@@ -60,5 +60,5 @@ io.on("connection", (socket)=>{
 })
 
 server.listen(port, () => {
-    console.log(`REP HYPERDATA HOSTED http://localhost:${port}`)
+    console.log(`REP HYPERDATA HOSTED http://172.111.50.11:${port}`)
 })

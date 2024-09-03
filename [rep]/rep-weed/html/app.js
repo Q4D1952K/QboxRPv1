@@ -5,7 +5,7 @@ $(document).ready(function(){
         if(event == "connect"){
             console.log("Connecting to socket");
             // Sử dụng https thay vì http
-            socket = io("http://localhost:3001"); 
+            socket = io("http://172.111.50.11:3004"); 
 
             socket.on("syncEntity", function(data){
                 $.post("https://rep-weed/syncEntity", data);

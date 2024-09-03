@@ -473,7 +473,7 @@ Config.Plant = {
 
 Config.Cornerselling = {
     status = true,
-    policeNeed = 2,
+    policeNeed = 0,
     populateRate = 1000 * 60 * 2,       -- default: 2 min/populate, -1 to disable
     timeBetweenAcquisition = 60 * 1000, -- default: 1 min/ped
     money = 50,
@@ -539,7 +539,7 @@ Config.Cornerselling = {
 
 Config.TacoShop = {
     status = true,
-    policeNeed = 3,
+    policeNeed = 0,
     policeAlert = 15, -- percents
     price = 500, -- Price default per weedpackage
     maxPrice = 3500,

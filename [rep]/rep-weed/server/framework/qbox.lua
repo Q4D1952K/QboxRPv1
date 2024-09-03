@@ -37,12 +37,12 @@ end
 
 function Framework.getPlayerRep(src)
     local player = exports.qbx_core:GetPlayer(src)
-    return player.PlayerData.metadata['weed-rep']
+    return player.PlayerData.metadata['weed_rep']
 end
 
 function Framework.setPlayerRep(src, amount)
     local player = exports.qbx_core:GetPlayer(src)
-    player.Functions.SetMetaData('weed-rep', amount)
+    player.Functions.SetMetaData('weed_rep', amount)
 end
 
 function Framework.earnCorner(src, _money)

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/web/build/static/css/main.67f6a3ed.css",
-    "main.js": "/web/build/static/js/main.9ef22b77.js",
+    "main.js": "/web/build/static/js/main.fe0d524b.js",
     "static/media/MARK SIMONSON - PROXIMA NOVA BOLD.OTF": "/web/build/static/media/MARK SIMONSON - PROXIMA NOVA BOLD.fcaab2524c5baabd71f6.OTF",
     "static/media/MARK SIMONSON - PROXIMA NOVA REGULAR.OTF": "/web/build/static/media/MARK SIMONSON - PROXIMA NOVA REGULAR.ea03f826587148b7335d.OTF",
     "static/media/MARK SIMONSON - PROXIMA NOVA BLACK.OTF": "/web/build/static/media/MARK SIMONSON - PROXIMA NOVA BLACK.120f91ca1cfeced5a5ac.OTF",
@@ -9,10 +9,10 @@
     "static/media/MARK SIMONSON - PROXIMA NOVA THIN.OTF": "/web/build/static/media/MARK SIMONSON - PROXIMA NOVA THIN.e700c29b9bb60e33a161.OTF",
     "index.html": "/web/build/index.html",
     "main.67f6a3ed.css.map": "/web/build/static/css/main.67f6a3ed.css.map",
-    "main.9ef22b77.js.map": "/web/build/static/js/main.9ef22b77.js.map"
+    "main.fe0d524b.js.map": "/web/build/static/js/main.fe0d524b.js.map"
   },
   "entrypoints": [
     "static/css/main.67f6a3ed.css",
-    "static/js/main.9ef22b77.js"
+    "static/js/main.fe0d524b.js"
   ]
 }

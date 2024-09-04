@@ -2,6 +2,7 @@ Config = {}
 
 -- Stress
 Config.StressChance = 0.1         -- Default: 10% -- Percentage Stress Chance When Shooting (0-1)
+Config.MinimumStress = 50 -- Minimum stress level for screen shaking
 Config.minForSpeeding = 1000 -- Minimum stress level for speeding while buckled
 Config.minForSpeedingUnbuckled = 50 -- Minimum stress level for speeding while unbuckled
 Config.DisablePoliceStress = true -- If true will disable stress for people with the police job

@@ -11,7 +11,7 @@ ui_page 'web/build/index.html'
 
 client_scripts {"client/**/*"}
 
-shared_scripts {'@ox_lib/init.lua', 'config.lua'}
+shared_scripts {'@ox_lib/init.lua', '@qbx_core/modules/lib.lua', 'config.lua'}
 
 server_scripts {
     '@oxmysql/lib/MySQL.lua',

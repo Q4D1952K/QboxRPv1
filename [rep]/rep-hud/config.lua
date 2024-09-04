@@ -205,3 +205,17 @@ Config.ZoneName = {
     ['PROL'] = 'Prologue / North Yankton',
     ['ISHeist'] = 'Cayo Perico Island'
 }
+
+Framework = {}
+
+function Framework.ESX()
+    return GetResourceState("es_extended") ~= "missing"
+end
+
+function Framework.QBCore()
+    return GetResourceState("qb-core") ~= "missing"
+end
+
+function Framework.QBox()
+    return GetResourceState("qbx_core") ~= "missing"
+end

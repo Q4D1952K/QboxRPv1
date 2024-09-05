@@ -86,7 +86,7 @@ function Framework.earnTaco(src, _money)
     Player.Functions.AddMoney('cash', _money, 'taco')
 end
 
-lib.callback.register('rep-weed:callback:checkOwner', function(plate)
+lib.callback.register('rep-weed:callback:checkOwner', function(source, plate)
     MySQL.query('SELECT * FROM player_vehicles WHERE plate = ?',{plate}, function(result)
         if result[1] then
             return true

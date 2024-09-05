@@ -65,7 +65,7 @@ function Framework.earnTaco(src, _money)
     xPlayer.addAccountMoney('money', _money, 'taco')
 end
 
-lib.callback.register('rep-weed:callback:checkOwner', function(plate)
+lib.callback.register('rep-weed:callback:checkOwner', function(source, plate)
     MySQL.query('SELECT * FROM owned_vehicles WHERE plate = ?',{plate}, function(result)
         if result[1] then
             return true

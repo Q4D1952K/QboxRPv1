@@ -31,3 +31,4 @@ escrow_ignore {
     'README.MD',
     'INSTALL.md'
 }
+dependency '/assetpacks'

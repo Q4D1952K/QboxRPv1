@@ -1,11 +1,3 @@
-AddEventHandler('ox_inventory:openedInventory', function(source)
-    TriggerClientEvent('rep-hud:client:hideHud', source)
-end)
-
-AddEventHandler('ox_inventory:closedInventory', function(source)
-    TriggerClientEvent('rep-hud:client:showHud', source)
-end)
-
 lib.addCommand('cinematic', {
     help = 'Toggle Cinematic',
     params = {},

@@ -82,4 +82,7 @@ end
 
 exports('getExpStrain', getExpStrain)
 
-TriggerEvent('rep-weed:config', Config)
+
+CreateThread(function ()
+    TriggerEvent('rep-weed:config', Config.HyperData)
+end)

@@ -13,10 +13,12 @@ https://youtu.be/rBnhWZc61AU
 
 
 ### IMPORTANT ###
-
+## IF use hyperdata transfer
 # Change "localhost" from app.js and hyperdata.js to your server ip
 
 # Turn on TCP port like FiveM (default is 3001, u can change it)
+
+## Else don't use, turn Config.HyperData = false
 
 ### QS-Inventory
 

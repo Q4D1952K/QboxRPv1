@@ -6,15 +6,15 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const DATASET = {}
-const Config = {};
+let HyperData = true;
 
 on("rep-weed:config", function(data){
-    Config = data
+    HyperData = data
 })
 
 on("rep-weed:register", function(name, data){
     DATASET[name] = data
-    if (Config.HyperData) {
+    if (HyperData) {
         io.emit("REGISTER_DATASET", {name, data})
     } else {
         emitNet("REGISTER_DATASET", -1, {name, data})
@@ -44,7 +44,7 @@ on("rep-weed:sync", function(name, index, index2, data){
         }
         DATASET[name][index][index2] = data
     }
-    if (Config.HyperData) {
+    if (HyperData) {
         io.emit("SYNC_DATASET", {name, index, index2, data})
     } else {
         emitNet("SYNC_DATASET", -1, {name, index, index2, data})
@@ -53,7 +53,7 @@ on("rep-weed:sync", function(name, index, index2, data){
 
 on("rep-weed:remove", function(name, index){
     delete DATASET[name][index]
-    if (Config.HyperData) {
+    if (HyperData) {
         io.emit("REMOVE_DATASET", {name, index})
     } else {
         emitNet("REMOVE_DATASET", -1, {name, index})
@@ -62,7 +62,7 @@ on("rep-weed:remove", function(name, index){
 
 on("rep-weed:update", function(data){
     DATASET['Plants'] = data
-    if (Config.HyperData) {
+    if (HyperData) {
         io.emit("UPDATE_DATASET", {data})
     } else {
         emitNet("UPDATE_DATASET", -1, {data})
@@ -88,5 +88,5 @@ io.on("connection", (socket)=>{
 })
 
 server.listen(port, () => {
-    console.log(`REP HYPERDATA HOSTED http://172.111.50.11:${port}`)
+    console.log(`REP HYPERDATA HOSTED http://localhost:${port}`)
 })

@@ -17,7 +17,9 @@ on("rep-weed:register", function(name, data){
     if (HyperData) {
         io.emit("REGISTER_DATASET", {name, data})
     } else {
-        emitNet("REGISTER_DATASET", -1, {name, data})
+        setTimeout(() => {
+            emitNet("REGISTER_DATASET", -1, { name, data });
+        }, 1000);
     }
 })
 

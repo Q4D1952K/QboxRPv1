@@ -7,7 +7,7 @@ lib.callback.register('rep-oxyrun:callback:GetCurrentCop', function()
     return #xPlayers
  end)
 
- lib.callback.register('rep-oxyrun:callback:checkOwner', function(plate)
+ lib.callback.register('rep-oxyrun:callback:checkOwner', function(source, plate)
     MySQL.query('SELECT * FROM owned_vehicles WHERE plate = ?',{plate}, function(result)
         if result[1] then
             return true

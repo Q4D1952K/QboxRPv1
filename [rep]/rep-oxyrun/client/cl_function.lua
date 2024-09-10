@@ -76,6 +76,7 @@ end
 
 function targetNPC()
     local _model, _pos = lib.callback.await('rep-oxyrun:callback:bossNPC', false)
+    lib.requestModel(_model)
     bossNpc = CreatePed(0, _model, _pos.x, _pos.y, _pos.z, _pos.w, false, true)
     SetPedFleeAttributes(bossNpc, 0, false)
     SetPedDiesWhenInjured(bossNpc, false)

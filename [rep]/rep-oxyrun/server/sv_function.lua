@@ -5,30 +5,35 @@ lib.callback.register('rep-oxyrun:callback:spawnObj', function(source, _model, _
     return NetworkGetNetworkIdFromEntity(obj)
 end)
 
-lib.callback.register('rep-oxyrun:callback:vehSpawn', function(source, _model, _pos)
-    local veh = CreateVehicle(_model, _pos.x, _pos.y, _pos.z, _pos.w, true, true)
+lib.callback.register('rep-oxyrun:callback:vehSpawn', function(source, _model, _pos, _pedModel)
+    local ped = GetPlayerPed(source)
+    local coords = GetEntityCoords(ped)
+    local veh = CreateVehicle(_model, coords.x, coords.y, coords.z + 7.5, _pos.w, true, true)
     while not DoesEntityExist(veh) do Wait(0) end
-    while NetworkGetEntityOwner(veh) ~= source do Wait(0) end
-    return NetworkGetNetworkIdFromEntity(veh)
+    SetEntityDistanceCullingRadius(veh, 30000.0) -- So this entity will be visible by all clients at any distance
+    SetEntityCoords(veh, _pos.x, _pos.y, _pos.z)
+    SetEntityHeading(veh, _pos.w)
+    Wait(2000)
+    local _ped = CreatePed(0, joaat(_pedModel), coords.x, coords.y, coords.z - 3.0, _pos.w, true, true)
+    while not DoesEntityExist(_ped) do Wait(0) end
+    SetEntityDistanceCullingRadius(_ped, 30000.0) -- So this entity will be visible by all clients at any distance
+    SetPedIntoVehicle(_ped, veh, -1)
+    Wait(2000)
+    return NetworkGetNetworkIdFromEntity(veh), NetworkGetNetworkIdFromEntity(_ped)
 end)
 
 lib.callback.register('rep-oxyrun:callback:spawnPed', function(source, _model, _pos)
-    local _ped = CreatePed(0, _model, _pos.x, _pos.y, _pos.z, _pos.w, true, true)
+    local ped = GetPlayerPed(source)
+    local coords = GetEntityCoords(ped)
+    local _ped = CreatePed(0, _model, coords.x, coords.y, coords.z - 3.0, _pos.w, true, true)
     while not DoesEntityExist(_ped) do Wait(0) end
-    while NetworkGetEntityOwner(_ped) ~= source do Wait(0) end
+    SetEntityDistanceCullingRadius(_ped, 30000.0) -- So this entity will be visible by all clients at any distance
+    SetEntityCoords(_ped, _pos.x, _pos.y, _pos.z)
+    SetEntityHeading(_ped, _pos.w)
     local idGroup = exports["rep-tablet"]:getGroupByMembers(source)
     local leader = exports["rep-tablet"]:GetGroupLeader(idGroup)
     Routes[leader].ped = _ped
-    return NetworkGetNetworkIdFromEntity(_ped)
-end)
-
-lib.callback.register('rep-oxyrun:callback:spawnPedInCar', function(source, _model, car)
-    local _ped = CreatePedInsideVehicle(NetworkGetEntityFromNetworkId(car), 26, _model, -1, true, true)
-    while not DoesEntityExist(_ped) do Wait(0) end
-    while NetworkGetEntityOwner(_ped) ~= source do Wait(0) end
-    local idGroup = exports["rep-tablet"]:getGroupByMembers(source)
-    local leader = exports["rep-tablet"]:GetGroupLeader(idGroup)
-    Routes[leader].ped = _ped
+    Wait(1000)
     return NetworkGetNetworkIdFromEntity(_ped)
 end)
 
@@ -38,4 +43,3 @@ RegisterNetEvent('rep-oxyrun:server:delEntity', function (objId)
         DeleteEntity(obj)
     end
 end)
-

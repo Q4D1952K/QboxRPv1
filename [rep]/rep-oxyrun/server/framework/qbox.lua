@@ -4,7 +4,7 @@ lib.callback.register('rep-oxyrun:callback:GetCurrentCop', function()
     return exports.qbx_core:GetDutyCountType('leo')
 end)
 
-lib.callback.register('rep-oxyrun:callback:checkOwner', function(plate)
+lib.callback.register('rep-oxyrun:callback:checkOwner', function(source, plate)
     MySQL.query('SELECT * FROM player_vehicles WHERE plate = ?',{plate}, function(result)
         if result[1] then
             return true

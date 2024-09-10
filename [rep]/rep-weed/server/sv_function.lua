@@ -32,11 +32,17 @@ end
 lib.callback.register('rep-weed:callback:spawnTacoNPC', function(source, _model, _index)
     local _pPos = Config.TacoShop.points[_index].pos
     _model = type(_model) == 'string' and joaat(_model) or _model
-    local _ped = CreatePed(0, _model, _pPos.x, _pPos.y, _pPos.z, _pPos.w, true, true)
+    local ped = GetPlayerPed(source)
+    local coords = GetEntityCoords(ped)
+    local _ped = CreatePed(0, _model, coords.x, coords.y, coords.z - 3.0, _pPos.w, true, true)
     while not DoesEntityExist(_ped) do Wait(0) end
     while NetworkGetEntityOwner(_ped) ~= source do Wait(0) end
+    SetEntityDistanceCullingRadius(_ped, 30000.0) -- So this entity will be visible by all clients at any distance
+    SetEntityCoords(_ped, _pPos.x, _pPos.y, _pPos.z)
+    SetEntityHeading(_ped, _pPos.w)
     TacoShop[source].ped = _ped
-    return NetworkGetNetworkIdFromEntity(TacoShop[source].ped)
+    Wait(1000)
+    return NetworkGetNetworkIdFromEntity(TacoShop[source].ped), _pPos
 end)
 
 lib.callback.register('rep-weed:callback:spawnObj', function(source, _model)

@@ -127,9 +127,9 @@ if Config.Inventory == 'ox' then
             if Framework.RemoveItem(inventory.id, i.name, 1, slot) then
                 TriggerClientEvent('rep-weed:client:smokeWeed', inventory.id, i)
                 local metadata = {}
-                metadata.n = item.metadata.n or 0
-                metadata.p = item.metadata.p or 0
-                metadata.k = item.metadata.k or 0
+                metadata.n = i.metadata.n or 0
+                metadata.p = i.metadata.p or 0
+                metadata.k = i.metadata.k or 0
                 local r = math.random(1, 100)
                 if r > 70 then
                     if r > 80 then

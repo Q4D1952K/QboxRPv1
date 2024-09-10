@@ -37,7 +37,3 @@ RegisterNetEvent('hud:server:RelieveStress', function(amount)
     TriggerClientEvent('hud:client:UpdateStress', src, newStress)
     exports.qbx_core:Notify(src, "Feeling More Relaxed!", 'success', 2500, nil, nil, {'#141517', '#ffffff'}, 'brain', '#0F52BA')
 end)
-
-lib.callback.register('rep-hud:callback:getMem', function ()
-    return #exports.qbx_core:GetQBPlayers()
-end)

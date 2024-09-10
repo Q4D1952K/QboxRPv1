@@ -4,6 +4,7 @@ local playerState = LocalPlayer.state
 stress = playerState.stress or 0
 hunger = playerState.hunger or 100
 thirst = playerState.thirst or 100
+citizenId = QBX:GetPlayerData().citizenid or nil
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     Wait(2000)
@@ -13,6 +14,7 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     thirst = PlayerData.metadata.thirst
     cashAmount = PlayerData.money.cash
     bankAmount = PlayerData.money.bank
+    citizenId = PlayerData.citizenid
     loadMap()
 end)
 
@@ -30,17 +32,11 @@ RegisterNetEvent('hud:client:OnMoneyChange', function(type, amount, isMinus)
     })
 end)
 
-function Framework.getIdentifier()
-    return QBX:GetPlayerData().citizenid
-end
-
 ---@deprecated Use statebags instead
 RegisterNetEvent('hud:client:UpdateNeeds', function(newHunger, newThirst) -- Triggered in qb-core
     hunger = newHunger
     thirst = newThirst
 end)
-
-
 
 ---@deprecated Use statebags instead
 RegisterNetEvent('hud:client:UpdateStress', function(newStress)
@@ -70,7 +66,6 @@ RegisterNetEvent('seatbelt:client:ToggleCruise', function()
         }
     })
 end)
-
 
 function Framework.Notification(_msg, _type, _time)
     exports.qbx_core:Notify(_msg, _type, _time)

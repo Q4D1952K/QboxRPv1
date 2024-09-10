@@ -1,7 +1,6 @@
 if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stations are a Config Option, instead of forced. Set this option in shared/config.lua!
     -- Variables
     local QBX = exports.qbx_core
-    local QBCore = exports['qb-core']:GetCoreObject()
     local PedsSpawned = false
 
     -- These are for fuel pickup:
@@ -21,35 +20,35 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
 
     local function UpdateStationInfo(info)
         if Config.FuelDebug then print("Fetching Information for Location #" ..CurrentLocation) end
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:fetchinfo', function(result)
-            if result then
-                for _, v in pairs(result) do
-                    -- Reserves --
-                    if info == "all" or info == "reserves" then
-                        if Config.FuelDebug then print("Fetched Reserve Levels: "..v.fuel.." Liters!") end
-                        Currentreserveamount = v.fuel
-                        ReserveLevels = Currentreserveamount
-                        if Currentreserveamount < Config.MaxFuelReserves then
-                            ReservesNotBuyable = false
-                        else
-                            ReservesNotBuyable = true
-                        end
-                        if Config.UnlimitedFuel then ReservesNotBuyable = true if Config.FuelDebug then print("Reserves are not buyable, because Config.UnlimitedFuel is set to true.") end end
+        local result = lib.callback.await('cdn-fuel:server:fetchinfo', false, CurrentLocation)
+        if result then
+            for _, v in pairs(result) do
+                -- Reserves --
+                if info == "all" or info == "reserves" then
+                    if Config.FuelDebug then print("Fetched Reserve Levels: "..v.fuel.." Liters!") end
+                    Currentreserveamount = v.fuel
+                    ReserveLevels = Currentreserveamount
+                    if Currentreserveamount < Config.MaxFuelReserves then
+                        ReservesNotBuyable = false
+                    else
+                        ReservesNotBuyable = true
                     end
-                    -- Fuel Price --
-                    if info == "all" or info == "fuelprice" then
-                        StationFuelPrice = v.fuelprice
-                    end
-                    -- Fuel Station's Balance --
-                    if info == "all" or info == "balance" then
-                        StationBalance = v.balance
-                        if Config.FuelDebug then print("Successfully Fetched: Balance") end
-                    end
-                    ----------------
+                    if Config.UnlimitedFuel then ReservesNotBuyable = true if Config.FuelDebug then print("Reserves are not buyable, because Config.UnlimitedFuel is set to true.") end end
                 end
+                -- Fuel Price --
+                if info == "all" or info == "fuelprice" then
+                    StationFuelPrice = v.fuelprice
+                end
+                -- Fuel Station's Balance --
+                if info == "all" or info == "balance" then
+                    StationBalance = v.balance
+                    if Config.FuelDebug then print("Successfully Fetched: Balance") end
+                end
+                ----------------
             end
-        end, CurrentLocation)
-    end exports(UpdateStationInfo, UpdateStationInfo)
+        end
+    end
+    exports('UpdateStationInfo', UpdateStationInfo)
 
     local function SpawnGasStationPeds()
         if not Config.GasStations or not next(Config.GasStations) or PedsSpawned then return end
@@ -100,7 +99,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
             AttachVehicleToTrailer(spawnedDeliveryTruck, spawnedTankerTrailer, 15.0)
             -- Now our vehicle is spawned.
             if spawnedDeliveryTruck ~= 0 and spawnedTankerTrailer ~= 0 then
-                TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(spawnedDeliveryTruck))
+                TriggerEvent("vehiclekeys:client:SetOwner", QBX:GetPlate(spawnedDeliveryTruck))
                 return true
             else
                 return false
@@ -135,7 +134,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
             }
 
             if SpawnPickupVehicles() then
-                QBCore.Functions.Notify(Lang:t("fuel_order_ready"), 'success')
+                exports.qbx_core:Notify(Lang:t("fuel_order_ready"), 'success')
                 SetNewWaypoint(Config.DeliveryTruckSpawns['truck'].x, Config.DeliveryTruckSpawns['truck'].y)
                 SetUseWaypointAsDestination(true)
                 ReservePickupData.blip = CreateBlip(vector3(Config.DeliveryTruckSpawns['truck'].x, Config.DeliveryTruckSpawns['truck'].y, Config.DeliveryTruckSpawns['truck'].z), "Truck Pickup")
@@ -198,7 +197,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                                                                 if distBetweenTruckAndTrailer > 10.0 then
                                                                     distBetweenTruckAndTrailer = nil
                                                                     if not stopNotifyTemp then
-                                                                        QBCore.Functions.Notify(Lang:t("trailer_too_far"), 'error', 7500)
+                                                                        exports.qbx_core:Notify(Lang:t("trailer_too_far"), 'error', 7500)
                                                                     end
                                                                     stopNotifyTemp = true
                                                                     Wait(1000)
@@ -294,50 +293,48 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
 
     RegisterNetEvent('cdn-fuel:stations:client:purchaselocation', function(data)
         local location = data.location
-        local CitizenID = QBCore.Functions.GetPlayerData().citizenid
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
         CanOpen = false
         Wait(5)
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:locationpurchased', function(result)
-            if result then
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned!") end
-                IsOwned = true
-            else
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned.") end
-                IsOwned = false
-            end
-        end, CurrentLocation)
+        local result = lib.callback.await('cdn-fuel:server:locationpurchased', false, CurrentLocation)
+        if result then
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned!") end
+            IsOwned = true
+        else
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned.") end
+            IsOwned = false
+        end
         Wait(Config.WaitTime)
 
         if not IsOwned then
             TriggerServerEvent('cdn-fuel:server:buyStation', location, CitizenID)
         elseif IsOwned then
-            QBCore.Functions.Notify(Lang:t("station_already_owned"), 'error', 7500)
+            exports.qbx_core:Notify(Lang:t("station_already_owned"), 'error', 7500)
         end
     end)
 
     RegisterNetEvent('cdn-fuel:stations:client:sellstation', function(data)
         local location = data.location
         local SalePrice = data.SalePrice
-        local CitizenID = QBCore.Functions.GetPlayerData().citizenid
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
         CanSell = false
         Wait(5)
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:isowner', function(result)
-            if result then
-                if Config.FuelDebug then print("The Location: "..location.." is owned by ID: "..CitizenID) end
-                CanSell = true
-            else
-                QBCore.Functions.Notify(Lang:t("station_not_owner"), 'error', 7500)
-                if Config.FuelDebug then print("The Location: "..location.." is not owned by ID: "..CitizenID) end
-                CanSell = false
-            end
-        end, location)
+        local result = lib.callback.await('cdn-fuel:server:isowner', false, location)
+        if result then
+            if Config.FuelDebug then print("The Location: "..location.." is owned by ID: "..CitizenID) end
+            CanSell = true
+        else
+            exports.qbx_core:Notify(Lang:t("station_not_owner"), 'error', 7500)
+            if Config.FuelDebug then print("The Location: "..location.." is not owned by ID: "..CitizenID) end
+            CanSell = false
+        end
         Wait(Config.WaitTime)
         if CanSell then
             if Config.FuelDebug then print("Attempting to sell for: $"..SalePrice) end
             TriggerServerEvent('cdn-fuel:stations:server:sellstation', location)
             if Config.FuelDebug then print("Event Triggered") end
         else
-            QBCore.Functions.Notify(Lang:t("station_cannot_sell"), 'error', 7500)
+            exports.qbx_core:Notify(Lang:t("station_cannot_sell"), 'error', 7500)
         end
     end)
 
@@ -348,17 +345,16 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         CanOpen = false
         Wait(5)
         if Config.FuelDebug then print("checking ownership of "..location) end
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:isowner', function(result)
-            local CitizenID = QBCore.Functions.GetPlayerData().citizenid
-            if result then
-                if Config.FuelDebug then print("The Location: "..location.." is owned by ID: "..CitizenID) end
-                CanOpen = true
-            else
-                QBCore.Functions.Notify(Lang:t("station_not_owner"), 'error', 7500)
-                if Config.FuelDebug then print("The Location: "..location.." is not owned by ID: "..CitizenID) end
-                CanOpen = false
-            end
-        end, location)
+        local result = lib.callback.await('cdn-fuel:server:isowner', false, location)
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
+        if result then
+            if Config.FuelDebug then print("The Location: "..location.." is owned by ID: "..CitizenID) end
+            CanOpen = true
+        else
+            exports.qbx_core:Notify(Lang:t("station_not_owner"), 'error', 7500)
+            if Config.FuelDebug then print("The Location: "..location.." is not owned by ID: "..CitizenID) end
+            CanOpen = false
+        end
         Wait(Config.WaitTime)
         if CanOpen then
             if Config.FuelDebug then print("Price: "..price.."<br> Amount: "..amount.." <br> Location: "..location) end
@@ -429,20 +425,19 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
     RegisterNetEvent('cdn-fuel:stations:client:purchasereserves', function(data)
         local CanOpen = false
         local location = data.location
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:isowner', function(result)
-            local CitizenID = QBCore.Functions.GetPlayerData().citizenid
-            if result then
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
-                CanOpen = true
-            else
-                QBCore.Functions.Notify(Lang:t("station_not_owner"), 'error', 7500)
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
-                CanOpen = false
-            end
-        end, location)
+        local result = lib.callback.await('cdn-fuel:server:isowner', false, location)
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
+        if result then
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
+            CanOpen = true
+        else
+            exports.qbx_core:Notify(Lang:t("station_not_owner"), 'error', 7500)
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
+            CanOpen = false
+        end
         Wait(Config.WaitTime)
         if CanOpen then
-            local bankmoney = QBCore.Functions.GetPlayerData().money['bank']
+            local bankmoney = exports.qbx_core:GetPlayerData().money['bank']
             if Config.FuelDebug then print("Showing Input for Reserves!") end
             if Config.Ox.Input then
                 local reserves = lib.inputDialog('Purchase Reserves', {
@@ -467,11 +462,11 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                     if Config.FuelDebug then print("Attempting to buy reserves!") end
                     Wait(100)
                     local amount = reservesAmount
-                    if not reservesAmount then QBCore.Functions.Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
+                    if not reservesAmount then exports.qbx_core:Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
                     Reservebuyamount = tonumber(reservesAmount)
-                    if Reservebuyamount < 1 then QBCore.Functions.Notify(Lang:t("station_more_than_one"), 'error', 7500) return end
+                    if Reservebuyamount < 1 then exports.qbx_core:Notify(Lang:t("station_more_than_one"), 'error', 7500) return end
                     if (Reservebuyamount + Currentreserveamount) > Config.MaxFuelReserves then
-                        QBCore.Functions.Notify(Lang:t("station_reserve_cannot_fit"), "error")
+                        exports.qbx_core:Notify(Lang:t("station_reserve_cannot_fit"), "error")
                     else
                         if math.ceil(GlobalTax(Reservebuyamount * Config.FuelReservesPrice) + (Reservebuyamount * Config.FuelReservesPrice)) <= bankmoney then
                             local price = math.ceil(GlobalTax(Reservebuyamount * Config.FuelReservesPrice) + (Reservebuyamount * Config.FuelReservesPrice))
@@ -479,7 +474,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                             TriggerEvent("cdn-fuel:stations:client:purchasereserves:final", location, price, amount)
 
                         else
-                            QBCore.Functions.Notify(Lang:t("not_enough_money_in_bank"), 'error', 7500)
+                            exports.qbx_core:Notify(Lang:t("not_enough_money_in_bank"), 'error', 7500)
                         end
                     end
                 end
@@ -499,11 +494,11 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                     if Config.FuelDebug then print("Attempting to buy reserves!") end
                     Wait(100)
                     local amount = reserves.amount
-                    if not reserves.amount then QBCore.Functions.Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
+                    if not reserves.amount then exports.qbx_core:Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
                     Reservebuyamount = tonumber(reserves.amount)
-                    if Reservebuyamount < 1 then QBCore.Functions.Notify(Lang:t("station_more_than_one"), 'error', 7500) return end
+                    if Reservebuyamount < 1 then exports.qbx_core:Notify(Lang:t("station_more_than_one"), 'error', 7500) return end
                     if (Reservebuyamount + Currentreserveamount) > Config.MaxFuelReserves then
-                        QBCore.Functions.Notify(Lang:t("station_reserve_cannot_fit"), "error")
+                        exports.qbx_core:Notify(Lang:t("station_reserve_cannot_fit"), "error")
                     else
                         if math.ceil(GlobalTax(Reservebuyamount * Config.FuelReservesPrice) + (Reservebuyamount * Config.FuelReservesPrice)) <= bankmoney then
                             local price = math.ceil(GlobalTax(Reservebuyamount * Config.FuelReservesPrice) + (Reservebuyamount * Config.FuelReservesPrice))
@@ -511,7 +506,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                             TriggerEvent("cdn-fuel:stations:client:purchasereserves:final", location, price, amount)
 
                         else
-                            QBCore.Functions.Notify(Lang:t("not_enough_money_in_bank"), 'error', 7500)
+                            exports.qbx_core:Notify(Lang:t("not_enough_money_in_bank"), 'error', 7500)
                         end
                     end
                 end
@@ -522,17 +517,16 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
     RegisterNetEvent('cdn-fuel:stations:client:changefuelprice', function(data)
         CanOpen = false
         local location = data.location
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:isowner', function(result)
-            local CitizenID = QBCore.Functions.GetPlayerData().citizenid
-            if result then
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
-                CanOpen = true
-            else
-                QBCore.Functions.Notify(Lang:t("station_not_owner"), 'error', 7500)
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
-                CanOpen = false
-            end
-        end, location)
+        local result = lib.callback.await('cdn-fuel:server:isowner', false, location)
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
+        if result then
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
+            CanOpen = true
+        else
+            exports.qbx_core:Notify(Lang:t("station_not_owner"), 'error', 7500)
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
+            CanOpen = false
+        end
         Wait(Config.WaitTime)
         if CanOpen then
             if Config.FuelDebug then print("Showing Input for Fuel Price Change!") end
@@ -552,16 +546,16 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                 if fuelprice then
                     if Config.FuelDebug then print("Attempting to change fuel price!") end
                     Wait(100)
-                    if not fuelPrice then QBCore.Functions.Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
+                    if not fuelPrice then exports.qbx_core:Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
                     NewFuelPrice = tonumber(fuelPrice)
-                    if NewFuelPrice < Config.MinimumFuelPrice then QBCore.Functions.Notify(Lang:t("station_price_too_low"), 'error', 7500) return end
+                    if NewFuelPrice < Config.MinimumFuelPrice then exports.qbx_core:Notify(Lang:t("station_price_too_low"), 'error', 7500) return end
                     if NewFuelPrice > Config.MaxFuelPrice then
-                        QBCore.Functions.Notify(Lang:t("station_price_too_high"), "error")
+                        exports.qbx_core:Notify(Lang:t("station_price_too_high"), "error")
                     else
                         TriggerServerEvent("cdn-fuel:station:server:updatefuelprice", NewFuelPrice, CurrentLocation)
                     end
                 end
-            else
+            else 
                 local fuelprice = exports['qb-input']:ShowInput({
                     header = Lang:t("input_alter_fuel_price_header_1")..StationFuelPrice..Lang:t("input_alter_fuel_price_header_2"),
                     submitText = Lang:t("input_alter_fuel_price_submit_text"),
@@ -575,11 +569,11 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                 if fuelprice then
                     if Config.FuelDebug then print("Attempting to change fuel price!") end
                     Wait(100)
-                    if not fuelprice.price then QBCore.Functions.Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
+                    if not fuelprice.price then exports.qbx_core:Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
                     NewFuelPrice = tonumber(fuelprice.price)
-                    if NewFuelPrice < Config.MinimumFuelPrice then QBCore.Functions.Notify(Lang:t("station_price_too_low"), 'error', 7500) return end
+                    if NewFuelPrice < Config.MinimumFuelPrice then exports.qbx_core:Notify(Lang:t("station_price_too_low"), 'error', 7500) return end
                     if NewFuelPrice > Config.MaxFuelPrice then
-                        QBCore.Functions.Notify(Lang:t("station_price_too_high"), "error")
+                        exports.qbx_core:Notify(Lang:t("station_price_too_high"), "error")
                     else
                         TriggerServerEvent("cdn-fuel:station:server:updatefuelprice", NewFuelPrice, CurrentLocation)
                     end
@@ -590,17 +584,16 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
 
     RegisterNetEvent('cdn-fuel:stations:client:sellstation:menu', function(data) -- Menu, seen after selecting the Sell this Location option.
         local location = data.location
-        local CitizenID = QBCore.Functions.GetPlayerData().citizenid
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:isowner', function(result)
-            if result then
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
-                CanOpen = true
-            else
-                QBCore.Functions.Notify(Lang:t("station_not_owner"), 'error', 7500)
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
-                CanOpen = false
-            end
-        end, CurrentLocation)
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
+        local result = lib.callback.await('cdn-fuel:server:isowner', false, CurrentLocation)
+        if result then
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
+             CanOpen = true
+        else
+             exports.qbx_core:Notify(Lang:t("station_not_owner"), 'error', 7500)
+             if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
+             CanOpen = false
+        end
         Wait(Config.WaitTime)
         if CanOpen then
             local GasStationCost = Config.GasStations[location].cost + GlobalTax(Config.GasStations[location].cost)
@@ -669,17 +662,16 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
 
     RegisterNetEvent('cdn-fuel:stations:client:changestationname', function() -- Menu for changing the label of the owned station.
         CanOpen = false
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:isowner', function(result)
-            local CitizenID = QBCore.Functions.GetPlayerData().citizenid
-            if result then
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
-                CanOpen = true
-            else
-                QBCore.Functions.Notify(Lang:t("station_not_owner"), 'error', 7500)
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
-                CanOpen = false
-            end
-        end, CurrentLocation)
+        local result = lib.callback.await('cdn-fuel:server:isowner', false, CurrentLocation)
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
+        if result then
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
+            CanOpen = true
+        else
+            exports.qbx_core:Notify(Lang:t("station_not_owner"), 'error', 7500)
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
+            CanOpen = false
+        end
         Wait(Config.WaitTime)
         if CanOpen then
             if Config.FuelDebug then print("Showing Input for name Change!") end
@@ -696,15 +688,15 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                 NewNameName = NewName[2]
                 if NewName then
                     if Config.FuelDebug then print("Attempting to alter stations name!") end
-                    if not NewNameName then QBCore.Functions.Notify(Lang:t("station_name_invalid"), 'error', 7500) return end
+                    if not NewNameName then exports.qbx_core:Notify(Lang:t("station_name_invalid"), 'error', 7500) return end
                     NewName = NewNameName
-                    if type(NewName) ~= "string" then QBCore.Functions.Notify(Lang:t("station_name_invalid"), 'error') return end
-                    if Config.ProfanityList[NewName] then QBCore.Functions.Notify(Lang:t("station_name_invalid"), 'error', 7500)
+                    if type(NewName) ~= "string" then exports.qbx_core:Notify(Lang:t("station_name_invalid"), 'error') return end
+                    if Config.ProfanityList[NewName] then exports.qbx_core:Notify(Lang:t("station_name_invalid"), 'error', 7500)
                         -- You can add logs for people that put prohibited words into the name changer if wanted, and here is where you would do it.
                         return
                     end
-                    if string.len(NewName) > Config.NameChangeMaxChar then QBCore.Functions.Notify(Lang:t("station_name_too_long"), 'error') return end
-                    if string.len(NewName) < Config.NameChangeMinChar then QBCore.Functions.Notify(Lang:t("station_name_too_short"), 'error') return end
+                    if string.len(NewName) > Config.NameChangeMaxChar then exports.qbx_core:Notify(Lang:t("station_name_too_long"), 'error') return end
+                    if string.len(NewName) < Config.NameChangeMinChar then exports.qbx_core:Notify(Lang:t("station_name_too_short"), 'error') return end
                     Wait(100)
                     TriggerServerEvent("cdn-fuel:station:server:updatelocationname", NewName, CurrentLocation)
                 end
@@ -721,15 +713,15 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                 })
                 if NewName then
                     if Config.FuelDebug then print("Attempting to alter stations name!") end
-                    if not NewName.newname then QBCore.Functions.Notify(Lang:t("station_name_invalid"), 'error', 7500) return end
+                    if not NewName.newname then exports.qbx_core:Notify(Lang:t("station_name_invalid"), 'error', 7500) return end
                     NewName = NewName.newname
-                    if type(NewName) ~= "string" then QBCore.Functions.Notify(Lang:t("station_name_invalid"), 'error') return end
-                    if Config.ProfanityList[NewName] then QBCore.Functions.Notify(Lang:t("station_name_invalid"), 'error', 7500)
+                    if type(NewName) ~= "string" then exports.qbx_core:Notify(Lang:t("station_name_invalid"), 'error') return end
+                    if Config.ProfanityList[NewName] then exports.qbx_core:Notify(Lang:t("station_name_invalid"), 'error', 7500)
                         -- You can add logs for people that put prohibited words into the name changer if wanted, and here is where you would do it.
                         return
                     end
-                    if string.len(NewName) > Config.NameChangeMaxChar then QBCore.Functions.Notify(Lang:t("station_name_too_long"), 'error') return end
-                    if string.len(NewName) < Config.NameChangeMinChar then QBCore.Functions.Notify(Lang:t("station_name_too_short"), 'error') return end
+                    if string.len(NewName) > Config.NameChangeMaxChar then exports.qbx_core:Notify(Lang:t("station_name_too_long"), 'error') return end
+                    if string.len(NewName) < Config.NameChangeMinChar then exports.qbx_core:Notify(Lang:t("station_name_too_short"), 'error') return end
                     Wait(100)
                     TriggerServerEvent("cdn-fuel:station:server:updatelocationname", NewName, CurrentLocation)
                 end
@@ -739,17 +731,16 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
 
     RegisterNetEvent('cdn-fuel:stations:client:managemenu', function(location) -- Menu, seen after selecting the Manage this Location Option.
         location = CurrentLocation
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:isowner', function(result)
-            local CitizenID = QBCore.Functions.GetPlayerData().citizenid
-            if result then
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
-                CanOpen = true
-            else
-                QBCore.Functions.Notify(Lang:t("station_not_owner"), 'error', 7500)
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
-                CanOpen = false
-            end
-        end, CurrentLocation)
+        local result = lib.callback.await('cdn-fuel:server:isowner', false, CurrentLocation)
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
+        if result then
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
+            CanOpen = true
+        else
+            exports.qbx_core:Notify(Lang:t("station_not_owner"), 'error', 7500)
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
+            CanOpen = false
+        end
         UpdateStationInfo("all")
         if Config.PlayerControlledFuelPrices then CanNotChangeFuelPrice = false else CanNotChangeFuelPrice = true end
         Wait(5)
@@ -905,17 +896,16 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
     end)
 
     RegisterNetEvent('cdn-fuel:stations:client:managefunds', function(location) -- Menu, seen after selecting the Manage this Location Option.
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:isowner', function(result)
-            local CitizenID = QBCore.Functions.GetPlayerData().citizenid
-            if result then
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
-                CanOpen = true
-            else
-                QBCore.Functions.Notify(Lang:t("station_not_owner"), 'error', 7500)
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
-                CanOpen = false
-            end
-        end, CurrentLocation)
+        local result = lib.callback.await('cdn-fuel:server:isowner', false, CurrentLocation)
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
+        if result then
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
+            CanOpen = true
+        else
+            exports.qbx_core:Notify(Lang:t("station_not_owner"), 'error', 7500)
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
+            CanOpen = false
+        end
         UpdateStationInfo("all")
         Wait(5)
         Wait(Config.WaitTime)
@@ -1017,17 +1007,16 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         if Config.FuelDebug then print("Triggered Event for: Withdraw!") end
         CanOpen = false
         local location = CurrentLocation
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:isowner', function(result)
-            local CitizenID = QBCore.Functions.GetPlayerData().citizenid
-            if result then
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
-                CanOpen = true
-            else
-                QBCore.Functions.Notify(Lang:t("station_not_owner"), 'error', 7500)
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
-                CanOpen = false
-            end
-        end, CurrentLocation)
+        local result = lib.callback.await('cdn-fuel:server:isowner', false, CurrentLocation)
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
+        if result then
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
+            CanOpen = true
+        else
+            exports.qbx_core:Notify(Lang:t("station_not_owner"), 'error', 7500)
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
+            CanOpen = false
+        end
         Wait(Config.WaitTime)
         if CanOpen then
             if Config.FuelDebug then print("Showing Input for Withdraw!") end
@@ -1043,16 +1032,16 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                 })
                 if not Withdraw then return end
                 WithdrawAmounts = tonumber(Withdraw[2])
-                if Withdraw then
+                if Withdraw then 
                     if Config.FuelDebug then print("Attempting to Withdraw!") end
                     Wait(100)
                     local amount = tonumber(WithdrawAmounts)
-                    if not WithdrawAmounts then QBCore.Functions.Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
-                    if amount < 1 then QBCore.Functions.Notify(Lang:t("station_withdraw_too_little"), 'error', 7500) return end
-                    if amount > StationBalance then QBCore.Functions.Notify(Lang:t("station_withdraw_too_much"), 'error', 7500) return end
+                    if not WithdrawAmounts then exports.qbx_core:Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
+                    if amount < 1 then exports.qbx_core:Notify(Lang:t("station_withdraw_too_little"), 'error', 7500) return end
+                    if amount > StationBalance then exports.qbx_core:Notify(Lang:t("station_withdraw_too_much"), 'error', 7500) return end
                     WithdrawAmount = tonumber(amount)
                     if (StationBalance - WithdrawAmount) < 0 then
-                        QBCore.Functions.Notify(Lang:t("station_withdraw_too_much"), 'error', 7500)
+                        exports.qbx_core:Notify(Lang:t("station_withdraw_too_much"), 'error', 7500)
                     else
                         TriggerServerEvent('cdn-fuel:station:server:Withdraw', amount, location, StationBalance)
                     end
@@ -1072,12 +1061,12 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                     if Config.FuelDebug then print("Attempting to Withdraw!") end
                     Wait(100)
                     local amount = tonumber(Withdraw.amount)
-                    if not Withdraw.amount then QBCore.Functions.Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
-                    if amount < 1 then QBCore.Functions.Notify(Lang:t("station_withdraw_too_little"), 'error', 7500) return end
-                    if amount > StationBalance then QBCore.Functions.Notify(Lang:t("station_withdraw_too_much"), 'error', 7500) return end
+                    if not Withdraw.amount then exports.qbx_core:Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
+                    if amount < 1 then exports.qbx_core:Notify(Lang:t("station_withdraw_too_little"), 'error', 7500) return end
+                    if amount > StationBalance then exports.qbx_core:Notify(Lang:t("station_withdraw_too_much"), 'error', 7500) return end
                     WithdrawAmount = tonumber(amount)
                     if (StationBalance - WithdrawAmount) < 0 then
-                        QBCore.Functions.Notify(Lang:t("station_withdraw_too_much"), 'error', 7500)
+                        exports.qbx_core:Notify(Lang:t("station_withdraw_too_much"), 'error', 7500)
                     else
                         TriggerServerEvent('cdn-fuel:station:server:Withdraw', amount, location, StationBalance)
                     end
@@ -1090,20 +1079,19 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         if Config.FuelDebug then print("Triggered Event for: Deposit!") end
         CanOpen = false
         local location = CurrentLocation
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:isowner', function(result)
-            local CitizenID = QBCore.Functions.GetPlayerData().citizenid
-            if result then
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
-                CanOpen = true
-            else
-                QBCore.Functions.Notify(Lang:t("station_not_owner"), 'error', 7500)
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
-                CanOpen = false
-            end
-        end, CurrentLocation)
+        local result = lib.callback.await('cdn-fuel:server:isowner', false,CurrentLocation)
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
+        if result then
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
+            CanOpen = true
+        else
+            exports.qbx_core:Notify(Lang:t("station_not_owner"), 'error', 7500)
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
+            CanOpen = false
+        end
         Wait(Config.WaitTime)
         if CanOpen then
-            local bankmoney = QBCore.Functions.GetPlayerData().money['bank']
+            local bankmoney = exports.qbx_core:GetPlayerData().money['bank']
             if Config.FuelDebug then print("Showing Input for Deposit!") end
             UpdateStationInfo("balance")
             Wait(50)
@@ -1117,15 +1105,15 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                 })
                 if not Deposit then return end
                 DepositAmounts = tonumber(Deposit[2])
-                if Deposit then
+                if Deposit then 
                     if Config.FuelDebug then print("Attempting to Deposit!") end
                     Wait(100)
                     local amount = tonumber(DepositAmounts)
-                    if not DepositAmounts then QBCore.Functions.Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
-                    if amount < 1 then QBCore.Functions.Notify(Lang:t("station_deposit_too_little"), 'error', 7500) return end
+                    if not DepositAmounts then exports.qbx_core:Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
+                    if amount < 1 then exports.qbx_core:Notify(Lang:t("station_deposit_too_little"), 'error', 7500) return end
                     DepositAmount = tonumber(amount)
                     if (DepositAmount) > bankmoney then
-                        QBCore.Functions.Notify(Lang:t("station_deposity_too_much"), "error")
+                        exports.qbx_core:Notify(Lang:t("station_deposity_too_much"), "error")
                     else
                         TriggerServerEvent('cdn-fuel:station:server:Deposit', amount, location, StationBalance)
                     end
@@ -1145,11 +1133,11 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                     if Config.FuelDebug then print("Attempting to Deposit!") end
                     Wait(100)
                     local amount = tonumber(Deposit.amount)
-                    if not Deposit.amount then QBCore.Functions.Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
-                    if amount < 1 then QBCore.Functions.Notify(Lang:t("station_deposit_too_little"), 'error', 7500) return end
+                    if not Deposit.amount then exports.qbx_core:Notify(Lang:t("station_amount_invalid"), 'error', 7500) return end
+                    if amount < 1 then exports.qbx_core:Notify(Lang:t("station_deposit_too_little"), 'error', 7500) return end
                     DepositAmount = tonumber(amount)
                     if (DepositAmount) > bankmoney then
-                        QBCore.Functions.Notify(Lang:t("station_deposity_too_much"), "error")
+                        exports.qbx_core:Notify(Lang:t("station_deposity_too_much"), "error")
                     else
                         TriggerServerEvent('cdn-fuel:station:server:Deposit', amount, location, StationBalance)
                     end
@@ -1163,31 +1151,28 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
     end)
 
     RegisterNetEvent('cdn-fuel:stations:client:purchasemenu', function(location) -- Menu, seen after selecting the purchase this location option.
-        local bankmoney = QBCore.Functions.GetPlayerData().money['bank']
+        local bankmoney = exports.qbx_core:GetPlayerData().money['bank']
         local costofstation = Config.GasStations[location].cost + GlobalTax(Config.GasStations[location].cost)
 
         if Config.OneStationPerPerson == true then
-            QBCore.Functions.TriggerCallback('cdn-fuel:server:doesPlayerOwnStation', function(result)
-                if result then
-                    if Config.FuelDebug then print("Player already owns a station, so disallowing purchase.") end
-                    PlayerOwnsAStation = true
-                else
-                    if Config.FuelDebug then print("Player doesn't own a station, so continuing purchase checks.") end
-                    PlayerOwnsAStation = false
-                end
-            end)
-
+            local result = lib.callback.await('cdn-fuel:server:doesPlayerOwnStation', false)
+            if result then
+                if Config.FuelDebug then print("Player already owns a station, so disallowing purchase.") end
+                PlayerOwnsAStation = true
+            else
+                if Config.FuelDebug then print("Player doesn't own a station, so continuing purchase checks.") end
+                PlayerOwnsAStation = false
+            end
             Wait(Config.WaitTime)
 
             if PlayerOwnsAStation == true then
-                QBCore.Functions.Notify('You can only buy one station, and you already own one!', 'error')
+                exports.qbx_core:Notify('You can only buy one station, and you already own one!', 'error')
                 return
             end
         end
 
-
         if bankmoney < costofstation then
-            QBCore.Functions.Notify(Lang:t("not_enough_money_in_bank").." $"..costofstation, 'error', 7500) return
+            exports.qbx_core:Notify(Lang:t("not_enough_money_in_bank").." $"..costofstation, 'error', 7500) return
         end
 
         if Config.Ox.Menu then
@@ -1260,41 +1245,36 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         DisablePurchase = true
         DisableOwnerMenu = true
         ShutOffDisabled = false
-
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:locationpurchased', function(result)
-            if result then
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned.") end
-                DisablePurchase = true
-            else
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned.") end
-                DisablePurchase = false
-                DisableOwnerMenu = true
-            end
-        end, CurrentLocation)
-
-        QBCore.Functions.TriggerCallback('cdn-fuel:server:isowner', function(result)
-            local CitizenID = QBCore.Functions.GetPlayerData().citizenid
-            if result then
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
-                DisableOwnerMenu = false
-            else
-                if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
-                DisableOwnerMenu = true
-            end
-        end, CurrentLocation)
+        local result = lib.callback.await('cdn-fuel:server:locationpurchased', false, CurrentLocation)
+        if result then
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned.") end
+            DisablePurchase = true
+        else
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned.") end
+            DisablePurchase = false
+            DisableOwnerMenu = true
+        end
+        local result2 = lib.callback.await('cdn-fuel:server:isowner', false, CurrentLocation)
+        local CitizenID = exports.qbx_core:GetPlayerData().citizenid
+        if result2 then
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is owned by ID: "..CitizenID) end
+            DisableOwnerMenu = false
+        else
+            if Config.FuelDebug then print("The Location: "..CurrentLocation.." is not owned by ID: "..CitizenID) end
+            DisableOwnerMenu = true
+        end
 
         if Config.EmergencyShutOff then
-            QBCore.Functions.TriggerCallback('cdn-fuel:server:checkshutoff', function(result)
-                if result == true then
-                    PumpState = "disabled."
-                elseif result == false then
-                    PumpState = "enabled."
-                else
-                    PumpState = "nil"
-                end
+            local result3 = lib.callback.await('cdn-fuel:server:checkshutoff', false, CurrentLocation)
+            if result3 == true then
+                PumpState = "disabled."
+            elseif result == false then
+                PumpState = "enabled."
+            else
+                PumpState = "nil"
+            end
 
-                if Config.FuelDebug then print("The result from Callback: Config.GasStations["..CurrentLocation.."].shutoff = "..PumpState) end
-            end, CurrentLocation)
+            if Config.FuelDebug then print("The result from Callback: Config.GasStations["..CurrentLocation.."].shutoff = "..PumpState) end
         else
             PumpState = "enabled."
             ShutOffDisabled = true

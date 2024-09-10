@@ -85,9 +85,9 @@ if Config.ElectricVehicleCharging then
     RegisterNetEvent('cdn-fuel:client:electric:FinalMenu', function(purchasetype)
         local money = nil
         if purchasetype == "bank" then
-            money = QBX.PlayerData.money['bank']
+            money = exports.qbx_core:GetPlayerData().money['bank']
         elseif purchasetype == 'cash' then
-            money = QBX.PlayerData.money['cash']
+            money = exports.qbx_core:GetPlayerData().money['cash']
         end
         FuelPrice = (1 * Config.ElectricChargingPrice)
         local vehicle = GetClosestVehicle()
@@ -95,7 +95,7 @@ if Config.ElectricVehicleCharging then
         -- Police Discount Math --
         if Config.EmergencyServicesDiscount['enabled'] == true and (Config.EmergencyServicesDiscount['emergency_vehicles_only'] == false or (Config.EmergencyServicesDiscount['emergency_vehicles_only'] == true and GetVehicleClass(vehicle) == 18)) then
             local discountedJobs = Config.EmergencyServicesDiscount['job']
-            local plyJob = QBX.PlayerData.job.name
+            local plyJob = exports.qbx_core:GetPlayerData().job.name
             local shouldRecieveDiscount = false
 
             if type(discountedJobs) == "table" then
@@ -109,7 +109,7 @@ if Config.ElectricVehicleCharging then
                 shouldRecieveDiscount = true
             end
 
-            if shouldRecieveDiscount == true and not QBX.PlayerData.job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
+            if shouldRecieveDiscount == true and not exports.qbx_core:GetPlayerData().job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
                 exports.qbx_core:Notify(Lang:t("you_are_discount_eligible"), 'primary', 7500)
                 shouldRecieveDiscount = false
             end
@@ -250,7 +250,7 @@ if Config.ElectricVehicleCharging then
         if not AwaitingElectricCheck then if Config.FuelDebug then print("Attempting to go to Charging Menu") end end
         if not AwaitingElectricCheck and FoundElectricVehicle then
             local CurFuel = GetVehicleFuelLevel(vehicle)
-            local playercashamount = QBX.PlayerData.money['cash']
+            local playercashamount = exports.qbx_core:GetPlayerData().money['cash']
             if not IsHoldingElectricNozzle() then
                 exports.qbx_core:Notify(Lang:t("electric_no_nozzle"), 'error', 7500)
                 return
@@ -403,7 +403,7 @@ if Config.ElectricVehicleCharging then
         -- Police Discount Math --
         if Config.EmergencyServicesDiscount['enabled'] == true and (Config.EmergencyServicesDiscount['emergency_vehicles_only'] == false or (Config.EmergencyServicesDiscount['emergency_vehicles_only'] == true and GetVehicleClass(vehicle) == 18)) then
             local discountedJobs = Config.EmergencyServicesDiscount['job']
-            local plyJob = QBX.PlayerData.job.name
+            local plyJob = exports.qbx_core:GetPlayerData().job.name
             local shouldRecieveDiscount = false
 
             if type(discountedJobs) == "table" then
@@ -417,7 +417,7 @@ if Config.ElectricVehicleCharging then
                 shouldRecieveDiscount = true
             end
 
-            if shouldRecieveDiscount == true and not QBX.PlayerData.job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
+            if shouldRecieveDiscount == true and not exports.qbx_core:GetPlayerData().job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
                 exports.qbx_core:Notify(Lang:t("you_are_discount_eligible"), 'primary', 7500)
                 shouldRecieveDiscount = false
             end
@@ -683,7 +683,7 @@ if Config.ElectricVehicleCharging then
             -- Police Discount Math --
             if Config.EmergencyServicesDiscount['enabled'] == true then
                 local discountedJobs = Config.EmergencyServicesDiscount['job']
-                local plyJob = QBX.PlayerData.job.name
+                local plyJob = exports.qbx_core:GetPlayerData().job.name
                 local shouldRecieveDiscount = false
 
                 if type(discountedJobs) == "table" then
@@ -697,7 +697,7 @@ if Config.ElectricVehicleCharging then
                     shouldRecieveDiscount = true
                 end
 
-                if shouldRecieveDiscount == true and not QBX.PlayerData.job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
+                if shouldRecieveDiscount == true and not exports.qbx_core:GetPlayerData().job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
                     exports.qbx_core:Notify(Lang:t("you_are_discount_eligible"), 'primary', 7500)
                     shouldRecieveDiscount = false
                 end
@@ -740,7 +740,7 @@ if Config.ElectricVehicleCharging then
                 Lang:t("electric_phone_notification") .. total, 'fas fa-bolt', '#9f0e63', "NONE", 'fas fa-check-circle',
                 'fas fa-times-circle')
             if success then
-                if QBX.PlayerData.money['bank'] <= (GlobalTax(amount) + amount) then
+                if exports.qbx_core:GetPlayerData().money['bank'] <= (GlobalTax(amount) + amount) then
                     exports.qbx_core:Notify(Lang:t("not_enough_money_in_bank"), "error")
                 else
                     TriggerServerEvent('cdn-fuel:server:PayForFuel', total, "bank", FuelPrice, true)

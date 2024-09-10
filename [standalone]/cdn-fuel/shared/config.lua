@@ -114,7 +114,7 @@ Config.PlayerControlledFuelPrices = true -- This gives you the option to disable
 Config.GasStationNameChanges = true -- This gives you the option to disable people being able to change the name of their gas station, only recommended if it becomes a problem.
 Config.NameChangeMinChar = 10 -- This is the minimum length that a Gas Station's name must be.
 Config.NameChangeMaxChar = 25 -- This is the maximum length that a Gas Station's name must be.
-Config.WaitTime = 400 -- This is the wait time after callbacks, if you are having issues with menus not popping up, or being greyed out, up this to around ~300, it is not recommended to go over ~750, as menus will get slower and more unresponsive the higher you go. (Fixes this issue: https://www.shorturl.at/eqS19)
+Config.WaitTime = 500 -- This is the wait time after callbacks, if you are having issues with menus not popping up, or being greyed out, up this to around ~300, it is not recommended to go over ~750, as menus will get slower and more unresponsive the higher you go. (Fixes this issue: https://www.shorturl.at/eqS19)
 Config.OneStationPerPerson = true -- This prevents players that already own one station from buying another, to prevent monopolies over Gas Stations.
 
 --- Electric Vehicles

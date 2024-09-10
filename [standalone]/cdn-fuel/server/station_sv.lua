@@ -1,7 +1,6 @@
 if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stations are a Config Option, instead of forced. Set this option in shared/config.lua!
     -- Variables
     local QBX = exports.qbx_core
-    local QBCore = exports['qb-core']:GetCoreObject()
     local FuelPickupSent = {} -- This is in case of an issue with vehicles not spawning when picking up vehicles.
 
     -- Functions
@@ -28,7 +27,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                     TriggerClientEvent('cdn-fuel:client:updatestationlabels', -1, location, newLabel)
                 else
                     if Config.FuelDebug then print('No Result! (UpdateStationLabel() line 29 station_sv.lua)') end
-                    cb(false)
+                    return false
                 end
             end)
         else
@@ -111,7 +110,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         if Config.FuelDebug then print("Toggling Emergency Shutoff Valves for Location #" .. location) end
         Config.GasStations[location].shutoff = not Config.GasStations[location].shutoff
         Wait(5)
-        TriggerClientEvent('QBCore:Notify', src, Lang:t("station_shutoff_success"), 'success')
+        exports.qbx_core:Notify(src, Lang:t("station_shutoff_success"), 'success')
         if Config.FuelDebug then print('Successfully altered the shutoff valve state for location #' .. location .. '!') end
         if Config.FuelDebug then print(Config.GasStations[location].shutoff) end
     end)
@@ -121,8 +120,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         if Config.FuelDebug then print('Attempting to update Location #' ..
             location .. "'s Fuel Price to a new price: $" .. fuelprice) end
         MySQL.Async.execute('UPDATE fuel_stations SET fuelprice = ? WHERE `location` = ?', { fuelprice, location })
-        TriggerClientEvent('QBCore:Notify', src,
-            Lang:t("station_fuel_price_success") .. fuelprice .. Lang:t("station_per_liter"), 'success')
+        exports.qbx_core:Notify(src, Lang:t("station_fuel_price_success") .. fuelprice .. Lang:t("station_per_liter"), 'success')
     end)
 
     RegisterNetEvent('cdn-fuel:station:server:updatereserves', function(reason, amount, currentlevel, location)
@@ -177,7 +175,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                     ReserveBuyPossible = false
                     if Config.FuelDebug then print(
                         "Purchase is not possible, as reserves will be greater than the maximum amount!") end
-                    TriggerClientEvent('QBCore:Notify', src, Lang:t("station_reserves_over_max"), 'error')
+                    exports.qbx_core:Notify(src, Lang:t("station_reserves_over_max"), 'error')
                 elseif v.fuel + amount <= Config.MaxFuelReserves then
                     ReserveBuyPossible = true
                     OldAmount = v.fuel
@@ -209,7 +207,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                     location .. " with for the amount of " .. NewAmount .. " | Triggered By: Source: " .. src) end
             end
         elseif ReserveBuyPossible then
-            TriggerClientEvent('QBCore:Notify', src, Lang:t("not_enough_money"), 'error')
+            exports.qbx_core:Notify(src, Lang:t("not_enough_money"), 'error')
         end
     end)
 
@@ -220,7 +218,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                 local cid = QBX:GetPlayer(src).PlayerData.citizenid
                 MySQL.Async.execute('UPDATE fuel_stations SET fuel = ? WHERE `location` = ?',
                     { FuelPickupSent[location]['refuelAmount'], location })
-                TriggerClientEvent('QBCore:Notify', src, Lang:t("fuel_pickup_failed"), 'success')
+                exports.qbx_core:Notify(src, Lang:t("fuel_pickup_failed"), 'success')
                 -- This will print player information just in case someone figures out a way to exploit this.
                 print(
                 "User encountered an error with fuel pickup, so we are updating the fuel level anyways, and cancelling the pickup. SQL Execute Update: fuel_station level to: " ..
@@ -244,9 +242,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                 local cid = QBX:GetPlayer(src).PlayerData.citizenid
                 MySQL.Async.execute('UPDATE fuel_stations SET fuel = ? WHERE `location` = ?',
                     { FuelPickupSent[location].refuelAmount, location })
-                TriggerClientEvent('QBCore:Notify', src,
-                    string.format(Lang:t("fuel_pickup_success"),
-                        tostring(tonumber(FuelPickupSent[location].refuelAmount))), 'success')
+                exports.qbx_core:Notify(src, string.format(Lang:t("fuel_pickup_success"), tostring(tonumber(FuelPickupSent[location].refuelAmount))), 'success')
                 -- This will print player information just in case someone figures out a way to exploit this.
                 if Config.FuelDebug then
                     print(
@@ -268,12 +264,12 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         if Config.FuelDebug then print('Attempting to set name for Location #' .. location .. ' to: ' .. newName) end
         MySQL.Async.execute('UPDATE fuel_stations SET label = ? WHERE `location` = ?', { newName, location })
         if Config.FuelDebug then print('Successfully executed the previous SQL Update!') end
-        TriggerClientEvent('QBCore:Notify', src, Lang:t("station_name_change_success") .. newName .. "!", 'success')
+        exports.qbx_core:Notify(src, Lang:t("station_name_change_success") .. newName .. "!", 'success')
         TriggerClientEvent('cdn-fuel:client:updatestationlabels', -1, location, newName)
     end)
 
     -- Callbacks
-    QBCore.Functions.CreateCallback('cdn-fuel:server:locationpurchased', function(source, cb, location)
+    lib.callback.register('cdn-fuel:server:locationpurchased', function(source, location)
         if Config.FuelDebug then print("Working on it.") end
         local result = MySQL.Sync.fetchAll('SELECT * FROM fuel_stations WHERE `location` = ?', { location })
         if result then
@@ -292,14 +288,14 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                     if Config.FuelDebug then print(
                         "Owned State (v.owned ~= 1 or 0) It must be 1 or 0! 1 = True, 0 = False!") end
                 end
-                cb(owned)
+                return owned
             end
         else
             if Config.FuelDebug then print("No Result Fetched!!") end
         end
     end)
 
-    QBCore.Functions.CreateCallback('cdn-fuel:server:doesPlayerOwnStation', function(source, cb)
+    lib.callback.register('cdn-fuel:server:doesPlayerOwnStation', function(source)
         local src = source
         local Player = QBX:GetPlayer(src)
         local citizenid = Player.PlayerData.citizenid
@@ -311,14 +307,14 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                 print("Player already owns another station!")
                 print("Result: " .. json.encode(result))
             end
-            cb(true)
+            return true
         else
             if Config.FuelDebug then print("No Result Sadge!") end
-            cb(false)
+            return false
         end
     end)
 
-    QBCore.Functions.CreateCallback('cdn-fuel:server:isowner', function(source, cb, location)
+    lib.callback.register('cdn-fuel:server:isowner', function(source, location)
         local src = source
         local Player = QBX:GetPlayer(src)
         local citizenid = Player.PlayerData.citizenid
@@ -336,46 +332,46 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                     print("Owner: " .. v.owner)
                 end
                 if v.owner == citizenid and v.owned == 1 then
-                    cb(true)
                     if Config.FuelDebug then print(citizenid .. " is the owner.. owner state == " .. v.owned) end
+                    return true
                 else
-                    cb(false)
                     if Config.FuelDebug then print("The owner is: " .. v.owner) end
+                    return false
                 end
             end
         else
             if Config.FuelDebug then print("No Result Sadge!") end
-            cb(false)
+            return false
         end
     end)
 
-    QBCore.Functions.CreateCallback('cdn-fuel:server:fetchinfo', function(source, cb, location)
+    lib.callback.register('cdn-fuel:server:fetchinfo', function(source, location)
         local src = source
         local Player = QBX:GetPlayer(src)
         if Config.FuelDebug then print("Fetching Information for Location: " .. location) end
         MySQL.Async.fetchAll('SELECT * FROM fuel_stations WHERE location = ?', { location }, function(result)
             if result then
-                cb(result)
                 if Config.FuelDebug then print(json.encode(result)) end
+                return result
             else
-                cb(false)
+                return false
             end
         end)
     end)
 
-    QBCore.Functions.CreateCallback('cdn-fuel:server:checkshutoff', function(source, cb, location)
+    lib.callback.register('cdn-fuel:server:checkshutoff', function(source, location)
         if Config.FuelDebug then print("Fetching Shutoff State for Location: " .. location) end
-        cb(Config.GasStations[location].shutoff)
+        return Config.GasStations[location].shutoff
     end)
 
-    QBCore.Functions.CreateCallback('cdn-fuel:server:fetchlabel', function(source, cb, location)
+    lib.callback.register('cdn-fuel:server:fetchlabel', function(source, location)
         if Config.FuelDebug then print("Fetching Shutoff State for Location: " .. location) end
         MySQL.Async.fetchAll('SELECT label FROM fuel_stations WHERE location = ?', { location }, function(result)
             if result then
-                cb(result)
                 if Config.FuelDebug then print(result) end
+                return result
             else
-                cb(false)
+                return false
             end
         end)
     end)

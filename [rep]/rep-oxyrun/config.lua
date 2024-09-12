@@ -212,7 +212,7 @@ Config.JobLocations = {
     },
     [2] = {
         routeBusy = false,
-        pickupPackage = vector4(-455.96, 3032.68, 24.9, 285.03),
+        pickupPackage = vector4(-454.48, 3034.53, 24.16, 320.22),
         spawnVeh = vector4(699.38, 48.22, 83.81, 236.8),
         waitPos = vector3(620.89, 56.05, 89.36),
         despawnVeh = vector3(530.17, 118.52, 96.77),

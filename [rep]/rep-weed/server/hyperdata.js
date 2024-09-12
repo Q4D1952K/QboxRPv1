@@ -71,8 +71,7 @@ on("rep-weed:update", function(data){
     }
 })
 
-RegisterNetEvent("rep-weed:join", function(){
-    console.log(source)
+onNet("rep-weed:join", function(){
     for(var name in DATASET){
         emitNet("REGISTER_DATASET", source, {name, data: DATASET[name]})
     }

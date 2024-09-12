@@ -3,7 +3,7 @@ game 'gta5'
 
 name "Rep Scripts - Weed"
 author "Q4D#1905"
-version "3.0.8"
+version "3.0.11"
 
 shared_scripts {
     '@ox_lib/init.lua',

@@ -52,15 +52,15 @@ Config.Plant = {
         { model = 'bkr_prop_weed_lrg_01b',      zOffset = -0.5 },
     },
     factor = 1.3,     -- How much longer does a male plant take to grow compared to a female plant (Femela plant = 1)
-    growthTime = 10, --240,    -- Plant Growing time in minutes 240
-    dry = 15,-- 360,          -- 360 minutes to dry weed
+    growthTime = 240, --240,    -- Plant Growing time in minutes 240
+    dry = 360,-- 360,          -- 360 minutes to dry weed
     lifeTime = 1440,  -- Plant lifetime in minutes before wiped
     button = {
         plant = 38,   -- https://docs.fivem.net/docs/game-references/controls/
         cancel = 44,
     },
     minusWater = 1.25,       -- Water drained from plants per timeLoop. 1.25% per timeLoop minute on plants
-    timeLoop = 2,          --minutes
+    timeLoop = 5,          --minutes
     maxPersonTreeDist = 4.0, -- Max Distance from player to plant to be allowed to plant
     water = {
         wateringcan = {

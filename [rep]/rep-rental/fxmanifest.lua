@@ -15,4 +15,4 @@ shared_scripts { '@ox_lib/init.lua', 'config.lua'}
 
 server_script "server/**/*"
 
-files { 'web/build/index.html', 'web/build/**/*', 'locales/*.json' }
+files { 'web/build/index.html', 'web/build/**/*'}

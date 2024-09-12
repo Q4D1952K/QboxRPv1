@@ -52,8 +52,8 @@ Config.Plant = {
         { model = 'bkr_prop_weed_lrg_01b',      zOffset = -0.5 },
     },
     factor = 1.3,     -- How much longer does a male plant take to grow compared to a female plant (Femela plant = 1)
-    growthTime = 240, --240,    -- Plant Growing time in minutes 240
-    dry = 360,-- 360,          -- 360 minutes to dry weed
+    growthTime = 10, --240,    -- Plant Growing time in minutes 240
+    dry = 15,-- 360,          -- 360 minutes to dry weed
     lifeTime = 1440,  -- Plant lifetime in minutes before wiped
     button = {
         plant = 38,   -- https://docs.fivem.net/docs/game-references/controls/
@@ -473,7 +473,7 @@ Config.Plant = {
 
 Config.Cornerselling = {
     status = true,
-    policeNeed = 2,
+    policeNeed = 0,
     populateRate = 1000 * 60 * 2,       -- default: 2 min/populate, -1 to disable
     timeBetweenAcquisition = 60 * 1000, -- default: 1 min/ped
     money = 50,
@@ -539,7 +539,7 @@ Config.Cornerselling = {
 
 Config.TacoShop = {
     status = true,
-    policeNeed = 3,
+    policeNeed = 0,
     policeAlert = 15, -- percents
     price = 500, -- Price default per weedpackage
     maxPrice = 3500,

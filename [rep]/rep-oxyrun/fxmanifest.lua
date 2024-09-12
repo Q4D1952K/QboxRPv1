@@ -3,7 +3,7 @@ game 'gta5'
 
 name "Rep Scripts - OxyRun - Tablet Version"
 author "Q4D"
-version "3.0.1"
+version "3.0.2"
 
 shared_scripts {
     '@ox_lib/init.lua',

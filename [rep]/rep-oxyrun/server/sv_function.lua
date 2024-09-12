@@ -17,6 +17,7 @@ lib.callback.register('rep-oxyrun:callback:vehSpawn', function(source, _model, _
     local _ped = CreatePed(0, joaat(_pedModel), coords.x, coords.y, coords.z - 2.5, _pos.w, true, true)
     while not DoesEntityExist(_ped) do Wait(0) end
     SetEntityDistanceCullingRadius(_ped, 30000.0) -- So this entity will be visible by all clients at any distance
+    SetEntityCoords(_ped, _pos.x, _pos.y, _pos.z)
     TaskWarpPedIntoVehicle(_ped, veh, -1)
     Wait(2000)
     return NetworkGetNetworkIdFromEntity(veh), NetworkGetNetworkIdFromEntity(_ped)

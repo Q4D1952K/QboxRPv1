@@ -54,7 +54,7 @@ Config.JobCenter = {
         },
         icon = "fa-solid fa-pills"
     },
-    ['theftcar'] = {
+    ['chopshop'] = {
         vpn = true,
         label = "Chop Shop",
         event = "rep-chopshop:client:chiduong",

@@ -34,8 +34,8 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
             }, {
                 options = {
                 {
-                    icon = Lang.target.droppack.icon,
-                    label = Lang.target.droppack.label,
+                    icon = Lang.target.getpack.icon,
+                    label = Lang.target.getpack.label,
                     action = function(entity)
                         TriggerServerEvent('rep-oxyrun:server:stage3', dropPack)
                     end,

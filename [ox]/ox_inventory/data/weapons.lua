@@ -197,6 +197,11 @@ return {
 			durability = 0.1,
 		},
 
+		['WEAPON_DIGISCANNER'] = {
+			label = 'DIGISCANNER',
+			weight = 2500,
+		},
+
 		['WEAPON_DAGGER'] = {
 			label = 'Dagger',
 			weight = 800,

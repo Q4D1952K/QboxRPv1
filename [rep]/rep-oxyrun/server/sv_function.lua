@@ -14,7 +14,7 @@ lib.callback.register('rep-oxyrun:callback:vehSpawn', function(source, _model, _
     SetEntityCoords(veh, _pos.x, _pos.y, _pos.z)
     SetEntityHeading(veh, _pos.w)
     Wait(2000)
-    local _ped = CreatePed(0, joaat(_pedModel), coords.x, coords.y, coords.z - 2.5, _pos.w, true, true)
+    local _ped = CreatePed(0, joaat(_pedModel), coords.x, coords.y, coords.z - 3.0, _pos.w, true, true)
     while not DoesEntityExist(_ped) do Wait(0) end
     SetEntityDistanceCullingRadius(_ped, 30000.0) -- So this entity will be visible by all clients at any distance
     SetEntityCoords(_ped, _pos.x, _pos.y, _pos.z)
@@ -26,7 +26,7 @@ end)
 lib.callback.register('rep-oxyrun:callback:spawnPed', function(source, _model, _pos)
     local ped = GetPlayerPed(source)
     local coords = GetEntityCoords(ped)
-    local _ped = CreatePed(0, _model, coords.x, coords.y, coords.z - 2.5, _pos.w, true, true)
+    local _ped = CreatePed(0, _model, coords.x, coords.y, coords.z - 3.0, _pos.w, true, true)
     while not DoesEntityExist(_ped) do Wait(0) end
     SetEntityDistanceCullingRadius(_ped, 30000.0) -- So this entity will be visible by all clients at any distance
     SetEntityCoords(_ped, _pos.x, _pos.y, _pos.z)

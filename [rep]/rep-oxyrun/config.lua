@@ -194,9 +194,9 @@ Config.CustomerCars = {
 }
 Config.CustomerDriverPed = {
     'a_m_m_mlcrisis_01',
-    'a_m_y_skater_01',
     'a_f_m_fatwhite_01',
     'g_f_y_families_01',
+    'g_m_y_ballasout_01',
     'csb_undercover',
     'g_m_importexport_01',
     'g_m_y_lost_01',

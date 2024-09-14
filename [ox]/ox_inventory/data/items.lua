@@ -1664,4 +1664,23 @@ return {
             image = "jerry_can.png",
         }
     },
+
+    ["car_door"] = {
+        label = "Car Door",
+        weight = 7500,
+        description = "",
+    },
+    
+    ["car_trunk"] = {
+        label = "Car Trunk",
+        weight = 7500,
+        description = "",
+    },
+    
+    ["car_wheel"] = {
+        label = "Car Wheel",
+        weight = 7500,
+        description = "",
+    },
+
 }

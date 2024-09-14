@@ -48,4 +48,46 @@ return {
             disableVehicle = true
         }
     },
+    car_trunk = {
+        model = `imp_prop_impexp_trunk_03a`,
+        pos = vec3(-0.21, 0.58, 0.0),
+        rot = vec3(79.36, 2.3, -0.3),
+        bone = 24817,
+        dict = 'anim@heists@box_carry@',
+        anim = 'idle',
+        disableKeys = {
+            disableSprint = true,
+            disableJump = true,
+            disableAttack = true,
+            disableVehicle = true
+        }
+    },
+    car_door = {
+        model = `imp_prop_impexp_car_door_04a`,
+        pos = vec3(-0.19, 0.46, -0.61),
+        rot = vec3(-89.7, 75.0, 0.0),
+        bone = 24817,
+        dict = 'anim@heists@box_carry@',
+        anim = 'idle',
+        disableKeys = {
+            disableSprint = true,
+            disableJump = true,
+            disableAttack = true,
+            disableVehicle = true
+        }
+    },
+    car_wheel = {
+        model = `prop_wheel_02`,
+        pos = vec3(-0.15, 0.4, 0.02),
+        rot = vec3(-185, 0.0, 0.0),
+        bone = 24817,
+        dict = 'anim@heists@box_carry@',
+        anim = 'idle',
+        disableKeys = {
+            disableSprint = true,
+            disableJump = true,
+            disableAttack = true,
+            disableVehicle = true
+        }
+    },
 }

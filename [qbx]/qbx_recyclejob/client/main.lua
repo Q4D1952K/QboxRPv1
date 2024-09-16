@@ -454,29 +454,30 @@ RegisterNetEvent('qbx_recyclejob:client:target:pickupPackage', function()
     if not pickupZone or carryPackage then
         return
     end
-
-    scrapAnim()
-
-    if lib.progressCircle({
-        duration = config.pickupActionDuration,
-        label = locale("text.picking_up_the_package"),
-        useWhileDead = false,
-        canCancel = true,
-        disable = {
-            move = true,
-            car = true,
-            mouse = true,
-            combat = true
-        },
-    }) then
-        packageCoords = nil
-        StopAnimTask(cache.ped, 'mp_car_bomb', 'car_bomb_mechanic', 1.0)
-        ClearPedTasks(cache.ped)
-        pickupPackage()
-        destroyPickupTarget()
-        registerDeliveryTarget()
-    else
-        exports.qbx_core:Notify(locale('error.canceled'), 'error')
+    local success = exports["rep-boxGame"]:StartMinigame(0)
+    if success then
+        scrapAnim()
+        if lib.progressCircle({
+            duration = config.pickupActionDuration,
+            label = locale("text.picking_up_the_package"),
+            useWhileDead = false,
+            canCancel = true,
+            disable = {
+                move = true,
+                car = true,
+                mouse = true,
+                combat = true
+            },
+        }) then
+            packageCoords = nil
+            StopAnimTask(cache.ped, 'mp_car_bomb', 'car_bomb_mechanic', 1.0)
+            ClearPedTasks(cache.ped)
+            pickupPackage()
+            destroyPickupTarget()
+            registerDeliveryTarget()
+        else
+            exports.qbx_core:Notify(locale('error.canceled'), 'error')
+        end
     end
 end)
 

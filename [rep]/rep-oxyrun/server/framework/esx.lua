@@ -42,8 +42,8 @@ function Framework.RemoveItem(src, _item, _amount)
     else
         local xPlayer = ESX.GetPlayerFromId(src)
         local name, has = xPlayer.hasItem(_item)
-        if name and amount >= has then
-            xPlayer.removeInventoryItem(_item, amount)
+        if name and _amount >= has then
+            xPlayer.removeInventoryItem(_item, _amount)
             return true
         end
         return false

@@ -290,7 +290,7 @@ function createGreenScreenVehicle(vehicleHash, vehicleModel) {
 				await Delay(100);
 			}
 		}
-		const vehicle = CreateVehicle(vehicleHash, config.greenScreenVehiclePosition.x, config.greenScreenVehiclePosition.y, config.greenScreenVehiclePosition.z, 0, true, true);
+		const vehicle = CreateVehicle(vehicleHash, config.greenScreenVehiclePosition.x, config.greenScreenVehiclePosition.y, config.greenScreenVehiclePosition.z, 0, false, true);
 		if (vehicle === 0) {
 			clearTimeout(timeout);
 			resolve(null);

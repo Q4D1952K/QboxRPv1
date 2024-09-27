@@ -1,5 +1,5 @@
 local config = require 'config.client'
-local isLoggedIn = false
+local isLoggedIn = LocalPlayer.state.isLoggedIn
 local carryPackage = nil
 local packageCoords = nil
 local onDuty = false
@@ -298,7 +298,7 @@ local function pickupPackage()
     local boxModel = config.pickupBoxModel
     lib.requestModel(boxModel, 5000)
     lib.playAnim(cache.ped, 'anim@heists@box_carry@', 'idle', 5.0, -1, -1, 50, 0, false, false, false)
-    local object = CreateObject(boxModel, pos.x, pos.y, pos.z, true, true, true)
+    local object = NetToObj(lib.callback.await('rep-base:callback:spawnObj', false, boxModel, vector3(pos.x, pos.y, pos.z)))
     SetModelAsNoLongerNeeded(boxModel)
     AttachEntityToEntity(object, cache.ped, GetPedBoneIndex(cache.ped, 57005), 0.05, 0.1, -0.3, 300.0, 250.0, 20.0, true, true, false, true, 1, true)
     carryPackage = object
@@ -454,9 +454,11 @@ RegisterNetEvent('qbx_recyclejob:client:target:pickupPackage', function()
     if not pickupZone or carryPackage then
         return
     end
+    lib.requestAnimDict("anim@amb@clubhouse@tutorial@bkr_tut_ig3@")
+    TaskPlayAnim(cache.ped, 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 1.0, -4.0, -1, 1, 0, false, false, false)
+    Wait(1750)
     local success = exports["rep-boxGame"]:StartMinigame(0)
     if success then
-        scrapAnim()
         if lib.progressCircle({
             duration = config.pickupActionDuration,
             label = locale("text.picking_up_the_package"),
@@ -470,14 +472,16 @@ RegisterNetEvent('qbx_recyclejob:client:target:pickupPackage', function()
             },
         }) then
             packageCoords = nil
-            StopAnimTask(cache.ped, 'mp_car_bomb', 'car_bomb_mechanic', 1.0)
             ClearPedTasks(cache.ped)
             pickupPackage()
             destroyPickupTarget()
             registerDeliveryTarget()
         else
+            ClearPedTasks(cache.ped)
             exports.qbx_core:Notify(locale('error.canceled'), 'error')
         end
+    else
+        ClearPedTasks(cache.ped)
     end
 end)
 
@@ -532,4 +536,5 @@ end)
 CreateThread(function()
     setLocationBlip()
     registerEntranceTarget()
+    startPackageBlipDraw()
 end)

@@ -998,7 +998,6 @@ function Save(source)
 
     playerData.metadata.health = GetEntityHealth(ped)
     playerData.metadata.armor = GetPedArmour(ped)
-
     if playerState.isLoggedIn then
         playerData.metadata.hunger = playerState.hunger or 0
         playerData.metadata.thirst = playerState.thirst or 0

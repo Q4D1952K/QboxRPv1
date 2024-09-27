@@ -1,5 +1,5 @@
 return {
-    useTarget = GetConvar('UseTarget', 'false') == 'true',
+    useTarget = true,
     debugPoly = false,
 
     outsideLocation 	= vector4(56.0, 6471.9, 31.0, 44.0),

@@ -1,7 +1,7 @@
 Plants = {}
 MyStrains = {}
 onDuty = false
-
+_entites = {}
 function talkNPC()
     local _model, _pos = lib.callback.await('rep-weed:callback:bossNPC', false)
     bossNpc = exports['rep-talkNPC']:CreateNPC({
@@ -42,26 +42,6 @@ function talkNPC()
         },
         [4] = {
             label = Lang.bossNpc.button4[1],
-            shouldClose = true,
-            action = function()
-                TriggerEvent('rep-weed:client:packageGood')
-            end,
-            canInteract = function()
-               return not canCollect and not isWeedProcessing and hasItem(Config.Items['driedbud'])
-            end,
-        },
-        [5] = {
-            label = Lang.bossNpc.button5[1],
-            shouldClose = true,
-            action = function()
-                TriggerServerEvent('rep-weed:server:collectPackageGood')
-            end,
-            canInteract = function()
-               return canCollect
-            end,
-        },
-        [6] = {
-            label = Lang.bossNpc.button6[1],
             shouldClose = true,
             action = function()
             end
@@ -113,28 +93,6 @@ function targetNPC()
                 label = Lang.target.checkstrain.label,
                 distance = 1.5,
             },
-            {
-                onSelect = function(entity)
-                    TriggerEvent('rep-weed:client:packageGood')
-                end,
-                icon = Lang.target.packageGood.icon,
-                label = Lang.target.packageGood.label,
-                distance = 1.5,
-                canInteract = function()
-                    return not canCollect and not isWeedProcessing and hasItem(Config.Items['driedbud'])
-                end,
-            },
-            {
-                onSelect = function(entity)
-                    TriggerServerEvent('rep-weed:server:collectPackageGood')
-                end,
-                icon = Lang.target.collectPackage.icon,
-                label = Lang.target.collectPackage.label,
-                distance = 1.5,
-                canInteract = function()
-                    return canCollect
-                end,
-            },
         })
     else
         exports[Config.Target]:AddTargetEntity(bossNpc, {
@@ -166,29 +124,271 @@ function targetNPC()
                     icon = Lang.target.checkstrain.icon,
                     label = Lang.target.checkstrain.label,
                 },
+            },
+            distance = 1.5
+        })
+    end
+end
+
+function initWeed()
+    if Config.Target == 'ox_target' then
+        exports.ox_target:addGlobalVehicle({
+            {
+                icon = Lang.target.start_cornerselling.icon,
+                label = Lang.target.start_cornerselling.label,
+                distance = 1.5,
+                onSelect = function(data)
+                    startConnerSelling(data.entity)
+                end,
+                canInteract = function(entity, distance, coords, name, bone)
+                    return not cornerselling and not IsPedInAnyVehicle(cache.ped, false) and hasItem(Config.Items['weedbaggie'], 1) and Config.Cornerselling.status
+                end,
+            },
+            {
+                icon = Lang.target.stop_cornerselling.icon,
+                label = Lang.target.stop_cornerselling.label,
+                distance = 1.5,
+                onSelect = function(data)
+                    stopConnerSelling()
+                end,
+                canInteract = function(entity, distance, coords, name, bone)
+                    return cornerselling and not IsPedInAnyVehicle(cache.ped, false) and Config.Cornerselling.status
+                end,
+            },
+        })
+        exports.ox_target:addGlobalPed({
+            {
+                icon = Lang.target.cornerselling.icon,
+                label = Lang.target.cornerselling.label,
+                distance = 1.5,
+                onSelect = function(data)
+                    connerSelling(data.entity)
+                end,
+                canInteract = function(entity, distance, coords, name, bone)
+                    return cornerselling and listPedsSelling[entity] and not IsPedInAnyVehicle(PlayerPedId(), false) and Config.Cornerselling.status
+                end,
+            },
+        })
+    else
+        exports[Config.Target]:AddGlobalVehicle({
+            options = {
                 {
-                    action = function()
-                        TriggerEvent('rep-weed:client:packageGood')
+                    icon = Lang.target.start_cornerselling.icon,
+                    label = Lang.target.start_cornerselling.label,
+                    action = function(entity)
+                        startConnerSelling(entity)
                     end,
-                    icon = Lang.target.packageGood.icon,
-                    label = Lang.target.packageGood.label,
                     canInteract = function()
-                        return not canCollect and not isWeedProcessing and hasItem(Config.Items['driedbud'])
+                        return not cornerselling and not IsPedInAnyVehicle(cache.ped, false) and hasItem(Config.Items['weedbaggie'], 1) and Config.Cornerselling.status
                     end,
                 },
                 {
-                    action = function()
-                        TriggerServerEvent('rep-weed:server:collectPackageGood')
+                    icon = Lang.target.stop_cornerselling.icon,
+                    label = Lang.target.stop_cornerselling.label,
+                    action = function(entity)
+                        stopConnerSelling()
                     end,
-                    icon = Lang.target.collectPackage.icon,
-                    label = Lang.target.collectPackage.label,
                     canInteract = function()
-                        return canCollect
+                        return cornerselling and not IsPedInAnyVehicle(cache.ped, false) and Config.Cornerselling.status
                     end,
+                }
+            },
+            distance = 1.5,
+        })
+        exports[Config.Target]:AddGlobalPed({
+            options = {
+                {
+                    icon = Lang.target.start_cornerselling.icon,
+                    label = Lang.target.start_cornerselling.label,
+                    type = "client",
+                    action = function(entity)
+                        connerSelling(entity)
+                    end,
+                    canInteract = function(entity)
+                        return cornerselling and listPedsSelling[entity] and not IsPedInAnyVehicle(PlayerPedId(), false) and Config.Cornerselling.status
+                    end,
+                },
+            },
+            distance = 1.5,
+        })
+    end
+    for k,v in pairs (Config.TacoShop.points) do
+        if Config.Target == 'ox_target' then
+            exports.ox_target:addSphereZone({
+                coords = vector3(v.pos.x, v.pos.y, v.pos.z + 1.0),
+                radius = 1.0,
+                debug =  Config.Debug,
+                drawSprite = true,
+                distance = 1.5,
+                options = {
+                    {
+                        icon = Lang.target.droppack.icon,
+                        label = Lang.target.droppack.label,
+                        onSelect = function(data)
+                            dropPackage()
+                        end,
+                        canInteract = function(entity, distance, coords, name, bone)
+                            if onDuty and tacoIndex == k and Config.TacoShop.status then
+                                return true
+                            end
+                            return false
+                        end,
+                    }
+                }
+            })
+        else
+            exports[Config.Target]:AddCircleZone("tacoshop_"..k, vector3(v.pos.x, v.pos.y, v.pos.z + 1.0), 1.0, {
+                name = "tacoshop_"..k,
+                debugPoly = Config.Debug,
+            }, {
+                options = {
+                    {
+                        icon = Lang.target.droppack.icon,
+                        label = Lang.target.droppack.label,
+                        action = function(entity)
+                            dropPackage()
+                        end,
+                        canInteract = function(entity, distance, data)
+                            if onDuty and tacoIndex == k and Config.TacoShop.status then
+                                return true
+                            end
+                            return false
+                        end,
+                        drawDistance = 10.0,
+                        drawColor = {255, 255, 255, 255},
+                        successDrawColor = {30, 144, 255, 255},
+                    }
+                },
+                distance = 1.5,
+            })
+        end
+    end
+    local _model = {}
+    for k,v in pairs(Config.Plant.growthObjects) do
+        table.insert(_model, v.model)
+    end
+    if Config.Target == 'ox_target' then
+        exports.ox_target:addModel(_model, {
+                {
+                    onSelect = function(data)
+                        checkPlant(data.entity)
+                    end,
+                    icon = Lang.target.check.icon,
+                    label = Lang.target.check.label,
+                    distance = 1.5,
+                },
+                {
+                    onSelect = function(data)
+                        harvestPlant(data.entity)
+                    end,
+                    icon = Lang.target.harvest.icon,
+                    label = Lang.target.harvest.label,
+                    distance = 1.5,
+                },
+            }
+        )
+    else
+        exports[Config.Target]:AddTargetModel(_model,{
+            options =  {
+                {
+                    action = function(entity)
+                        checkPlant(entity)
+                    end,
+                    icon = Lang.target.check.icon,
+                    label = Lang.target.check.label,
+                },
+                {
+                    action = function(entity)
+                        harvestPlant(entity)
+                    end,
+                    icon = Lang.target.harvest.icon,
+                    label = Lang.target.harvest.label,
                 },
             },
             distance = 1.5
         })
+    end
+    if Config.HyperData then
+        SendNUIMessage({
+            event = "connect"
+        })
+    else
+        TriggerServerEvent('rep-weed:join')
+    end
+    Config.TacoShop.points = lib.callback.await('rep-weed:callback:getConfigTaco', false)
+    weedProcessingLocation  = lib.callback.await('rep-weed:callback:getweedProcessingLocation', false)
+    for _index, _value in pairs(Config.Plant.packageLocation) do
+        local _model = Config.TacoShop.ped[math.random(#Config.TacoShop.ped)]
+        lib.requestModel(_model)
+        local _ped = CreatePed(0, _model, _value.ped.x, _value.ped.y, _value.ped.z, _value.ped.w, false, true)
+        SetPedFleeAttributes(_ped, 0, false)
+        SetPedDiesWhenInjured(_ped, false)
+        SetBlockingOfNonTemporaryEvents(_ped, true)
+        SetEntityInvincible(_ped, true)
+        FreezeEntityPosition(_ped, true)
+        lib.requestAnimDict('mp_arresting')
+        TaskPlayAnim(_ped, 'mp_arresting', 'a_uncuff', 3.0, 1.0, -1, 49, 0, false, false, false)
+        SetPedKeepTask(_ped, true)
+        local object = CreateObject(joaat("bkr_prop_weed_table_01a"), _value.table.x, _value.table.y, _value.table.z, false, false, false)
+        SetEntityHeading(object,  _value.table.w)
+        SetEntityInvincible(object, true)
+        FreezeEntityPosition(object, true)
+        _entites[#_entites+1] = _ped
+        _entites[#_entites+1] = object
+        if Config.Target == 'ox_target' then
+            exports.ox_target:addLocalEntity(_ped,
+            {
+                {
+                    onSelect = function(data)
+                        TriggerEvent('rep-weed:client:packageGood', _index)
+                    end,
+                    icon = Lang.target.packageGood.icon,
+                    label = Lang.target.packageGood.label,
+                    distance = 1.5,
+                    canInteract = function()
+                        return not weedProcessingLocation[_index].itemCollect and not weedProcessingLocation[_index].isWeedProcessing and hasItem(Config.Items['driedbud'])
+                    end,
+                },
+                {
+                    onSelect = function(entity)
+                        TriggerServerEvent('rep-weed:server:collectPackageGood', _index)
+                    end,
+                    icon = Lang.target.collectPackage.icon,
+                    label = Lang.target.collectPackage.label,
+                    distance = 1.5,
+                    canInteract = function()
+                        return weedProcessingLocation[_index].itemCollect
+                    end,
+                },
+            }
+        )
+        else
+            exports[Config.Target]:AddTargetEntity(_ped, {
+                options = {
+                    {
+                        action = function (entity)
+                            TriggerEvent('rep-weed:client:packageGood', _index)
+                        end,
+                        icon = Lang.target.packageGood.icon,
+                        label = Lang.target.packageGood.label,
+                        canInteract = function()
+                            return not weedProcessingLocation[_index].itemCollect and not weedProcessingLocation[_index].isWeedProcessing and hasItem(Config.Items['driedbud'])
+                        end,
+                    },
+                    {
+                        action = function ()
+                            TriggerServerEvent('rep-weed:server:collectPackageGood', _index)
+                        end,
+                        icon = Lang.target.packageGood.icon,
+                        label = Lang.target.packageGood.label,
+                        canInteract = function()
+                            return weedProcessingLocation[_index].itemCollect
+                        end,
+                    },
+                },
+                distance = 1.5,
+            })
+        end
     end
 end
 
@@ -384,191 +584,7 @@ AddEventHandler('onResourceStart', function(r)
         else
             targetNPC()
         end
-        if Config.Target == 'ox_target' then
-            exports.ox_target:addGlobalVehicle({
-                {
-                    icon = Lang.target.start_cornerselling.icon,
-                    label = Lang.target.start_cornerselling.label,
-                    distance = 1.5,
-                    onSelect = function(data)
-                        startConnerSelling(data.entity)
-                    end,
-                    canInteract = function(entity, distance, coords, name, bone)
-                        return not cornerselling and not IsPedInAnyVehicle(cache.ped, false) and hasItem(Config.Items['weedbaggie'], 1) and Config.Cornerselling.status
-                    end,
-                },
-                {
-                    icon = Lang.target.stop_cornerselling.icon,
-                    label = Lang.target.stop_cornerselling.label,
-                    distance = 1.5,
-                    onSelect = function(data)
-                        stopConnerSelling()
-                    end,
-                    canInteract = function(entity, distance, coords, name, bone)
-                        return cornerselling and not IsPedInAnyVehicle(cache.ped, false) and Config.Cornerselling.status
-                    end,
-                },
-            })
-            exports.ox_target:addGlobalPed({
-                {
-                    icon = Lang.target.cornerselling.icon,
-                    label = Lang.target.cornerselling.label,
-                    distance = 1.5,
-                    onSelect = function(data)
-                        connerSelling(data.entity)
-                    end,
-                    canInteract = function(entity, distance, coords, name, bone)
-                        return cornerselling and listPedsSelling[entity] and not IsPedInAnyVehicle(PlayerPedId(), false) and Config.Cornerselling.status
-                    end,
-                },
-            })
-        else
-            exports[Config.Target]:AddGlobalVehicle({
-                options = {
-                    {
-                        icon = Lang.target.start_cornerselling.icon,
-                        label = Lang.target.start_cornerselling.label,
-                        action = function(entity)
-                            startConnerSelling(entity)
-                        end,
-                        canInteract = function()
-                            return not cornerselling and not IsPedInAnyVehicle(cache.ped, false) and hasItem(Config.Items['weedbaggie'], 1) and Config.Cornerselling.status
-                        end,
-                    },
-                    {
-                        icon = Lang.target.stop_cornerselling.icon,
-                        label = Lang.target.stop_cornerselling.label,
-                        action = function(entity)
-                            stopConnerSelling()
-                        end,
-                        canInteract = function()
-                            return cornerselling and not IsPedInAnyVehicle(cache.ped, false) and Config.Cornerselling.status
-                        end,
-                    }
-                },
-                distance = 1.5,
-            })
-            exports[Config.Target]:AddGlobalPed({
-                options = {
-                    {
-                        icon = Lang.target.start_cornerselling.icon,
-                        label = Lang.target.start_cornerselling.label,
-                        type = "client",
-                        action = function(entity)
-                            connerSelling(entity)
-                        end,
-                        canInteract = function(entity)
-                            return cornerselling and listPedsSelling[entity] and not IsPedInAnyVehicle(PlayerPedId(), false) and Config.Cornerselling.status
-                        end,
-                    },
-                },
-                distance = 1.5,
-            })
-        end
-        for k,v in pairs (Config.TacoShop.points) do
-            if Config.Target == 'ox_target' then
-                exports.ox_target:addSphereZone({
-                    coords = vector3(v.pos.x, v.pos.y, v.pos.z + 1.0),
-                    radius = 1.0,
-                    debug =  Config.Debug,
-                    drawSprite = true,
-                    distance = 1.5,
-                    options = {
-                        {
-                            icon = Lang.target.droppack.icon,
-                            label = Lang.target.droppack.label,
-                            onSelect = function(data)
-                                dropPackage()
-                            end,
-                            canInteract = function(entity, distance, coords, name, bone)
-                                if onDuty and tacoIndex == k and Config.TacoShop.status then
-                                    return true
-                                end
-                                return false
-                            end,
-                        }
-                    }
-                })
-            else
-                exports[Config.Target]:AddCircleZone("tacoshop_"..k, vector3(v.pos.x, v.pos.y, v.pos.z + 1.0), 1.0, {
-                    name = "tacoshop_"..k,
-                    debugPoly = Config.Debug,
-                }, {
-                    options = {
-                        {
-                            icon = Lang.target.droppack.icon,
-                            label = Lang.target.droppack.label,
-                            action = function(entity)
-                                dropPackage()
-                            end,
-                            canInteract = function(entity, distance, data)
-                                if onDuty and tacoIndex == k and Config.TacoShop.status then
-                                    return true
-                                end
-                                return false
-                            end,
-                            drawDistance = 10.0,
-                            drawColor = {255, 255, 255, 255},
-                            successDrawColor = {30, 144, 255, 255},
-                        }
-                    },
-                    distance = 1.5,
-                })
-            end
-        end
-        local _model = {}
-        for k,v in pairs(Config.Plant.growthObjects) do
-            table.insert(_model, v.model)
-        end
-        if Config.Target == 'ox_target' then
-            exports.ox_target:addModel(_model, {
-                    {
-                        onSelect = function(data)
-                            checkPlant(data.entity)
-                        end,
-                        icon = Lang.target.check.icon,
-                        label = Lang.target.check.label,
-                        distance = 1.5,
-                    },
-                    {
-                        onSelect = function(data)
-                            harvestPlant(data.entity)
-                        end,
-                        icon = Lang.target.harvest.icon,
-                        label = Lang.target.harvest.label,
-                        distance = 1.5,
-                    },
-                }
-            )
-        else
-            exports[Config.Target]:AddTargetModel(_model,{
-                options =  {
-                    {
-                        action = function(entity)
-                            checkPlant(entity)
-                        end,
-                        icon = Lang.target.check.icon,
-                        label = Lang.target.check.label,
-                    },
-                    {
-                        action = function(entity)
-                            harvestPlant(entity)
-                        end,
-                        icon = Lang.target.harvest.icon,
-                        label = Lang.target.harvest.label,
-                    },
-                },
-                distance = 1.5
-            })
-        end
-        if Config.HyperData then
-            SendNUIMessage({
-                event = "connect"
-            })
-        else
-            TriggerServerEvent('rep-weed:join')
-        end
-        Config.TacoShop.points = lib.callback.await('rep-weed:callback:getConfigTaco', false)
+        initWeed()
     end
 end)
 
@@ -577,6 +593,10 @@ AddEventHandler('onResourceStop', function(r)
         for id, plant in pairs(Plants) do
             removeWeed(id)
         end
+        for _index, _value in pairs(_entites) do
+            DeleteEntity(_value)
+        end
+        DeleteEntity(bossNpc)
     end
 end)
 

@@ -166,7 +166,7 @@ https://youtu.be/rBnhWZc61AU
 # Add the following code before trigger:
 
 ```lua
-    TriggerEvent('rep-weed:server:checkDry', QBPlayer.PlayerData.items, formattedInventor)
+    TriggerEvent('rep-weed:server:checkDry', source, QBPlayer.PlayerData.items, formattedInventor)
 ```
 
 # Search for the following code:

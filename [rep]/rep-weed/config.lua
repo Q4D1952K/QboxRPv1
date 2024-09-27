@@ -52,8 +52,8 @@ Config.Plant = {
         { model = 'bkr_prop_weed_lrg_01b',      zOffset = -0.5 },
     },
     factor = 1.3,     -- How much longer does a male plant take to grow compared to a female plant (Femela plant = 1)
-    growthTime = 10, --240,    -- Plant Growing time in minutes 240
-    dry = 15,-- 360,          -- 360 minutes to dry weed
+    growthTime = 10,    -- Plant Growing time in minutes 240
+    dry = 15,          -- 360 minutes to dry weed
     lifeTime = 1440,  -- Plant lifetime in minutes before wiped
     button = {
         plant = 38,   -- https://docs.fivem.net/docs/game-references/controls/
@@ -468,12 +468,26 @@ Config.Plant = {
             [9] = { min = 17, max = 19 },
             [10] = { min = 20, max = 25 }, -- at max rep, one loop of smoke will give you 20-25 armor.
         },
-    }
+    },
+    packageLocation = {
+        {
+            table =  vec4(1399.087890625, 3602.65380859375, 37.94190979003906, 20.0),
+            ped = vec4(1398.73, 3603.5, 37.94, 202.48)
+        },
+        {
+            table =  vec4(1399.4583740234376, 3611.179443359375, 38.00577545166015, 290.0),
+            ped = vec4(1400.2, 3611.5, 38.0, 115.92)
+        },
+        {
+            table =  vec4(1394.354248046875, 3617.89990234375, 37.92603302001953, 20.0),
+            ped = vec4(1394.11, 3618.62, 37.92, 211.49)
+        },
+    },
 }
 
 Config.Cornerselling = {
     status = true,
-    policeNeed = 0,
+    policeNeed = 2,
     populateRate = 1000 * 60 * 2,       -- default: 2 min/populate, -1 to disable
     timeBetweenAcquisition = 60 * 1000, -- default: 1 min/ped
     money = 50,
@@ -539,7 +553,7 @@ Config.Cornerselling = {
 
 Config.TacoShop = {
     status = true,
-    policeNeed = 0,
+    policeNeed = 3,
     policeAlert = 15, -- percents
     price = 500, -- Price default per weedpackage
     maxPrice = 3500,
@@ -641,12 +655,6 @@ Config.Lang = {
                 [1] = "I want to check my strain",
             },
             button4 = {
-                [1] = "I want to pack goods",
-            },
-            button5 = {
-                [1] = "I want to pick up the packed package",
-            },
-            button6 = {
                 [1] = "I'm just passing through here",
             },
         },

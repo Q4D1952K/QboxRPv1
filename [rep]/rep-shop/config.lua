@@ -123,7 +123,7 @@ Config.Stores = {
         },
         ped = 's_f_y_bartender_01',
         name = "Rob's Liqour",
-        logo = "https://raw.githubusercontent.com/Q4D1952K/QBoxRpImg/main/LTD.png",
+        logo = "https://raw.githubusercontent.com/Q4D1952K/QBoxRpImg/main/Liquor.png",
         colorP = 'red',
         shade = 6,
         theme = 'dark',

@@ -1,5 +1,5 @@
 return {
-    useTarget = false,
+    useTarget = true,
     polyDebug = false,
 
     handcuffItems = 'handcuffs',

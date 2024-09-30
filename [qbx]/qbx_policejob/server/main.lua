@@ -592,3 +592,22 @@ CreateThread(function()
         updateBlips()
     end
 end)
+
+exports['rep-shop']:registerShop("police", {
+    name = "Police Shop",
+    logo = "https://raw.githubusercontent.com/Q4D1952K/QBoxRpImg/main/LSPD.png",
+    groups = {"police", "sheriff"},
+    locations = sharedConfig.locations.armory,
+    items = {
+        ['ammo-9'] = { name = 'ammo-9', price = 5, },
+		['ammo-rifle'] = { name = 'ammo-rifle', price = 5, },
+		['WEAPON_FLASHLIGHT'] = { name = 'WEAPON_FLASHLIGHT', price = 200 },
+		['WEAPON_NIGHTSTICK'] = { name = 'WEAPON_NIGHTSTICK', price = 100 },
+		['WEAPON_PISTOL'] = { name = 'WEAPON_PISTOL', price = 500, info = { registered = true, serial = 'POL' }, license = 'weapon' },
+		['WEAPON_CARBINERIFLE'] = { name = 'WEAPON_CARBINERIFLE', price = 1000, info = { registered = true, serial = 'POL' }, license = 'weapon', grade = 3 },
+		['WEAPON_STUNGUN'] = { name = 'WEAPON_STUNGUN', price = 500, info = { registered = true, serial = 'POL'} }
+    },
+    colorP = 'blue',
+    shade = 4,
+    theme = 'dark',
+})

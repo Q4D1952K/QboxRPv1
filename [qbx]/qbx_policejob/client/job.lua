@@ -467,6 +467,42 @@ else
     end
 end
 
+if config.useTarget then
+    CreateThread(function()
+        for i = 1, #sharedConfig.locations.armory do
+            exports.ox_target:addBoxZone({
+                coords = sharedConfig.locations.armory[i],
+                size = vec3(1,1,3),
+                debug = config.polyDebug,
+                options = {{
+                    distance = 1.5,
+                    label = "Open Police Amory",
+                    icon = 'fa-solid fa-sign-in-alt',
+                    onSelect = function ()
+                        exports['rep-shop']:openShop("police", i)
+                    end,
+                }}
+            })
+        end
+    end)
+else
+    for i = 1, #sharedConfig.locations.armory do
+        lib.zones.box({
+            coords = sharedConfig.locations.armory[i],
+            size = vec3(2, 2, 2),
+            rotation = 0.0,
+            debug = config.polyDebug,
+            onEnter = function()
+                exports['rep-shop']:openShop("police", i)
+            end,
+            onExit = function()
+                inPrompt = false
+                lib.hideTextUI()
+            end
+        })
+    end
+end
+
 CreateThread(function()
     -- Police Trash
     for i = 1, #sharedConfig.locations.trash do

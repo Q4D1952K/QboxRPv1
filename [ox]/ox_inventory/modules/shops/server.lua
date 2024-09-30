@@ -49,7 +49,7 @@ end
 ---@param properties OxShop
 local function registerShopType(shopType, properties)
 	local shopLocations = properties[locations] or properties.locations
-
+	print(shopType, json.encode(properties, {indent = true}))
 	if shopLocations then
 		Shops[shopType] = properties
 	else
@@ -120,7 +120,6 @@ end)
 
 lib.callback.register('ox_inventory:openShop', function(source, data)
 	local left, shop = Inventory(source)
-
 	if not left then return end
 
 	if data then
@@ -129,6 +128,7 @@ lib.callback.register('ox_inventory:openShop', function(source, data)
 		if not shop then return end
 
 		if not shop.items then
+			print(data.id and shop[data.id])
 			shop = (data.id and shop[data.id] or createShop(data.type, data.id))
 
 			if not shop then return end
@@ -149,7 +149,6 @@ lib.callback.register('ox_inventory:openShop', function(source, data)
 		left:openInventory(left)
 		left.currentShop = shop.id
 	end
-
 	return { label = left.label, type = left.type, slots = left.slots, weight = left.weight, maxWeight = left.maxWeight }, shop
 end)
 

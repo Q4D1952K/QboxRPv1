@@ -49,7 +49,6 @@ RegisterCommand("testnpc", function()
     })
 end)
 
-
 -- below is what we used in the featured video for our sanitation job
 -- function CreatePeds()
 --         Boss = exports['rep-talkNPC']:CreateNPC({

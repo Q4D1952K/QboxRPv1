@@ -1682,5 +1682,9 @@ return {
         weight = 7500,
         description = "",
     },
-
+    ["recyclablematerial"] = {
+        label = "Recycleable Material",
+        weight = 50,
+        description = "Can be exchanged into useful goods",
+    },
 }
